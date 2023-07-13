@@ -1,0 +1,1622 @@
+﻿@{
+    ViewData["Title"] = "Muhasebe";
+}
+@section head{
+    <link href="~/Content/vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet" asp-append-version="true">
+    <link href="~/Content/vendor/jquery-nice-select/css/nice-select.css" rel="stylesheet" asp-append-version="true">
+    <link href="~/Content/vendor/select2/css/select2.min.css" rel="stylesheet" asp-append-version="true" />
+    <style>
+        .card-body {
+            padding: 0.3rem 1rem;
+        }
+        td{
+        text-align:center;
+        }
+
+        .uploadFile {
+            width: 100%;
+            background-color: white;
+            color: grey;
+            font-size: 16px;
+            line-height: 23px;
+            overflow: hidden;
+            padding: 10px 10px 4px 10px;
+            position: relative;
+            resize: none;
+            [type="file"]
+
+        {
+            cursor: pointer !important;
+            display: block;
+            font-size: 999px;
+            filter: alpha(opacity=0);
+            min-height: 100%;
+            min-width: 100%;
+            opacity: 0;
+            position: absolute;
+            right: 0px;
+            text-align: right;
+            top: 0px;
+            z-index: 1;
+        }
+
+        }
+        .thh{
+            text-align:center;
+        }
+    </style>
+    <link href="~/content/css/gidermodel.css" rel="stylesheet" />
+}
+
+<div class="row page-titles" id="myBreadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active"><a asp-controller="Muhasebe" asp-action="Muhasebe">Muhasebe</a></li>
+    </ol>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="col-sm-6">
+                    <div style="display:flex;">
+                        <div class="col-sm-5">
+                            <select class="default-select wide">
+                                <option value="All" selected="selected">Şube Seçiniz</option>
+                                <option value="1">Mersin</option>
+                                <option value="2">İzmir</option>
+                                <option value="3">İstanbul</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-toolbar">
+                    <button id="TumListe" onclick="TumListe()" class="btn btn-danger font-weight-bolder action-btn" >Tüm Liste</button>
+
+
+                    <button id="Gelir" onclick="Gelir()" class="btn btn-danger font-weight-bolder">Gelir Listesi</button>
+
+                    <button id="Gider" onclick="Gider()" class="btn btn-danger font-weight-bolder">Gider Listesi</button>
+                </div>
+            </div>
+            <div class="card-body">
+                
+
+                    <div class="row" id="GelirField" hidden>
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="col-lg-4">
+                                        <select class="default-select wide" id="sinifadi">
+                                            <option disabled="" selected="" value="0">Sınıf Seçiniz</option>
+                                            <option value="All">Tümünü Göster</option>
+                                            <option value="2022 Kasım N5 Grubu"> 2022 Kasım N5 Grubu </option>
+                                            <option value="2023 Ocak N5 Grubu - 1"> 2023 Ocak N5 Grubu - 1 </option>
+                                            <option value="2023 Ocak N5 Grubu - 2"> 2023 Ocak N5 Grubu - 2 </option>
+                                            <option value="2023 Mart N5 Grubu - 1"> 2023 Mart N5 Grubu - 1 </option>
+                                            <option value="2023 Mart N5 Grubu - 2"> 2023 Mart N5 Grubu - 2 </option>
+                                            <option value="2023 Ocak N4 Grubu"> 2023 Ocak N4 Grubu </option>
+                                            <option value="2023 Mayıs N5 Grubu - 1"> 2023 Mayıs N5 Grubu - 1 </option>
+                                            <option value="2023 Mayıs N5 Grubu - 2"> 2023 Mayıs N5 Grubu - 2 </option>
+                                            <option value="2023 Mayıs N4 Grubu"> 2023 Mayıs N4 Grubu </option>
+                                            <option value="N5 Konuşma Sınıfı - 2022 Aralık"> N5 Konuşma Sınıfı - 2022 Aralık </option>
+                                            <option value="N4 Konuşma Sınıfı - 2022 Aralık"> N4 Konuşma Sınıfı - 2022 Aralık </option>
+                                            <option value="N5 Konuşma Sınıfı - 2023 Şubat"> N5 Konuşma Sınıfı - 2023 Şubat </option>
+                                            <option value="İzmir Japonca Eğitimi"> İzmir Japonca Eğitimi </option>
+                                            <option value="2022 Eylül N5 Grubu"> 2022 Eylül N5 Grubu Pasif </option>
+                                            <option value="2022 Eylül N4 Grubu"> 2022 Eylül N4 Grubu Pasif </option>
+                                            <option value="2021 Mart N5 Grubu"> 2021 Mart N5 Grubu Pasif </option>
+                                            <option value="2021 Mayıs N5 Grubu"> 2021 Mayıs N5 Grubu Pasif </option>
+                                            <option value="2021 Temmuz N5 Grubu"> 2021 Temmuz N5 Grubu Pasif </option>
+                                            <option value="2021 Eylül N5 Grubu"> 2021 Eylül N5 Grubu Pasif </option>
+                                            <option value="2021 Kasım N5 Grubu"> 2021 Kasım N5 Grubu Pasif </option>
+                                            <option value="Özel Ders - Büşra Badışoğlu"> Özel Ders - Büşra Badışoğlu Pasif </option>
+                                            <option value="2022 Ocak N5 Grubu"> 2022 Ocak N5 Grubu Pasif </option>
+                                            <option value="2022 Mart N5 Grubu"> 2022 Mart N5 Grubu Pasif </option>
+                                            <option value="2022 Mart N4 Grubu"> 2022 Mart N4 Grubu Pasif </option>
+                                            <option value="2022 Şubat N5 Grubu"> 2022 Şubat N5 Grubu Pasif </option>
+                                            <option value="2022 Mayıs N5 Grubu"> 2022 Mayıs N5 Grubu Pasif </option>
+                                            <option value="2022 Temmuz N4 Grubu"> 2022 Temmuz N4 Grubu Pasif </option>
+                                            <option value="2022 Temmuz N5 Grubu - 1"> 2022 Temmuz N5 Grubu - 1 Pasif </option>
+                                            <option value="2022 Temmuz N5 Grubu - 2"> 2022 Temmuz N5 Grubu - 2 Pasif </option>
+
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-4" id="divAy">
+                                        <select class="default-select wide" id="ay">
+                                            <option selected="" disabled="" value="0">Ay Seçiniz</option>
+                                            <option value="All">Tümünü Göster</option>
+                                            <option value="1">Ocak</option>
+                                            <option value="2">Şubat</option>
+                                            <option value="3">Mart</option>
+                                            <option value="4">Nisan</option>
+                                            <option value="5">Mayıs</option>
+                                            <option value="6">Haziran</option>
+                                            <option value="7">Temmuz</option>
+                                            <option value="8">Ağustos</option>
+                                            <option value="9">Eylül</option>
+                                            <option value="10">Ekim</option>
+                                            <option value="11">Kasım</option>
+                                            <option value="12">Aralık</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <select class="default-select wide" id="yil">
+                                            <option selected="" disabled="" value="0">Yıl Seçiniz</option>
+                                            <option value="2024">2024</option>
+                                            <option value="2023">2023</option>
+                                            <option value="2022">2022</option>
+                                            <option value="2021">2021</option>
+                                        </select>
+                                    </div>
+                                    <div class="card-toolbar">
+                                        <a href="#" onclick="Raporla()" class="btn light btn-primary font-weight-bolder">
+                                            <span class="svg-icon svg-icon-md">
+                                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                        <rect x="0" y="0" width="24" height="24"></rect>
+                                                        <circle fill="#000000" cx="9" cy="15" r="6"></circle>
+                                                        <path d="M8.8012943,7.00241953 C9.83837775,5.20768121 11.7781543,4 14,4 C17.3137085,4 20,6.6862915 20,10 C20,12.2218457 18.7923188,14.1616223 16.9975805,15.1987057 C16.9991904,15.1326658 17,15.0664274 17,15 C17,10.581722 13.418278,7 9,7 C8.93357256,7 8.86733422,7.00080962 8.8012943,7.00241953 Z" fill="#000000" opacity="0.3"></path>
+                                                    </g>
+                                                </svg>
+                                            </span>Göster
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive" style="overflow-x: clip;">
+
+
+                                            <table id="GelirTable" class="display dataTable" style="min-width:auto;">
+                                                <div class="row" style="padding: 10px;">
+
+                                                    <div class="col-lg-6">
+                                                        <div class="card-toolbar">
+                                                            <a href="#GelirEkleModal" data-bs-target="#GelirEkleModal" data-bs-toggle="modal" class="btn btn-secondary font-weight-bolder">
+                                                                <span class="svg-icon svg-icon-md">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                                                                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+                                                                    </svg>
+                                                                </span>Gelir Ekle
+                                                            </a>
+@*                                                            <a href="#" class="btn btn-danger font-weight-bolder">
+                                                                <span class="svg-icon svg-icon-md">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-dash-circle-fill" viewBox="0 0 16 16">
+                                                                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1h-7z" />
+                                                                    </svg>
+                                                                </span>Gelir Sil
+                                                            </a>*@
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="col-lg-6" style="display: flex;flex-direction: row-reverse;">
+                                                        <div class="dt-buttons">
+                                                            <button type="button" class="btn btn-outline-success">
+                                                                <span>
+                                                                    <i class="fa fa-file-excel"></i> Excel
+                                                                </span>
+                                                            </button>
+                                                            <button class="dt-button buttons-pdf btn btn-outline-danger font-weight-bolder" tabindex="0" aria-controls="classDataTable" type="button">
+                                                                <span>
+                                                                    <i class="fa fa-file-pdf"></i> Pdf
+                                                                </span>
+                                                            </button>
+                                                            <button class="dt-button btn btn-outline-dark font-weight-bolder" tabindex="0" aria-controls="classDataTable" type="button">
+                                                                <span>
+                                                                    <i class="fa fa-print"></i> Print
+                                                                </span>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+
+
+
+
+                                                </div>
+
+
+                                                <thead>
+                                                    <tr>
+
+                                                    <th class="bassinif thh">İsim Soyisim</th>
+                                                        <th class="thh">Ödeme Tarihi</th>
+                                                        <th class="thh">Ödeme Türü</th>
+                                                        <th class="thh">Tutar</th>
+                                                        <th class="thh">Durumu</th>
+                                                        <th class="thh">Kişi Durumu</th>
+                                                    <th class="thh" style="width:8rem">Aksiyon</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr class="odd">
+
+                                                        <td><a href="#">Abdullah Köse</a></td>
+                                                        <td>02.06.2023</td>
+                                                        <td>1. Taksit</td>
+                                                        <td>2.100,00₺</td>
+                                                        <td>
+                                                            <span class="badge light badge-danger">Ödenmedi</span>
+                                                        </td>
+                                                        <td>
+                                                            <span class="label label-success label-dot mr-2"></span>
+                                                            <span class="font-weight-bold text-success">Aktif</span>
+                                                        </td>
+                                                        <td class="thh">
+                                                            <a id="odevview" onclick="odevview()" class="btn btn-info shadow btn-xs sharp me-1"><i class="fa fa-eye"></i></a>
+
+                                                    <a href="#DuzGelirModal" data-bs-target="#DuzGelirModal" data-bs-toggle="modal" class="btn btn-warning shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+                                                            <a class="btn btn-primary shadow btn-xs sharp me-1"><i class="fa fa-trash"></i></a>
+
+
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr class="even">
+
+                                                        <td><a href="#">Abdullah Köse</a></td>
+
+                                                        <td>02.07.2023</td>
+                                                        <td>2. Taksit</td>
+                                                        <td>2.100,00₺</td>
+                                                        <td>
+                                                        <span class="badge light badge-success"style="width:78px;">Ödendi</span>
+                                                        </td>
+                                                        <td>
+                                                            <span class="label label-success label-dot mr-2"></span>
+                                                            <span class="font-weight-bold text-success">Aktif</span>
+                                                        </td>
+                                                        <td class="thh">
+                                                            <a id="odevview" onclick="odevview()" class="btn btn-info shadow btn-xs sharp me-1"><i class="fa fa-eye"></i></a>
+
+                                                    <a href="#DuzGelirModal" data-bs-target="#DuzGelirModal" data-bs-toggle="modal" class="btn btn-warning shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+                                                            <a class="btn btn-primary shadow btn-xs sharp me-1"><i class="fa fa-trash"></i></a>
+
+
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr class="odd">
+
+                                                        <td><a href="#">Abdullah Köse</a></td>
+                                                        <td>02.06.2023</td>
+                                                        <td>1. Taksit</td>
+                                                        <td>2.100,00₺</td>
+                                                        <td>
+                                                            <span class="badge light badge-danger">Ödenmedi</span>
+                                                        </td>
+                                                        <td>
+                                                            <span class="label label-success label-dot mr-2"></span>
+                                                            <span class="font-weight-bold text-success">Aktif</span>
+                                                        </td>
+                                                        <td class="thh">
+                                                            <a id="odevview" onclick="odevview()" class="btn btn-info shadow btn-xs sharp me-1"><i class="fa fa-eye"></i></a>
+
+                                                            <a href="#DuzGelirModal" data-bs-target="#DuzGelirModal" data-bs-toggle="modal"  class="btn btn-warning shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+                                                            <a class="btn btn-primary shadow btn-xs sharp me-1"><i class="fa fa-trash"></i></a>
+
+
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr class="even">
+
+                                                        <td><a href="#">Abdullah Köse</a></td>
+
+                                                        <td>02.07.2023</td>
+                                                        <td>2. Taksit</td>
+                                                        <td>2.100,00₺</td>
+                                                        <td>
+                                                            <span class="badge light badge-danger">Ödenmedi</span>
+                                                        </td>
+                                                        <td>
+                                                            <span class="label label-success label-dot mr-2"></span>
+                                                            <span class="font-weight-bold text-success">Aktif</span>
+                                                        </td>
+                                                        <td class="thh">
+                                                            <a id="odevview" onclick="odevview()" class="btn btn-info shadow btn-xs sharp me-1"><i class="fa fa-eye"></i></a>
+
+                                                            <a href="#DuzGelirModal" data-bs-target="#DuzGelirModal" data-bs-toggle="modal" class="btn btn-warning shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+                                                            <a class="btn btn-primary shadow btn-xs sharp me-1"><i class="fa fa-trash"></i></a>
+
+
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <div class="row" style="padding-bottom: 20px;">
+                                                <div class="col-lg-4" style="display: flex;justify-content: center;">
+                                                    <button type="button" class="btn btn-rounded btn-success" disabled="disabled">Ödenen: 815.770,00₺</button>
+
+                                                </div>
+                                                <div class="col-lg-4" style="display: flex;justify-content: center;">
+                                                    <button type="button" class="btn btn-rounded btn-warning" disabled="disabled">Ödenmeyen: 533.200,00₺</button>
+
+                                                </div>
+                                                <div class="col-lg-4" style="display: flex;justify-content: center;">
+                                                    <button type="button" class="btn btn-rounded btn-info" disabled="disabled">Toplam: 1.348.970,00₺</button>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                  
+
+                    <div class="row" id="GiderField" hidden>
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+
+                                    <div class="col-lg-5" id="divAy">
+                                        <select class="default-select wide" id="ay">
+                                            <option selected="" disabled="" value="0">Ay Seçiniz</option>
+                                            <option value="All">Tümünü Göster</option>
+                                            <option value="1">Ocak</option>
+                                            <option value="2">Şubat</option>
+                                            <option value="3">Mart</option>
+                                            <option value="4">Nisan</option>
+                                            <option value="5">Mayıs</option>
+                                            <option value="6">Haziran</option>
+                                            <option value="7">Temmuz</option>
+                                            <option value="8">Ağustos</option>
+                                            <option value="9">Eylül</option>
+                                            <option value="10">Ekim</option>
+                                            <option value="11">Kasım</option>
+                                            <option value="12">Aralık</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-5">
+                                        <select class="default-select wide" id="yil">
+                                            <option selected="" disabled="" value="0">Yıl Seçiniz</option>
+                                            <option value="2024">2024</option>
+                                            <option value="2023">2023</option>
+                                            <option value="2022">2022</option>
+                                            <option value="2021">2021</option>
+                                        </select>
+                                    </div>
+                                    <div class="card-toolbar">
+                                        <a href="#" onclick="Raporla()" class="btn light btn-primary font-weight-bolder">
+                                            <span class="svg-icon svg-icon-md">
+                                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                        <rect x="0" y="0" width="24" height="24"></rect>
+                                                        <circle fill="#000000" cx="9" cy="15" r="6"></circle>
+                                                        <path d="M8.8012943,7.00241953 C9.83837775,5.20768121 11.7781543,4 14,4 C17.3137085,4 20,6.6862915 20,10 C20,12.2218457 18.7923188,14.1616223 16.9975805,15.1987057 C16.9991904,15.1326658 17,15.0664274 17,15 C17,10.581722 13.418278,7 9,7 C8.93357256,7 8.86733422,7.00080962 8.8012943,7.00241953 Z" fill="#000000" opacity="0.3"></path>
+                                                    </g>
+                                                </svg>
+                                            </span>Göster
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive" style="overflow-x: clip;">
+                                        <div id="classDataTable_wrapper" class="dataTables_wrapper">
+
+                                            <table id="GiderTable" class="display dataTable" style="min-width:auto;">
+                                                <div class="row" style="padding: 10px;">
+
+                                                    <div class="col-lg-6">
+                                                        <div class="card-toolbar">
+                                                            <a  href="#GiderEkleModal" data-bs-target="#GiderEkleModal" data-bs-toggle="modal" class="btn btn-secondary font-weight-bolder">
+                                                                <span class="svg-icon svg-icon-md">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                                                                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+                                                                    </svg>
+                                                                </span>Gider Ekle
+                                                     </a>
+ @*                                                                  <a href="#" class="btn btn-danger font-weight-bolder">
+                                                                <span class="svg-icon svg-icon-md">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-dash-circle-fill" viewBox="0 0 16 16">
+                                                                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1h-7z" />
+                                                                    </svg>
+                                                                </span>Gider Sil
+                                                            </a>*@
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="col-lg-6" style="display: flex;flex-direction: row-reverse;">
+                                                        <div class="dt-buttons">
+                                                            <button type="button" class="btn btn-outline-success">
+                                                                <span>
+                                                                    <i class="fa fa-file-excel"></i> Excel
+                                                                </span>
+                                                            </button>
+                                                            <button class="dt-button buttons-pdf btn btn-outline-danger font-weight-bolder" tabindex="0" aria-controls="classDataTable" type="button">
+                                                                <span>
+                                                                    <i class="fa fa-file-pdf"></i> Pdf
+                                                                </span>
+                                                            </button>
+                                                            <button class="dt-button btn btn-outline-dark font-weight-bolder" tabindex="0" aria-controls="classDataTable" type="button">
+                                                                <span>
+                                                                    <i class="fa fa-print"></i> Print
+                                                                </span>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+
+
+
+
+                                                </div>
+
+                                                <thead>
+                                                    <tr role="row">
+
+                                                    <th class="thh">Gider Adı</th>
+                                                    <th class="bastak thh">Gider Türü</th>
+                                                    <th class="thh">Ödeme Tarihi</th>
+                                                    <th class="thh">Ödeme Tutarı</th>
+                                                    <th class="thh">Fatura</th>
+                                                    <th class="thh">Durumu</th>
+                                                    <th class="thh">Aksiyon</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr role="row" class="odd">
+
+                                                        <td class="thh"><a href="#">iş</a></td>
+                                                        <td class="thh">Taksit</td>
+
+                                                        <td class="thh">02.06.2023</td>
+                                                    <td class="thh">2.100,00₺</td>
+                                                        <td class="thh">
+                                                        <a href="javascript:void(0);">
+                                                            İndir
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-file-earmark-arrow-down" viewBox="0 0 16 16">
+                                                                <path d="M8.5 6.5a.5.5 0 0 0-1 0v3.793L6.354 9.146a.5.5 0 1 0-.708.708l2 2a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0-.708-.708L8.5 10.293V6.5z" />
+                                                                <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z" />
+                                                            </svg>
+
+                                                        </a>
+                                                        </td>
+                                                    <td class="thh">
+  
+                                                                                                                <span class="badge light badge-danger">Ödenmedi</span>
+
+                                                        </td>
+                                                        <td>
+                                                        <a id="odevview" onclick="odevview()" class="btn btn-info shadow btn-xs sharp me-1"><i class="fa fa-eye"></i></a>
+
+                                                        <a  href="#DuzGiderModal" data-bs-target="#DuzGiderModal" data-bs-toggle="modal" class="btn btn-warning shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+                                                        <a class="btn btn-primary shadow btn-xs sharp me-1"><i class="fa fa-trash"></i></a>
+
+                                                        </td>
+                                                    </tr>
+
+                                                
+                                                    <tr role="row" class="odd">
+
+                                                    <td class="thh"><a href="#">iş</a></td>
+                                                    <td class="thh">Taksit</td>
+
+                                                    <td class="thh">02.06.2023</td>
+                                                    <td class="thh">2.100,00₺</td>
+                                                    <td class="thh">
+                                                        <label class="uploadFile">
+                                                            <i class="bi bi-file-earmark-arrow-up"></i>
+                                                            <span class="filename" style="font-size:12.25px;">Yükle</span>
+                                                            <input type="file" class="inputfile form-control" name="file">
+                                                        </label>
+                                                    </td>
+                                                    <td class="thh">
+
+                                                        <span class="badge light badge-success" style="width:78px;">Ödendi</span>
+
+                                                    </td>
+                                                    <td>
+                                                        <a id="odevview" onclick="odevview()" class="btn btn-info shadow btn-xs sharp me-1"><i class="fa fa-eye"></i></a>
+
+                                                        <a href="#DuzGiderModal" data-bs-target="#DuzGiderModal" data-bs-toggle="modal" class="btn btn-warning shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+                                                        <a class="btn btn-primary shadow btn-xs sharp me-1"><i class="fa fa-trash"></i></a>
+                                                        
+                                                    </td>
+
+                                                </tr>
+
+                                                </tbody>
+
+                                            </table>
+                                            <div class="row" style="padding-bottom: 20px;">
+                                                <div class="col-lg-4" style="display: flex;justify-content: center;">
+                                                    <button type="button" class="btn btn-rounded btn-success" disabled="disabled">Ödenen: 815.770,00₺</button>
+
+                                                </div>
+                                                <div class="col-lg-4" style="display: flex;justify-content: center;">
+                                                    <button type="button" class="btn btn-rounded btn-warning" disabled="disabled">Ödenmeyen: 533.200,00₺</button>
+
+                                                </div>
+                                                <div class="col-lg-4" style="display: flex;justify-content: center;">
+                                                    <button type="button" class="btn btn-rounded btn-info" disabled="disabled">Toplam: 1.348.970,00₺</button>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   
+                    <div class="row" id="TumListeField" hidden>
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="col-lg-4">
+                                        <select class="default-select wide" id="sinifadi">
+                                            <option disabled="" selected="" value="0">Sınıf Seçiniz</option>
+                                            <option value="All">Tümünü Göster</option>
+                                            <option value="2022 Kasım N5 Grubu"> 2022 Kasım N5 Grubu </option>
+                                            <option value="2023 Ocak N5 Grubu - 1"> 2023 Ocak N5 Grubu - 1 </option>
+                                            <option value="2023 Ocak N5 Grubu - 2"> 2023 Ocak N5 Grubu - 2 </option>
+                                            <option value="2023 Mart N5 Grubu - 1"> 2023 Mart N5 Grubu - 1 </option>
+                                            <option value="2023 Mart N5 Grubu - 2"> 2023 Mart N5 Grubu - 2 </option>
+                                            <option value="2023 Ocak N4 Grubu"> 2023 Ocak N4 Grubu </option>
+                                            <option value="2023 Mayıs N5 Grubu - 1"> 2023 Mayıs N5 Grubu - 1 </option>
+                                            <option value="2023 Mayıs N5 Grubu - 2"> 2023 Mayıs N5 Grubu - 2 </option>
+                                            <option value="2023 Mayıs N4 Grubu"> 2023 Mayıs N4 Grubu </option>
+                                            <option value="N5 Konuşma Sınıfı - 2022 Aralık"> N5 Konuşma Sınıfı - 2022 Aralık </option>
+                                            <option value="N4 Konuşma Sınıfı - 2022 Aralık"> N4 Konuşma Sınıfı - 2022 Aralık </option>
+                                            <option value="N5 Konuşma Sınıfı - 2023 Şubat"> N5 Konuşma Sınıfı - 2023 Şubat </option>
+                                            <option value="İzmir Japonca Eğitimi"> İzmir Japonca Eğitimi </option>
+                                            <option value="2022 Eylül N5 Grubu"> 2022 Eylül N5 Grubu Pasif </option>
+                                            <option value="2022 Eylül N4 Grubu"> 2022 Eylül N4 Grubu Pasif </option>
+                                            <option value="2021 Mart N5 Grubu"> 2021 Mart N5 Grubu Pasif </option>
+                                            <option value="2021 Mayıs N5 Grubu"> 2021 Mayıs N5 Grubu Pasif </option>
+                                            <option value="2021 Temmuz N5 Grubu"> 2021 Temmuz N5 Grubu Pasif </option>
+                                            <option value="2021 Eylül N5 Grubu"> 2021 Eylül N5 Grubu Pasif </option>
+                                            <option value="2021 Kasım N5 Grubu"> 2021 Kasım N5 Grubu Pasif </option>
+                                            <option value="Özel Ders - Büşra Badışoğlu"> Özel Ders - Büşra Badışoğlu Pasif </option>
+                                            <option value="2022 Ocak N5 Grubu"> 2022 Ocak N5 Grubu Pasif </option>
+                                            <option value="2022 Mart N5 Grubu"> 2022 Mart N5 Grubu Pasif </option>
+                                            <option value="2022 Mart N4 Grubu"> 2022 Mart N4 Grubu Pasif </option>
+                                            <option value="2022 Şubat N5 Grubu"> 2022 Şubat N5 Grubu Pasif </option>
+                                            <option value="2022 Mayıs N5 Grubu"> 2022 Mayıs N5 Grubu Pasif </option>
+                                            <option value="2022 Temmuz N4 Grubu"> 2022 Temmuz N4 Grubu Pasif </option>
+                                            <option value="2022 Temmuz N5 Grubu - 1"> 2022 Temmuz N5 Grubu - 1 Pasif </option>
+                                            <option value="2022 Temmuz N5 Grubu - 2"> 2022 Temmuz N5 Grubu - 2 Pasif </option>
+
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-4" id="divAy">
+                                        <select class="default-select wide" id="ay">
+                                            <option selected="" disabled="" value="0">Ay Seçiniz</option>
+                                            <option value="All">Tümünü Göster</option>
+                                            <option value="1">Ocak</option>
+                                            <option value="2">Şubat</option>
+                                            <option value="3">Mart</option>
+                                            <option value="4">Nisan</option>
+                                            <option value="5">Mayıs</option>
+                                            <option value="6">Haziran</option>
+                                            <option value="7">Temmuz</option>
+                                            <option value="8">Ağustos</option>
+                                            <option value="9">Eylül</option>
+                                            <option value="10">Ekim</option>
+                                            <option value="11">Kasım</option>
+                                            <option value="12">Aralık</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <select class="default-select wide" id="yil">
+                                            <option selected="" disabled="" value="0">Yıl Seçiniz</option>
+                                            <option value="2024">2024</option>
+                                            <option value="2023">2023</option>
+                                            <option value="2022">2022</option>
+                                            <option value="2021">2021</option>
+                                        </select>
+                                    </div>
+                                    <div class="card-toolbar">
+                                        <a href="#" onclick="Raporla()" class="btn light btn-primary font-weight-bolder">
+                                            <span class="svg-icon svg-icon-md">
+                                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                        <rect x="0" y="0" width="24" height="24"></rect>
+                                                        <circle fill="#000000" cx="9" cy="15" r="6"></circle>
+                                                        <path d="M8.8012943,7.00241953 C9.83837775,5.20768121 11.7781543,4 14,4 C17.3137085,4 20,6.6862915 20,10 C20,12.2218457 18.7923188,14.1616223 16.9975805,15.1987057 C16.9991904,15.1326658 17,15.0664274 17,15 C17,10.581722 13.418278,7 9,7 C8.93357256,7 8.86733422,7.00080962 8.8012943,7.00241953 Z" fill="#000000" opacity="0.3"></path>
+                                                    </g>
+                                                </svg>
+                                            </span>Göster
+                                        </a>
+                                    </div>
+                                </div>
+                                
+                                <div class="card-body">
+
+
+
+                                <div class="table-responsive" style="overflow-x: clip;">
+
+                                            <table id="TumListeTable" class="display dataTable" style="min-width:auto;">
+                                            <div class="row" style="padding: 10px;">
+                                                <div class="col-lg-12" style="display: flex;flex-direction: row-reverse;">
+                                                    <div class="dt-buttons">
+                                                        <button type="button" class="btn btn-outline-success">
+                                                            <span>
+                                                                <i class="fa fa-file-excel"></i> Excel
+                                                            </span>
+                                                        </button>
+                                                        <button class="dt-button buttons-pdf btn btn-outline-danger font-weight-bolder" tabindex="0" aria-controls="classDataTable" type="button">
+                                                            <span>
+                                                                <i class="fa fa-file-pdf"></i> Pdf
+                                                            </span>
+                                                        </button>
+                                                        <button class="dt-button btn btn-outline-dark font-weight-bolder" tabindex="0" aria-controls="classDataTable" type="button">
+                                                            <span>
+                                                                <i class="fa fa-print"></i> Print
+                                                            </span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+
+
+
+
+                                            </div>
+
+                                                <thead>
+                                                    <tr>
+
+                                                        <th class="bas thh" >İsim Soyisim</th>
+                                                        <th class="thh">Ödeme Tarihi</th>
+                                                        <th class="thh">Ödeme Türü</th>
+                                                        <th class="thh">Tutar</th>
+                                                        <th class="thh">Durumu</th>
+                                                        <th class="thh">Kişi Durum</th>
+                                                        <th class="thh" style="width:8rem">Akisyon</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr  class="odd">
+
+                                                        <td><a href="#">Abdullah Köse</a></td>
+                                                        <td>02.06.2023</td>
+                                                        <td>1. Taksit</td>
+                                                        <td>2.100,00₺</td>
+                                                        <td>
+                                                         <span class="badge light badge-success" style="width:78px;">
+                                                        Ödendi
+                                                         </span>
+                                                        </td>
+                                                        <td>
+                                                            <span class="label label-success label-dot mr-2"></span>
+                                                            <span class="font-weight-bold text-success">Aktif</span>
+                                                        </td>
+                                                    <td class="thh">
+                                                        <a id="odevview" onclick="odevview()" class="btn btn-info shadow btn-xs sharp me-1"><i class="fa fa-eye"></i></a>
+
+                                                        <a class="btn btn-warning shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+                                                        <a class="btn btn-primary shadow btn-xs sharp me-1"><i class="fa fa-trash"></i></a>
+
+
+                                                    </td>
+                                                    </tr>
+                                                                                 
+                                                    <tr  class="even">
+
+                                                    <td><a href="#">Abdullah Köse</a></td>
+
+                                                    <td>02.07.2023</td>
+                                                    <td>2. Taksit</td>
+                                                    <td>2.100,00₺</td>
+                                                    <td>
+                                                    <span class="badge light badge-danger">Ödenmedi</span>
+                                                    </td>
+                                                    <td>
+                                                    <span class="label label-success label-dot mr-2"></span>
+                                                    <span class="font-weight-bold text-success">Aktif</span>
+                                                    </td>
+                                                    <td class="thh">
+                                                        <a id="odevview" onclick="odevview()" class="btn btn-info shadow btn-xs sharp me-1"><i class="fa fa-eye"></i></a>
+
+                                                        <a class="btn btn-warning shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+                                                        <a class="btn btn-primary shadow btn-xs sharp me-1"><i class="fa fa-trash"></i></a>
+
+
+                                                    </td>
+                                                    </tr>
+
+                                                    <tr  class="odd">
+
+                                                        <td><a href="#">Abdullah Köse</a></td>
+                                                        <td>02.06.2023</td>
+                                                        <td>1. Taksit</td>
+                                                        <td>2.100,00₺</td>
+                                                        <td>
+                                                            <span class="badge light badge-danger">Ödenmedi</span>
+                                                        </td>
+                                                        <td>
+                                                            <span class="label label-success label-dot mr-2"></span>
+                                                            <span class="font-weight-bold text-success">Aktif</span>
+                                                        </td>
+                                                    <td class="thh">
+                                                        <a id="odevview" onclick="odevview()" class="btn btn-info shadow btn-xs sharp me-1"><i class="fa fa-eye"></i></a>
+
+                                                        <a class="btn btn-warning shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+                                                        <a class="btn btn-primary shadow btn-xs sharp me-1"><i class="fa fa-trash"></i></a>
+
+
+                                                    </td>
+                                                    </tr>
+
+                                                    <tr  class="even">
+
+                                                        <td><a href="#">Abdullah Köse</a></td>
+
+                                                        <td>02.07.2023</td>
+                                                        <td>2. Taksit</td>
+                                                        <td>2.100,00₺</td>
+                                                        <td>
+                                                            <span class="badge light badge-danger">Ödenmedi</span>
+                                                        </td>
+                                                        <td>
+                                                            <span class="label label-success label-dot mr-2"></span>
+                                                            <span class="font-weight-bold text-success">Aktif</span>
+                                                        </td>
+                                                    <td class="thh">
+                                                        <a id="odevview" onclick="odevview()" class="btn btn-info shadow btn-xs sharp me-1"><i class="fa fa-eye"></i></a>
+
+                                                        <a class="btn btn-warning shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+                                                        <a class="btn btn-primary shadow btn-xs sharp me-1"><i class="fa fa-trash"></i></a>
+
+
+                                                    </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <div class="row" style="padding-bottom: 20px;">
+                                                <div class="col-lg-4" style="display: flex;justify-content: center;">
+                                                    <button type="button" class="btn btn-rounded btn-success" disabled="disabled">Ödenen: 815.770,00₺</button>
+
+                                                </div>
+                                                <div class="col-lg-4" style="display: flex;justify-content: center;">
+                                                    <button type="button" class="btn btn-rounded btn-warning" disabled="disabled">Ödenmeyen: 533.200,00₺</button>
+
+                                                </div>
+                                                <div class="col-lg-4" style="display: flex;justify-content: center;">
+                                                    <button type="button" class="btn btn-rounded btn-info" disabled="disabled">Toplam: 1.348.970,00₺</button>
+
+                                                </div>
+                                            </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true" id="GelirEkleModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Gelir Ekleme Penceresi</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal">
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="basic-form">
+                    <form action="#" id="GelirEkleForm" method="post">
+                        @Html.AntiForgeryToken()
+
+                        <div class="mb-3 row">
+                            <label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 1rem;">Gelir Türü</label>
+                            <div class="col-sm-9">
+                                <select id="gelirturu" name="gelirturu" required>
+                                    <option>Seçiniz</option>
+                                    <option>Eğitim</option>
+                                    <option>Çeviri</option>
+                                </select>
+                            </div>
+                        </div>
+                                                
+                       
+                        @*Eğitim*@
+                        <div class="mb-3 row" id="birg" style="display:none;">
+                            <label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 1rem;">Öğrenci Seçiniz</label>
+                            <div class="col-sm-9">
+                                <select id="ogrenciad" name="ogrenciadid" required>
+                                    <option>Seçiniz</option>
+                                    <option>Mehmet</option>
+                                    <option>Ahmet</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3 row" id="ikig" style="display:none;">
+                            <label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2rem;">Eğitim Tutarı</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name="egitimtutar" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 row" id="ucg" style="display:none;">
+                            <label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2rem;">Peşinat</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name="pesinat" required>
+                            </div>
+                        </div>
+                        <div class="mb-3 row" id="dortg" style="display:none;">
+                            <label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2rem;">Taksit Sayısı</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name="taksitsg" required>
+                            </div>
+                        </div>
+                        <div class="mb-3 row" id="besg" style="display:none;">
+                            <label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2rem;">Başlangıç Tarihi</label>
+                            <div class="col-sm-9">
+                                <input type="date" class="form-control" name="taksitsg" required>
+                            </div>
+                        </div>
+                        @*Çeviri*@
+                        <div class="mb-3 row" id="dortce" style="display:none;">
+                            <label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 1rem;">Kişi Seçiniz</label>
+                            <div class="col-sm-9">
+                                <select id="kisiad" name="kisiid" required>
+                                    <option>Seçiniz</option>
+                                    <option>Mehmet</option>
+                                    <option>Ahmet</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3 row" id="birce" style="display:none;">
+                            <label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2rem;">Sayfa Sayısı</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name="sayfasay" required>
+                            </div>
+                        </div>
+                        <div class="mb-3 row" id="ikice" style="display:none;">
+                            <label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2rem;">Toplam Ücret</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name="toplam" required>
+                            </div>
+                        </div>
+                        <div class="mb-3 row" id="ucce" style="display:none;">
+                            <label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2rem;">Taksit Sayısı</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name="taksitsc" required>
+                            </div>
+                        </div>
+
+
+
+
+       
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" id="btnSubmit">Kaydet</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Kapat</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true" id="DuzGelirModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Gelir Düzeltme Penceresi</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal">
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="basic-form">
+                    <form action="#" id="DuzGelirEkleForm" method="post">
+                        @Html.AntiForgeryToken()
+
+
+                        <div class="mb-3 row">
+                            <label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2rem;">Ödeme Tutarı</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name="masratari" value="2.100,00₺" required>
+                            </div>
+                        </div>
+
+@*                        <div class="mb-3 row">
+                            <label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2.4rem;">Ödeme Durumu</label>
+                            <div class="col-sm-9" >
+                                <select id="DuzgelirDurum" class="form-control" name="DuzgelirDurum" required>
+                                    <option>Durum Seçiniz</option>
+                                    <option>Ödendi</option>
+                                    <option>Ödenmedi</option>
+
+                                </select>
+                            </div>
+                        </div>*@
+
+                        
+
+                        <div class="mb-3 row">
+                            <label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2.4rem;">Dosya Yükle</label>
+                            <div class="col-sm-9">
+                                <input type="file" class="form-control" name="Sinavin" placeholder="Not giriniz" required>
+                            </div>
+                        </div>
+
+
+
+
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" id="btnSubmit">Kaydet</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Kapat</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true" id="GiderEkleModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Gider Ekleme Penceresi</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal">
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="basic-form">
+                    <form action="#" id="GiderEkleForm" method="post">
+                        @Html.AntiForgeryToken()
+
+                        <div class="mb-3 row">
+                            <label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 1rem;">Gider Türü</label>
+                            <div class="col-sm-9">
+                                <select id="giderturu" name="giderturu" required>
+                                    <option>Seçiniz</option>
+                                    <option>Personel Maaşı</option>
+                                    <option>Ofis Masrafları</option>
+                                    <option>Öğretmen Maaşı</option>
+                                    <option>Paydaş Ödemesi</option>
+
+
+                                </select>
+                            </div>
+                        </div>
+
+
+                        @*Personel Maaşı*@
+
+                        <div id="birp" style="display:none;">
+
+                            <div class="row" id="bird" style="display:flex;width:100%;margin: 0px 0px 14px 0px;justify-content: space-between;">
+
+                                <div class="row" id="degsaat" style="display: flex;width: 50%;float: left;padding: 0px;">
+                                    <label class="col-sm-7 col-form-label" style="float: left;line-height: 2rem;">Aylık Maaş Tutarı</label>
+                                    <div class="col-sm-5" style="float: left;padding: 0px;margin: 0px;">
+                                        <input type="text" class="form-control" id="degsaat" name="degsaat" placeholder="" required="">
+                                    </div>
+                                </div>
+
+
+                                <div class="row" id="ekucretid" style="display: flex;width: 50%;float: left;padding: 0px;">
+                                    <label class="col-sm-7 col-form-label" style="float: left;line-height: 2rem;">Ek Ücretler</label>
+                                    <div class="col-sm-5" style="float: left;padding: 0px;margin: 0px;">
+                                        <input type="text" class="form-control" id="ekucretid" name="ekucretid" placeholder="" required>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+                        <div id="ikip" style="display:none;">
+                            <div class="row" id="ikid" style="display:flex;width:100%;margin: 0px 0px 14px 0px;justify-content: space-between;">
+
+                                <div class="row" id="Calismad" style="display: flex; width: 50%; float: left; padding:0px;">
+                                    <label class="col-sm-7 col-form-label" style="float: left;line-height: 2rem;">Çalışma Türü</label>
+                                    <div class="col-sm-5" style="float: left;padding: 0px; margin:0px;">
+                                        <select class="form-control" id="Calismad" name="Calismad" required>
+                                            <option>Tam Zamanlı</option>
+                                            <option>Yarı Zamanlı</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="row" id="Sozlesmeturud" style="display: flex; width: 50%; float: right;padding: 0px;">
+                                    <label class="col-sm-7 col-form-label" style=" line-height: 2rem; float: left;">Sözleşme Türü</label>
+                                    <div class="col-sm-5" style="float: right;padding: 0px;margin:0px;">
+                                        <select class="form-control" tabindex="-1" id="Sozlesmeturud" name="Sozlesmeturud" required>
+                                            <option>Süreli</option>
+                                            <option>Süresiz</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                        <div id="ucp" style="display:none;">
+
+                            <div class="row" id="ucd" style="display:flex;width:100%;margin: 0px 0px 14px 0px;justify-content: space-between;">
+
+                                <div class="row" id="tarihbas" style="display: flex;width: 50%;float: left;padding: 0px;">
+
+                                    <label class="col-sm-7 col-form-label" style="float: left;line-height: 2rem;">Başlangıç Tarihi</label>
+                                    <div class="col-sm-5" style="float: left;padding: 0px;margin: 0px;">
+                                        <input type="date" class="form-control" id="tarihbas" name="tarihbas" placeholder="" required>
+                                    </div>
+                                </div>
+
+
+
+
+
+
+                                <div class="row" id="tarihbitd" style="display:flex; width: 50%; float: right; padding: 0px;">
+                                    <label class="col-sm-7 col-form-label" style=" line-height: 2rem; float: right;">Bitiş Tarihi</label>
+                                    <div class="col-sm-5" style="float: right;padding: 0px;margin: 0px;">
+                                        <input type="date" class="form-control" id="tarihbitd" name="tarihbitd" placeholder="" required>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                      
+                        @*Ofis Masrafları*@
+                        <div class="mb-3 row" id="birof" style="display:none;">
+                            <label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2rem;">Masraf Adi</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name="masrafadi" required>
+                            </div>
+                        </div>
+                         
+                      
+                        <div class="mb-3 row" id="ikiof" style="display:none;">
+                            <label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2rem;">Masraf Tutarı</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name="masraftutari" required>
+                            </div>
+                        </div>
+                        
+                        
+                        <div class="mb-3 row" id="ucof" style="display:none;">
+                            <label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2rem;">Masraf tarihi</label>
+                            <div class="col-sm-9">
+                                <input type="date" class="form-control" name="masraftarih" required>
+                            </div>
+                        </div>
+
+
+                        @*Öğretmen Maaşı*@
+                        <div id="birog" style="display:none;">
+
+                            <div class="row" id="bir" style="display:flex;width:100%;margin: 0px 0px 14px 0px;justify-content: space-between;">
+
+                                <div class="row" id="ogsaat" style="display: flex;width: 50%;float: left;padding: 0px;">
+                                    <label class="col-sm-7 col-form-label" style="float: left;line-height: 2rem;">Aylık Ders Saati</label>
+                                    <div class="col-sm-5" style="float: left;padding: 0px;margin: 0px;">
+                                        <input type="text" class="form-control" id="ogsaat" name="ogsaat" placeholder="" required="">
+                                    </div>
+                                </div>
+
+
+                                <div class="row" id="saatucreti" style="display: flex; width: 50%; float: right;">
+                                    <label class="col-sm-7 col-form-label" style=" line-height: 2rem;">Ders Saat Ücreti</label>
+                                    <div class="col-sm-5" style="float: right;padding: 0px;">
+                                        <input type="text" class="form-control" id="saatucreti" name="saatucreti" placeholder="" required>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+                        <div id="ikiog" style="display:none;">
+                            <div class="row" id="iki" style="display:flex;width:100%;margin: 0px 0px 14px 0px;justify-content: space-between;">
+
+                                <div class="row" id="ekucreti" style="display: flex;width: 50%;float: left;padding: 0px;">
+                                    <label class="col-sm-7 col-form-label" style="float: left;line-height: 2rem;">Ek Ücretler</label>
+                                    <div class="col-sm-5" style="float: left;padding: 0px;margin: 0px;">
+                                        <input type="text" class="form-control" id="ekucreti" name="ekucreti" placeholder="" required>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="row" id="Sozlesmeturu" style="display: flex; width: 50%; float: right;">
+                                    <label class="col-sm-7 col-form-label" style=" line-height: 2rem;">Sözleşme Türü</label>
+                                    <div class="col-sm-5" style="float: right;padding: 0px;">
+                                        <select class="form-control" id="Sozlesmeturu" name="Sozlesmeturu" required>
+                                            <option>Süreli</option>
+                                            <option>Süresiz</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                        <div id="ucog" style="display:none;">
+
+                            <div class="row" id="uc" style="display:flex;width:100%;margin: 0px 0px 14px 0px;justify-content: space-between;">
+
+                                <div class="row" id="tarihbas" style="display: flex;width: 50%;float: left;padding: 0px;">
+
+                                    <label class="col-sm-7 col-form-label" style="float: left;line-height: 2rem;">Başlangıç Tarihi</label>
+                                    <div class="col-sm-5" style="float: left;padding: 0px;margin: 0px;">
+                                        <input type="date" class="form-control" id="tarihbas" name="tarihbas" placeholder="" required>
+                                    </div>
+                                </div>
+
+
+
+
+
+
+                                <div class="row" id="tarihbit" style="display:flex; width: 50%; float: right;">
+                                    <label class="col-sm-7 col-form-label" style=" line-height: 2rem;">Bitiş Tarihi</label>
+                                    <div class="col-sm-5" style="float: right;padding: 0px;">
+                                        <input type="date" class="form-control" id="tarihbit" name="tarihbit" placeholder="" required>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        @*Paydaş*@
+
+
+                        <div class="mb-3 row" id="birpa" style="display:none;">
+                            <label class="col-sm-3 col-form-label" style=" line-height: 2rem; float: left;">Kişi Seçiniz</label>
+                            <div class="col-sm-9" >
+                                <select class="form-control" tabindex="-1" id="" name="Sozlesmeturud" required>
+                                    <option>muhammed</option>
+                                    <option>selçuk</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 row" id="ikipa" style="display:none;">
+                            <label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2rem;">Ödeme Tutarı</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name="odem" required>
+                            </div>
+                        </div>
+
+
+                        <div class="mb-3 row" id="ucpa" style="display:none;">
+                            <label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2rem;">Ödeme Tarihi</label>
+                            <div class="col-sm-9">
+                                <input type="date" class="form-control" name="odemtar" required>
+                            </div>
+                        </div>
+
+
+                        <div class="mb-3 row"  id="dortpa" style="display:none;">
+                            <label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2rem;">Açıklama</label>
+                            <div class="col-sm-9">
+                                <textarea class="form-control"></textarea>
+                            </div>
+                        </div>
+
+                    
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" id="btnSubmit">Kaydet</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Kapat</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true" id="DuzGiderModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Gider Düzeltme Penceresi</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal">
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="basic-form">
+                    <form action="#" id="GiderEkleForm" method="post">
+                        @Html.AntiForgeryToken()
+                        <div class="mb-3 row">
+                            <label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2rem;">Ödeme Tutarı</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name="masratari" value="2.100,00₺" required>
+                            </div>
+                        </div>
+
+@*                        <div class="mb-3 row">
+                            <label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2.4rem;">Ödeme Durumu</label>
+                            <div class="col-sm-9" >
+                                <select id="DuzgelirDurum" class="form-control" name="DuzgelirDurum" required>
+                                    <option>Durum Seçiniz</option>
+                                    <option>Ödendi</option>
+                                    <option>Ödenmedi</option>
+
+                                </select>
+                            </div>
+                        </div>*@
+
+                        
+
+                        <div class="mb-3 row">
+                            <label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2.4rem;">Dosya Yükle</label>
+                            <div class="col-sm-9">
+                                <input type="file" class="form-control" name="Sinavin" placeholder="Not giriniz" required>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" id="btnSubmit">Kaydet</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Kapat</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Content/vendor/datatables/js/jquery.dataTables.min.js" asp-append-version="true"></script>
+    <script src="~/Content/vendor/jquery-nice-select/js/jquery.nice-select.min.js" asp-append-version="true"></script>
+    <script src="~/Content/vendor/select2/js/select2.full.min.js" asp-append-version="true"></script>
+
+    <script>
+        $(document).ready(function () {
+            $("#gelirturu").select2({
+                dropdownParent: $('#GelirEkleModal')
+            });
+            $("#kisiad").select2({
+                dropdownParent: $('#GelirEkleModal')
+            });
+            $("#ogrenciad").select2({
+                dropdownParent: $('#GelirEkleModal')
+            });
+
+            $("#giderturu").select2({
+                dropdownParent: $('#GiderEkleModal')
+            });
+            $("#personelsec").select2({
+                dropdownParent: $('#GiderEkleModal')
+            });
+
+
+                        
+            $("#DuzgiderDurum").select2({
+                dropdownParent: $('#DuzGiderModal')
+            });
+
+
+            var loadFile = function (event) {
+                var image = document.getElementById("output");
+                image.src = URL.createObjectURL(event.target.files[0]);
+            };
+            var mycrumb = $("#myBreadcrumb");
+            $("#previousBreadcrumb").before(mycrumb);
+            var table = $('#GelirTable').DataTable({
+                searching: true,
+                paging: true,
+                select: false,
+                info: false,
+                lengthChange: false,
+                scrollY: false, // إزالة ميزة السكرول العمودي
+                scrollX: false, // إزالة ميزة السكرول الأفقي
+
+                language: {
+                    paginate: {
+                        next: '<i class="fa fa-angle-double-right" aria-hidden="true"></i>',
+                        previous: '<i class="fa fa-angle-double-left" aria-hidden="true"></i>'
+                    }
+                }
+            });
+
+            var table = $('#GiderTable').DataTable({
+                searching: true,
+                paging: true,
+                select: false,
+                info: false,
+                lengthChange: false,
+                scrollY: false, // إزالة ميزة السكرول العمودي
+                scrollX: false, // إزالة ميزة السكرول الأفقي
+
+                language: {
+                    paginate: {
+                        next: '<i class="fa fa-angle-double-right" aria-hidden="true"></i>',
+                        previous: '<i class="fa fa-angle-double-left" aria-hidden="true"></i>'
+                    }
+                }
+            });
+            var table = $('#TumListeTable').DataTable({
+                searching: true,
+                paging: true,
+                select: false,
+                info: false,
+                lengthChange: false,
+                scrollY: false, // إزالة ميزة السكرول العمودي
+                scrollX: false, // إزالة ميزة السكرول الأفقي
+
+                language: {
+                    paginate: {
+                        next: '<i class="fa fa-angle-double-right" aria-hidden="true"></i>',
+                        previous: '<i class="fa fa-angle-double-left" aria-hidden="true"></i>'
+                    }
+                }
+            });
+            var table = $('#sinavSonuclarimTable').DataTable({
+                searching: true,
+                paging: true,
+                select: false,
+                info: false,
+                lengthChange: false,
+                scrollY: false, // إزالة ميزة السكرول العمودي
+                scrollX: false, // إزالة ميزة السكرول الأفقي
+
+                language: {
+                    paginate: {
+                        next: '<i class="fa fa-angle-double-right" aria-hidden="true"></i>',
+                        previous: '<i class="fa fa-angle-double-left" aria-hidden="true"></i>'
+                    }
+                }
+            });
+
+
+        })
+        $(document).ready(function () {
+            TumListe();
+        });
+
+        function Gelir() {
+            $("#GelirField").removeAttr('hidden');
+            // الحصول على جميع العناصر التي تحتوي على الفئة "bas"
+            var elements = document.getElementsByClassName("bassinif");
+
+            // التأكد من وجود عنصر واحد على الأقل
+            if (elements.length > 0) {
+                // اضغط على العنصر الأول الموجود في القائمة
+                elements[0].click();
+            }
+            $("#TumListeField").attr('hidden', true);
+            $("#sinavSonuclarimField").attr('hidden', true);
+            $("#GiderField").attr('hidden', true);
+        }
+        function Gider() {
+            $("#GiderField").removeAttr('hidden');
+            // الحصول على جميع العناصر التي تحتوي على الفئة "bas"
+            var elements = document.getElementsByClassName("bastak");
+
+            // التأكد من وجود عنصر واحد على الأقل
+            if (elements.length > 0) {
+                // اضغط على العنصر الأول الموجود في القائمة
+                elements[0].click();
+            }
+            $("#TumListeField").attr('hidden', true);
+            $("#sinavSonuclarimField").attr('hidden', true);
+            $("#GelirField").attr('hidden', true);
+        }
+        function TumListe() {
+            $("#TumListeField").removeAttr('hidden');
+            // الحصول على جميع العناصر التي تحتوي على الفئة "bas"
+            var elements = document.getElementsByClassName("bas");
+
+            // التأكد من وجود عنصر واحد على الأقل
+            if (elements.length > 0) {
+                // اضغط على العنصر الأول الموجود في القائمة
+                elements[0].click();
+            }
+            $("#GiderField").attr('hidden', true);
+            $("#sinavSonuclarimField").attr('hidden', true);
+            $("#GelirField").attr('hidden', true);
+        }
+        function sinavSonuclarim() {
+            $("#sinavSonuclarimField").removeAttr('hidden');
+            $("#GiderField").attr('hidden', true);
+            $("#TumListeField").attr('hidden', true);
+            $("#GelirField").attr('hidden', true);
+        }
+    </script>
+    <script>
+        var selectElement = document.getElementById("gelirturu");
+
+        selectElement.onchange = function () {
+            var selectedOption = this.options[this.selectedIndex].text;
+
+            if (selectedOption == "Eğitim") {
+                document.getElementById("birg").style.display = "flex";
+                document.getElementById("ikig").style.display = "flex";
+                document.getElementById("ucg").style.display = "flex";
+                document.getElementById("dortg").style.display = "flex";
+                document.getElementById("besg").style.display = "flex";
+
+
+
+                document.getElementById("birce").style.display = "none";
+                document.getElementById("ikice").style.display = "none";
+                document.getElementById("ucce").style.display = "none";
+                document.getElementById("dortce").style.display = "none";
+
+
+
+            }
+            else if (selectedOption == "Çeviri") {
+                document.getElementById("birce").style.display = "flex";
+                document.getElementById("ikice").style.display = "flex";
+                document.getElementById("ucce").style.display = "flex";
+                document.getElementById("dortce").style.display = "flex";
+
+
+                document.getElementById("birg").style.display = "none";
+                document.getElementById("ikig").style.display = "none";
+                document.getElementById("ucg").style.display = "none";
+                document.getElementById("dortg").style.display = "none";
+                document.getElementById("besg").style.display = "none";
+
+
+            }
+            else {
+                /* Öğretmen و Diğer  الأختيار */
+                document.getElementById("birg").style.display = "none";
+                document.getElementById("ikig").style.display = "none";
+                document.getElementById("ucg").style.display = "none";
+                document.getElementById("dortg").style.display = "none";
+                document.getElementById("besg").style.display = "none";
+
+
+
+                document.getElementById("birce").style.display = "none";
+                document.getElementById("ikice").style.display = "none";
+                document.getElementById("ucce").style.display = "none";
+                document.getElementById("dortce").style.display = "none";
+
+            }
+        };
+
+
+    </script>
+    <script>
+        var selectElement = document.getElementById("giderturu");
+
+        selectElement.onchange = function () {
+            var selectedOption = this.options[this.selectedIndex].text;
+
+            if (selectedOption == "Personel Maaşı") {
+                document.getElementById("birp").style.display = "flex";
+                document.getElementById("ikip").style.display = "flex";
+                document.getElementById("ucp").style.display = "flex";
+
+
+
+                document.getElementById("birof").style.display = "none";
+                document.getElementById("ikiof").style.display = "none";
+                document.getElementById("ucof").style.display = "none";
+
+
+
+                document.getElementById("birog").style.display = "none";
+                document.getElementById("ikiog").style.display = "none";
+                document.getElementById("ucog").style.display = "none";
+
+
+                document.getElementById("birpa").style.display = "none";
+                document.getElementById("ikipa").style.display = "none";
+                document.getElementById("ucpa").style.display = "none";
+                document.getElementById("dortpa").style.display = "none";
+            }
+            else if (selectedOption == "Ofis Masrafları") {
+                document.getElementById("birof").style.display = "flex";
+                document.getElementById("ikiof").style.display = "flex";
+                document.getElementById("ucof").style.display = "flex";
+
+
+                document.getElementById("birp").style.display = "none";
+                document.getElementById("ikip").style.display = "none";
+                document.getElementById("ucp").style.display = "none";
+
+
+
+                document.getElementById("birog").style.display = "none";
+                document.getElementById("ikiog").style.display = "none";
+                document.getElementById("ucog").style.display = "none";
+
+                document.getElementById("birpa").style.display = "none";
+                document.getElementById("ikipa").style.display = "none";
+                document.getElementById("ucpa").style.display = "none";
+                document.getElementById("dortpa").style.display = "none";
+            }
+            else if (selectedOption == "Öğretmen Maaşı") {
+
+
+                document.getElementById("birog").style.display = "flex";
+                document.getElementById("ikiog").style.display = "flex";
+                document.getElementById("ucog").style.display = "flex";
+
+
+
+                document.getElementById("birof").style.display = "none";
+                document.getElementById("ikiof").style.display = "none";
+                document.getElementById("ucof").style.display = "none";
+
+
+                document.getElementById("birp").style.display = "none";
+                document.getElementById("ikip").style.display = "none";
+                document.getElementById("ucp").style.display = "none";
+
+
+                document.getElementById("birpa").style.display = "none";
+                document.getElementById("ikipa").style.display = "none";
+                document.getElementById("ucpa").style.display = "none";
+                document.getElementById("dortpa").style.display = "none";
+
+            }
+
+            else if (selectedOption == "Paydaş Ödemesi") {
+
+
+                document.getElementById("birpa").style.display = "flex";
+                document.getElementById("ikipa").style.display = "flex";
+                document.getElementById("ucpa").style.display = "flex";
+                document.getElementById("dortpa").style.display = "flex";
+
+
+
+                document.getElementById("birof").style.display = "none";
+                document.getElementById("ikiof").style.display = "none";
+                document.getElementById("ucof").style.display = "none";
+
+
+                document.getElementById("birp").style.display = "none";
+                document.getElementById("ikip").style.display = "none";
+                document.getElementById("ucp").style.display = "none";
+
+
+                document.getElementById("birog").style.display = "none";
+                document.getElementById("ikiog").style.display = "none";
+                document.getElementById("ucog").style.display = "none";
+
+
+
+
+            }
+            else {
+                /* Personel Maaşı و Ofis Masrafları  الأختيار */
+                document.getElementById("birp").style.display = "none";
+                document.getElementById("ikip").style.display = "none";
+                document.getElementById("ucp").style.display = "none";
+
+
+                document.getElementById("birof").style.display = "none";
+                document.getElementById("ikiof").style.display = "none";
+                document.getElementById("ucof").style.display = "none";
+
+
+                document.getElementById("birog").style.display = "none";
+                document.getElementById("ikiog").style.display = "none";
+                document.getElementById("ucog").style.display = "none";
+
+                document.getElementById("birpa").style.display = "none";
+                document.getElementById("ikipa").style.display = "none";
+                document.getElementById("ucpa").style.display = "none";
+                document.getElementById("dortpa").style.display = "none";
+            }
+        };
+
+        $("input[type=file]").change(function (e) {
+            $(this).parents(".uploadFile").find(".filename").text(e.target.files[0].name);
+        });
+    </script>
+}

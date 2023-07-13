@@ -1,0 +1,121 @@
+﻿@{
+    ViewData["Title"] = "............ Duyuru";
+    Layout = "~/Views/Shared/DuyuruLayout.cshtml";
+
+}
+
+@section head{
+    <link href="~/Content/vendor/jquery-nice-select/css/nice-select.css" rel="stylesheet" asp-append-version="true">
+    <script src="~/Content/vendor/ckeditor/ckeditor.js" asp-append-version="true"></script>
+}
+
+<div class="row page-titles" id="myBreadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-controller="Duyuru" asp-action="Duyurular">Duyurular</a></li>
+        <li class="breadcrumb-item active"><a asp-controller="Duyuru" asp-action="DuyuruDetay">..... Duyuru Detayı</a></li>
+    </ol>
+</div>
+
+<div class="row">
+    <div class="col-lg-8">
+        <textarea name="editor1" onkeyup="duyuruEditorkeyUp()"></textarea>
+        <script>
+            CKEDITOR.replace('editor1', {
+                customConfig: '/Content/vendor/ckeditor/config.js'
+            });
+            CKEDITOR.instances.editor1.on('change', function () {
+                $("#duyuruKaydet").removeAttr('hidden');
+                $("#duyuruKaydetvazgec").removeAttr('hidden');
+            });
+        </script>
+        <div style="float:right;margin-top:3px;">
+            <a href="/Duyuru/Duyurular" class="btn btn-danger font-weight-bolder" id="duyuruKaydetvazgec" hidden>Vazgeç</a>
+            <button class="btn btn-secondary font-weight-bolder" id="duyuruKaydet" hidden >Kaydet</button>
+        </div>
+    </div>
+    <div class="col-xl-4 chat-right-area col-md-6">
+        <a href="javascript:void(0);" class="chat-rightarea-btn"><i class="fas fa-chevron-left"></i></a>
+        <div class="card share-widget dlab-scroll" id="share-widget">
+            <div class="card-body">
+                <div class="chat-icon">
+                    <a href="#dosyaEkleModal" data-bs-target="#dosyaEkleModal" data-bs-toggle="modal" class="btn btn-secondary font-weight-bolder" style="width:100%;">
+                        <span class="svg-icon svg-icon-md">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+                            </svg>
+                        </span>Dosya Ekle
+                    </a>
+                    <div style="height:6px;"></div>
+                    <a href="#dosyaSilModal" data-bs-target="#dosyaSilModal" data-bs-toggle="modal" class="btn btn-danger font-weight-bolder" style="width:100%;">
+                        <span class="svg-icon svg-icon-md">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-dash-circle-fill" viewBox="0 0 16 16">
+                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1h-7z" />
+                            </svg>
+                        </span>Dosya Sil
+                    </a>
+                </div>
+                <div class="share-files">
+                    <div class="widget-heading d-flex justify-content-between mt-4">
+                        <h4 class="m-0 fs-18 font-w600">Dosyalar</h4>
+                    </div>
+                    <ul class="file-list">
+                        <li>
+                            <input style="margin-right:2px;" type="checkbox" class="form-check-input" id="customCheckBox1">
+                            <div class="d-flex align-items-center">
+                                <span class="file">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M19.4928 23.625C20.1153 23.625 20.6178 23.1225 20.6178 22.5V6.95247C20.6178 6.80251 20.5353 6.53247 20.5353 6.52501C20.4753 6.38251 20.3928 6.26248 20.2878 6.15747L14.8353 0.705C14.7303 0.599992 14.6103 0.5175 14.4678 0.457485C14.4603 0.457485 14.1828 0.374992 14.0403 0.374992H4.50781C3.8853 0.374992 3.38281 0.877477 3.38281 1.49999V22.5C3.38281 23.1225 3.8853 23.625 4.50781 23.625H19.4928V23.625ZM5.63281 2.625H12.9153V6.95247C12.9153 7.57499 13.4178 8.07747 14.0403 8.07747H18.3678V21.375H5.63281V2.625Z" fill="#374557" />
+                                    </svg>
+                                </span>
+                                <div class="ms-2 fl-info">
+                                    <h4 class="m-0 fs-14 font-w600">File.doc</h4>
+                                    <span>2 March 2021, 13:45 PM</span>
+                                </div>
+                            </div>
+                            <h4 class="m-0 fs-14 font-w600">1,5 Mb</h4>
+                            <br />
+                        </li>
+                        <li>
+                            <input style="margin-right:2px;" type="checkbox" class="form-check-input" id="customCheckBox1">
+                            <div class="d-flex align-items-center">
+                                <span class="file">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M19.4928 23.625C20.1153 23.625 20.6178 23.1225 20.6178 22.5V6.95247C20.6178 6.80251 20.5353 6.53247 20.5353 6.52501C20.4753 6.38251 20.3928 6.26248 20.2878 6.15747L14.8353 0.705C14.7303 0.599992 14.6103 0.5175 14.4678 0.457485C14.4603 0.457485 14.1828 0.374992 14.0403 0.374992H4.50781C3.8853 0.374992 3.38281 0.877477 3.38281 1.49999V22.5C3.38281 23.1225 3.8853 23.625 4.50781 23.625H19.4928V23.625ZM5.63281 2.625H12.9153V6.95247C12.9153 7.57499 13.4178 8.07747 14.0403 8.07747H18.3678V21.375H5.63281V2.625Z" fill="#374557" />
+                                    </svg>
+                                </span>
+                                <div class="ms-2 fl-info">
+                                    <h4 class="m-0 fs-14 font-w600">File.doc</h4>
+                                    <span>2 March 2021, 13:45 PM</span>
+                                </div>
+                            </div>
+                            <h4 class="m-0 fs-14 font-w600">1,5 Mb</h4>
+                        </li>
+                        <li>
+                            <input style="margin-right:2px;" type="checkbox" class="form-check-input" id="customCheckBox1">
+                            <div class="d-flex align-items-center">
+                                <span class="file">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M19.4928 23.625C20.1153 23.625 20.6178 23.1225 20.6178 22.5V6.95247C20.6178 6.80251 20.5353 6.53247 20.5353 6.52501C20.4753 6.38251 20.3928 6.26248 20.2878 6.15747L14.8353 0.705C14.7303 0.599992 14.6103 0.5175 14.4678 0.457485C14.4603 0.457485 14.1828 0.374992 14.0403 0.374992H4.50781C3.8853 0.374992 3.38281 0.877477 3.38281 1.49999V22.5C3.38281 23.1225 3.8853 23.625 4.50781 23.625H19.4928V23.625ZM5.63281 2.625H12.9153V6.95247C12.9153 7.57499 13.4178 8.07747 14.0403 8.07747H18.3678V21.375H5.63281V2.625Z" fill="#374557" />
+                                    </svg>
+                                </span>
+                                <div class="ms-2 fl-info">
+                                    <h4 class="m-0 fs-14 font-w600">File.doc</h4>
+                                    <span>2 March 2021, 13:45 PM</span>
+                                </div>
+                            </div>
+                            <h4 class="m-0 fs-14 font-w600">1,5 Mb</h4>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Content/vendor/jquery-nice-select/js/jquery.nice-select.min.js" asp-append-version="true"></script>
+    <script>
+        var mycrumb = $("#myBreadcrumb");
+        $("#previousBreadcrumb").before(mycrumb);
+    </script>
+}

@@ -1,0 +1,607 @@
+﻿@{
+	ViewData["Title"] = "MaasDetay";
+	Layout = "~/Views/Shared/insanKaynakLayout.cshtml";
+
+}
+
+
+@section head{
+
+			@*yeni @media*@
+    <link href="~/content/css/stylesheet.css" rel="stylesheet" asp-append-version="true"/>
+    <link href="~/content/css/stylesheet1.css" rel="stylesheet" asp-append-version="true"/>
+			@*yeni @media*@
+	<link href="~/Content/vendor/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet" asp-append-version="true"/>
+
+	<link href="~/Content/vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet" asp-append-version="true">
+	<link href="~/Content/vendor/jquery-nice-select/css/nice-select.css" rel="stylesheet" asp-append-version="true">
+	<link href="~/Content/vendor/select2/css/select2.min.css" rel="stylesheet" asp-append-version="true" />
+
+	<style>
+		.thh{
+			text-align:center;
+		}
+	</style>
+}
+
+
+
+<div class="row page-titles" id="myBreadcrumb">
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item "><a asp-controller="InsanKaynaklari" asp-action="InsanKaynaklari">İnsan Kaynakları İzinler</a></li>
+		<li class="breadcrumb-item active"><a asp-controller="InsanKaynaklari" asp-action="MaasDetay">Maaş Detayları</a></li>
+	</ol>
+</div>
+
+
+<div class="row">
+	<div class="col-12">
+		<div class="card">
+			<div class="card-header">
+				<h4>Şube Seçiniz</h4>
+				<div class="col-xl-4">
+					<div class="d-flex">
+						<div class="col-xl-8">
+							<select class="default-select wide">
+								<option value="All" selected="selected">Tümünü Göster</option>
+								<option value="1">Mersin</option>
+								<option value="2">İzmir</option>
+								<option value="3">İstanbul</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="card-toolbar">
+					<a href="#MaasEkleModal" data-bs-target="#MaasEkleModal" data-bs-toggle="modal" class="btn btn-secondary font-weight-bolder">
+						<span class="svg-icon svg-icon-md">
+							<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+								<path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+							</svg>
+						</span>Maaş Ekle
+					</a>
+					<a href="#" class="btn btn-danger font-weight-bolder">
+						<span class="svg-icon svg-icon-md">
+							<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-dash-circle-fill" viewBox="0 0 16 16">
+								<path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1h-7z" />
+							</svg>
+						</span>Maaş Sil
+					</a>
+					<a href="#" class="btn btn-dark font-weight-bolder">
+						<span class="svg-icon svg-icon-md">
+							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer-fill" viewBox="0 0 16 16">
+								<path d="M5 1a2 2 0 0 0-2 2v1h10V3a2 2 0 0 0-2-2H5zm6 8H5a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1z" />
+								<path d="M0 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-1v-2a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2H2a2 2 0 0 1-2-2V7zm2.5 1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z" />
+							</svg>
+						</span>Yazdır
+					</a>
+				</div>
+			</div>
+			<div class="card-body">
+				<div class="table-responsive">
+					<table id="demirbaslarTable" class="display" style="min-width: 845px">
+						<thead>
+							<tr>
+								<th class="thh">
+									<div class="form-check custom-checkbox ms-2">
+										<input type="checkbox" class="form-check-input" id="checkAll" required="">
+										<label class="form-check-label" for="checkAll"></label>
+									</div>
+								</th>
+								<th class="bas thh">Ad Soyad</th>
+								<th class="thh">Görevi</th>
+								<th class="thh">Tarih</th>
+								<th class="thh">Maaş Tutarı</th>
+								<th class="thh" style="width:8rem">Aksiyon</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="odd">
+								<td class="thh">
+									<div class="form-check custom-checkbox ms-2">
+										<input type="checkbox" class="form-check-input" id="customCheckBox2" required="">
+										<label class="form-check-label" for="customCheckBox2"></label>
+									</div>
+								</td>
+								<td class="thh"><a href="#">ibo</a></td>
+								<td class="thh">Öğretmen</td>
+								<td class="thh">02.06.2023</td>
+
+								<td class="thh">15,500TL</td>
+
+								<td class="thh">
+									<a id="odevview" onclick="odevview()" class="btn btn-info shadow btn-xs sharp me-1"><i class="fa fa-eye"></i></a>
+
+									<a class="btn btn-warning shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+									<a class="btn btn-primary shadow btn-xs sharp me-1"><i class="fa fa-trash"></i></a>
+
+
+								</td>
+							</tr>
+
+							<tr class="even">
+								<td class="thh">
+									<div class="form-check custom-checkbox ms-2">
+										<input type="checkbox" class="form-check-input" id="customCheckBox2" required="">
+										<label class="form-check-label" for="customCheckBox2"></label>
+									</div>
+								</td>
+								<td class="thh"><a href="#">Abdullah Köse</a></td>
+
+								<td class="thh">Öğretmen</td>
+								<td class="thh">02.07.2023</td>
+
+								<td class="thh">20,000TL</td>
+
+								<td class="thh">
+									<a id="odevview" onclick="odevview()" class="btn btn-info shadow btn-xs sharp me-1"><i class="fa fa-eye"></i></a>
+
+									<a class="btn btn-warning shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+									<a class="btn btn-primary shadow btn-xs sharp me-1"><i class="fa fa-trash"></i></a>
+
+
+								</td>
+							</tr>
+
+
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true" id="MaasEkleModal">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Maaş Giriş Penceresi</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal">
+				</button>
+			</div>
+			@*			Özür dilerim, acaba neden izin alıyorsunuz?
+			*@			<div class="modal-body">
+				<div class="basic-form">
+					<form action="#" id="MaasEkleForm" method="post">
+
+@*						<div class="mb-3 row">
+							<label class="col-sm-3 col-form-label">Başlangiç/Bittiş</label>
+							<div class="col-sm-9">
+								<input class="form-control input-daterange-datepicker" type="text" name="daterange" value="01/01/2015 - 01/31/2015">
+							</div>
+						</div>
+						<div class="mb-3 row">
+							<label class="col-sm-3 col-form-label">Başlangiç/Bittiş</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" placeholder="2017-06-04" id="mdate" data-dtp="dtp_3dAdx">
+							</div>
+						</div>*@
+
+						<div class="mb-3 row">
+							<label class="col-sm-3 col-form-label">Personel Türü</label>
+							<div class="col-sm-9">
+								<select class="form-control" id="Maas" name="IzınTuru1Id" required>
+									<option>Seçiniz</option>
+									<option>Öğretmen</option>
+									<option>Diğer</option>
+								</select>
+							</div>
+						</div>
+
+						@*Öğretmen*@
+						<div class="mb-3 row" id="dorto" style="display:none;">
+							<label class="col-sm-3 col-form-label" style="font-size:12.25px;">Personel Seçiniz</label>
+							<div class="col-sm-9">
+								<select class="form-control" id="PersonelArama" name="PersonelId" required>
+									<option>Personel Seçiniz</option>
+									<option>Selçuk Keskin</option>
+									<option>Mustafa Bey</option>
+
+								</select>
+							</div>
+						</div>
+						<div id="biro" style="display:none;">
+
+							<div class="row" id="bir" style="display:flex;width:100%;margin: 0px 0px 14px 0px;justify-content: space-between;">
+
+								<div class="row" id="ogsaat" style="display: flex;width: 50%;float: left;padding: 0px;">
+									<label class="col-sm-7 col-form-label" style="float: left;line-height: 2rem;">Aylık Ders Saati</label>
+									<div class="col-sm-5" style="float: left;padding: 0px;margin: 0px;">
+										<input type="text" class="form-control" id="ogsaat" name="ogsaat" placeholder="" required="">
+									</div>
+								</div>
+
+
+								<div class="row" id="saatucreti" style="display: flex; width: 50%; float: right;">
+									<label class="col-sm-7 col-form-label" style=" line-height: 2rem;">Ders Saat Ücreti</label>
+									<div class="col-sm-5" style="float: right;padding: 0px;">
+										<input type="text" class="form-control" id="saatucreti" name="saatucreti" placeholder="" required>
+									</div>
+								</div>
+							
+							</div>
+						
+					
+						</div>
+				
+						<div id="ikio" style="display:none;">
+							<div class="row" id="iki" style="display:flex;width:100%;margin: 0px 0px 14px 0px;justify-content: space-between;">
+
+								<div class="row" id="ekucreti" style="display: flex;width: 50%;float: left;padding: 0px;">
+									<label class="col-sm-7 col-form-label" style="float: left;line-height: 2rem;">Ek Ücretler</label>
+									<div class="col-sm-5" style="float: left;padding: 0px;margin: 0px;">
+										<input type="text" class="form-control" id="ekucreti" name="ekucreti" placeholder="" required>
+									</div>
+								</div>
+
+
+
+								<div class="row" id="Sozlesmegr" style="display: flex; width: 50%; float: right;">
+									<label class="col-sm-7 col-form-label" style=" line-height: 2rem;">Sözleşme Türü</label>
+									<div class="col-sm-5" style="float: right;padding: 0px;">
+										<select class="form-control" id="Sozlesmeturu" name="Sozlesmeid" required>
+											<option>Türü Seçiniz</option>
+
+											<option>Süreli</option>
+											<option>Süresiz</option>
+										</select>
+									</div>
+								</div>
+
+
+							</div>
+						</div>
+						
+						<div id="uco" style="display:none;">
+
+							<div class="row" id="uc" style="display:flex;width:100%;margin: 0px 0px 14px 0px;justify-content: space-between;">
+
+								<div class="row" id="tarihbas" style="display: flex;width: 50%;float: left;padding: 0px;">
+
+									<label class="col-sm-7 col-form-label" style="float: left;line-height: 2rem;">Başlangıç Tarihi</label>
+									<div class="col-sm-5" style="float: left;padding: 0px;margin: 0px;">
+										<input type="date" class="form-control" id="tarihbas" name="tarihbas" placeholder="" required>
+									</div>
+								</div>
+
+
+
+
+
+
+								<div class="row" id="tarihbit" style="display:flex; width: 50%; float: right;">
+									<label class="col-sm-7 col-form-label" style=" line-height: 2rem;">Bitiş Tarihi</label>
+									<div class="col-sm-5" style="float: right;padding: 0px;">
+										<input type="date" class="form-control" id="tarihbit" name="tarihbit" placeholder="" required>
+									</div>
+								</div>
+
+							</div>
+						</div>
+
+						@*Diğer*@
+
+						<div class="mb-3 row" id="dortde" style="display:none;">
+							<label class="col-sm-3 col-form-label" style="font-size:12.25px;">Personel Seçiniz</label>
+							<div class="col-sm-9">
+								<select class="form-control" id="PersonelArama" name="PersonelId" required>
+									<option>Personel Seçiniz</option>
+									<option>Selçuk Keskin</option>
+									<option>Mustafa Bey</option>
+
+								</select>
+							</div>
+						</div>
+						<div id="birde" style="display:none;">
+
+							<div class="row" id="bird" style="display:flex;width:100%;margin: 0px 0px 14px 0px;justify-content: space-between;">
+
+								<div class="row" id="degsaat" style="display: flex;width: 50%;float: left;padding: 0px;">
+									<label class="col-sm-7 col-form-label" style="float: left;line-height: 2rem;">Aylık Maaş Tutarı</label>
+									<div class="col-sm-5" style="float: left;padding: 0px;margin: 0px;">
+										<input type="text" class="form-control" id="degsaat" name="degsaat" placeholder="" required="">
+									</div>
+								</div>
+
+
+								<div class="row" id="ekucretid" style="display: flex;width: 50%;float: left;padding: 0px;">
+									<label class="col-sm-7 col-form-label" style="float: left;line-height: 2rem;">Ek Ücretler</label>
+									<div class="col-sm-5" style="float: left;padding: 0px;margin: 0px;">
+										<input type="text" class="form-control" id="ekucretid" name="ekucretid" placeholder="" required>
+									</div>
+								</div>
+
+							</div>
+
+
+						</div>
+
+						<div id="ikide" style="display:none;">
+							<div class="row" id="ikid" style="display:flex;width:100%;margin: 0px 0px 14px 0px;justify-content: space-between;">
+
+								<div class="row" id="Calismad" style="display: flex; width: 50%; float: left; padding:0px;">
+									<label class="col-sm-7 col-form-label" style="float: left;line-height: 2rem;">Çalışma Türü</label>
+									<div class="col-sm-5" style="float: left;padding: 0px; margin:0px;">
+										<select class="form-control" id="Calismad" name="Calismad" required>
+											<option>Tam Zamanlı</option>
+											<option>Yarı Zamanlı</option>
+										</select>
+									</div>
+								</div>
+
+
+
+								<div class="row" id="Sozlesmegrd" style="display: flex; width: 50%; float: right;padding: 0px;">
+									<label class="col-sm-7 col-form-label" style=" line-height: 2rem; float: left;">Sözleşme Türü</label>
+									<div class="col-sm-5" style="float: right;padding: 0px;margin:0px;">
+										<select class="form-control" tabindex="-1"  id="Sozlesmeturud" name="Sozlesmeidd" required>
+											<option>Türü Seçiniz</option>
+
+
+											<option>Süreli</option>
+											<option>Süresiz</option>
+										</select>
+									</div>
+								</div>
+
+
+							</div>
+						</div>
+
+						<div id="ucde" style="display:none;">
+
+							<div class="row" id="ucd" style="display:flex;width:100%;margin: 0px 0px 14px 0px;justify-content: space-between;">
+
+								<div class="row" id="tarihbas" style="display: flex;width: 50%;float: left;padding: 0px;">
+
+									<label class="col-sm-7 col-form-label" style="float: left;line-height: 2rem;">Başlangıç Tarihi</label>
+									<div class="col-sm-5" style="float: left;padding: 0px;margin: 0px;">
+										<input type="date" class="form-control" id="tarihbas" name="tarihbas" placeholder="" required>
+									</div>
+								</div>
+
+
+
+
+
+
+								<div class="row" id="tarihbitd" style="display:flex; width: 50%; float: right; padding: 0px;">
+									<label class="col-sm-7 col-form-label" style=" line-height: 2rem; float: right;">Bitiş Tarihi</label>
+									<div class="col-sm-5" style="float: right;padding: 0px;margin: 0px;">
+										<input type="date" class="form-control" id="tarihbitd" name="tarihbitd" placeholder="" required>
+									</div>
+								</div>
+
+							</div>
+						</div>
+
+
+						
+					</form>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success" id="btnSubmit">Kaydet</button>
+
+				<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Kapat</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="daterangepicker ltr show-calendar opensright" style="top: 293.01px; left: 27.125px; right: auto; display: none;"><div class="ranges"></div><div class="drp-calendar left"><div class="calendar-table"><table class="table-condensed"><thead><tr><th class="prev available"><span></span></th><th colspan="5" class="month">Jan 2015</th><th></th></tr><tr><th>Su</th><th>Mo</th><th>Tu</th><th>We</th><th>Th</th><th>Fr</th><th>Sa</th></tr></thead><tbody><tr><td class="weekend off ends available" data-title="r0c0">28</td><td class="off ends available" data-title="r0c1">29</td><td class="off ends available" data-title="r0c2">30</td><td class="off ends available" data-title="r0c3">31</td><td class="active start-date available" data-title="r0c4">1</td><td class="in-range available" data-title="r0c5">2</td><td class="weekend in-range available" data-title="r0c6">3</td></tr><tr><td class="weekend in-range available" data-title="r1c0">4</td><td class="in-range available" data-title="r1c1">5</td><td class="in-range available" data-title="r1c2">6</td><td class="in-range available" data-title="r1c3">7</td><td class="in-range available" data-title="r1c4">8</td><td class="in-range available" data-title="r1c5">9</td><td class="weekend in-range available" data-title="r1c6">10</td></tr><tr><td class="weekend in-range available" data-title="r2c0">11</td><td class="in-range available" data-title="r2c1">12</td><td class="in-range available" data-title="r2c2">13</td><td class="in-range available" data-title="r2c3">14</td><td class="in-range available" data-title="r2c4">15</td><td class="in-range available" data-title="r2c5">16</td><td class="weekend in-range available" data-title="r2c6">17</td></tr><tr><td class="weekend in-range available" data-title="r3c0">18</td><td class="in-range available" data-title="r3c1">19</td><td class="in-range available" data-title="r3c2">20</td><td class="in-range available" data-title="r3c3">21</td><td class="in-range available" data-title="r3c4">22</td><td class="in-range available" data-title="r3c5">23</td><td class="weekend in-range available" data-title="r3c6">24</td></tr><tr><td class="weekend in-range available" data-title="r4c0">25</td><td class="in-range available" data-title="r4c1">26</td><td class="in-range available" data-title="r4c2">27</td><td class="in-range available" data-title="r4c3">28</td><td class="in-range available" data-title="r4c4">29</td><td class="in-range available" data-title="r4c5">30</td><td class="weekend active end-date in-range available" data-title="r4c6">31</td></tr><tr><td class="weekend off ends available" data-title="r5c0">1</td><td class="off ends available" data-title="r5c1">2</td><td class="off ends available" data-title="r5c2">3</td><td class="off ends available" data-title="r5c3">4</td><td class="off ends available" data-title="r5c4">5</td><td class="off ends available" data-title="r5c5">6</td><td class="weekend off ends available" data-title="r5c6">7</td></tr></tbody></table></div><div class="calendar-time" style="display: none;"></div></div><div class="drp-calendar right"><div class="calendar-table"><table class="table-condensed"><thead><tr><th></th><th colspan="5" class="month">Feb 2015</th><th class="next available"><span></span></th></tr><tr><th>Su</th><th>Mo</th><th>Tu</th><th>We</th><th>Th</th><th>Fr</th><th>Sa</th></tr></thead><tbody><tr><td class="weekend off ends in-range available" data-title="r0c0">25</td><td class="off ends in-range available" data-title="r0c1">26</td><td class="off ends in-range available" data-title="r0c2">27</td><td class="off ends in-range available" data-title="r0c3">28</td><td class="off ends in-range available" data-title="r0c4">29</td><td class="off ends in-range available" data-title="r0c5">30</td><td class="weekend off ends active end-date in-range available" data-title="r0c6">31</td></tr><tr><td class="weekend available" data-title="r1c0">1</td><td class="available" data-title="r1c1">2</td><td class="available" data-title="r1c2">3</td><td class="available" data-title="r1c3">4</td><td class="available" data-title="r1c4">5</td><td class="available" data-title="r1c5">6</td><td class="weekend available" data-title="r1c6">7</td></tr><tr><td class="weekend available" data-title="r2c0">8</td><td class="available" data-title="r2c1">9</td><td class="available" data-title="r2c2">10</td><td class="available" data-title="r2c3">11</td><td class="available" data-title="r2c4">12</td><td class="available" data-title="r2c5">13</td><td class="weekend available" data-title="r2c6">14</td></tr><tr><td class="weekend available" data-title="r3c0">15</td><td class="available" data-title="r3c1">16</td><td class="available" data-title="r3c2">17</td><td class="available" data-title="r3c3">18</td><td class="available" data-title="r3c4">19</td><td class="available" data-title="r3c5">20</td><td class="weekend available" data-title="r3c6">21</td></tr><tr><td class="weekend available" data-title="r4c0">22</td><td class="available" data-title="r4c1">23</td><td class="available" data-title="r4c2">24</td><td class="available" data-title="r4c3">25</td><td class="available" data-title="r4c4">26</td><td class="available" data-title="r4c5">27</td><td class="weekend available" data-title="r4c6">28</td></tr><tr><td class="weekend off ends available" data-title="r5c0">1</td><td class="off ends available" data-title="r5c1">2</td><td class="off ends available" data-title="r5c2">3</td><td class="off ends available" data-title="r5c3">4</td><td class="off ends available" data-title="r5c4">5</td><td class="off ends available" data-title="r5c5">6</td><td class="weekend off ends available" data-title="r5c6">7</td></tr></tbody></table></div><div class="calendar-time" style="display: none;"></div></div><div class="drp-buttons"><span class="drp-selected">01/01/2015 - 01/31/2015</span><button class="cancelBtn btn btn-sm btn-inverse" type="button">Cancel</button><button class="applyBtn btn btn-sm btn-danger" type="button">Apply</button> </div></div>
+@section scripts{
+
+	<script src="~/Content/vendor/datatables/js/jquery.dataTables.min.js" asp-append-version="true"></script>
+	<script src="~/Content/vendor/jquery-nice-select/js/jquery.nice-select.min.js" asp-append-version="true"></script>
+	<script src="~/Content/vendor/select2/js/select2.full.min.js" asp-append-version="true"></script>
+
+
+
+	<script>
+
+		$(document).ready(function () {
+			var mycrumb = $("#myBreadcrumb");
+			$("#previousBreadcrumb").before(mycrumb);
+
+			var table = $('#demirbaslarTable').DataTable({
+				searching: true,
+				paging: true,
+				select: false,
+				info: false,
+				lengthChange: false,
+				language: {
+					paginate: {
+						next: '<i class="fa fa-angle-double-right" aria-hidden="true"></i>',
+						previous: '<i class="fa fa-angle-double-left" aria-hidden="true"></i>'
+					}
+				}
+			});
+		})
+
+
+
+		$(document).ready(function () {
+			$("#Maas").select2({
+				dropdownParent: $('#MaasEkleModal')
+			});
+
+
+			$("#MaasEkleForm").submit(function (e) {
+				e.preventDefault();
+				var fd = new FormData(this);
+				pondFiles = pond.getFiles();
+				for (var i = 0; i < pondFiles.length; i++) {
+					fd.append('filepond', pondFiles[i].file);
+				}
+				$.ajax({
+					url: '/Kutuphane/TestUpload',
+					type: 'POST',
+					data: fd,
+					dataType: 'JSON',
+					contentType: false,
+					cache: false,
+					processData: false,
+					success: function (data) {
+					},
+					error: function (data) {
+					}
+				}
+				);
+			});
+		})
+
+
+
+</script>
+	<script>
+		var selectElement = document.getElementById("Maas");
+
+		selectElement.onchange = function () {
+			var selectedOption = this.options[this.selectedIndex].text;
+
+			if (selectedOption == "Öğretmen") {
+				document.getElementById("biro").style.display = "flex";
+				document.getElementById("ikio").style.display = "flex";
+				document.getElementById("uco").style.display = "flex";
+				document.getElementById("dorto").style.display = "flex";
+
+
+				document.getElementById("birde").style.display = "none";
+				document.getElementById("ikide").style.display = "none";
+				document.getElementById("ucde").style.display = "none";
+				document.getElementById("dortde").style.display = "none";
+
+			}
+			else if (selectedOption == "Diğer") {
+				document.getElementById("birde").style.display = "flex";
+				document.getElementById("ikide").style.display = "flex";
+				document.getElementById("ucde").style.display = "flex";
+				document.getElementById("dortde").style.display = "flex";
+
+
+				document.getElementById("biro").style.display = "none";
+				document.getElementById("ikio").style.display = "none";
+				document.getElementById("uco").style.display = "none";
+				document.getElementById("dorto").style.display = "none";
+
+
+			}
+			else {
+				/* Öğretmen و Diğer  الأختيار */
+				document.getElementById("biro").style.display = "none";
+				document.getElementById("ikio").style.display = "none";
+				document.getElementById("uco").style.display = "none";
+				document.getElementById("dorto").style.display = "none";
+
+
+				document.getElementById("birde").style.display = "none";
+				document.getElementById("ikide").style.display = "none";
+				document.getElementById("ucde").style.display = "none";
+				document.getElementById("dortde").style.display = "none";
+
+			}
+		};
+
+
+	</script>
+
+
+	<script>
+		var selectElement = document.getElementById("Sozlesmeturu");
+
+		selectElement.onchange = function () {
+			var selectedOption = this.options[this.selectedIndex].text;
+
+			if (selectedOption == "Süreli") {
+
+				document.getElementById("uco").style.display = "flex";
+
+
+
+			}
+			else if (selectedOption == "Süresiz") {
+
+				document.getElementById("uco").style.display = "none";
+
+
+			}
+			else {
+				/* Öğretmen و Diğer  الأختيار */
+
+				document.getElementById("uco").style.display = "none";
+
+			}
+		};
+
+
+	</script>
+
+	<script>
+		var selectElement = document.getElementById("Sozlesmeturud");
+
+		selectElement.onchange = function () {
+			var selectedOption = this.options[this.selectedIndex].text;
+
+			if (selectedOption == "Süreli") {
+
+				document.getElementById("ucde").style.display = "flex";
+
+
+
+			}
+			else if (selectedOption == "Süresiz") {
+
+				document.getElementById("ucde").style.display = "none";
+
+
+			}
+			else {
+				/* Öğretmen و Diğer  الأختيار */
+
+				document.getElementById("ucde").style.display = "none";
+
+			}
+		};
+
+
+	</script>
+}
+
+@*<script>
+	var selectElement = document.getElementById("Maas");
+
+	selectElement.onchange = function () {
+		var selectedOption = this.options[this.selectedIndex].text;
+
+		if (selectedOption == "Öğretmen") {
+			document.getElementById("ogsaat").style.display = "flex";
+			document.getElementById("saatucreti").style.display = "flex";
+			document.getElementById("ekucreti").style.display = "flex";
+			document.getElementById("sozlesmesure").style.display = "flex";
+			document.getElementById("aytutarpara").style.display = "none";
+			document.getElementById("perturu").style.display = "none";
+			document.getElementById("sozlesmesured").style.display = "none";
+		}
+		else if (selectedOption == "Diğer") {
+			document.getElementById("aytutarpara").style.display = "flex";
+			document.getElementById("perturu").style.display = "flex";
+			document.getElementById("sozlesmesured").style.display = "flex";
+			document.getElementById("ogsaat").style.display = "none";
+			document.getElementById("saatucreti").style.display = "none";
+			document.getElementById("ekucreti").style.display = "none";
+			document.getElementById("sozlesmesure").style.display = "none";
+		}
+		else {
+			/* Öğretmen و Diğer  الأختيار */
+			document.getElementById("ogsaat").style.display = "none";
+			document.getElementById("saatucreti").style.display = "none";
+			document.getElementById("ekucreti").style.display = "none";
+			document.getElementById("sozlesmesure").style.display = "none";
+			document.getElementById("aytutarpara").style.display = "none";
+			document.getElementById("perturu").style.display = "none";
+			document.getElementById("sozlesmesured").style.display = "none";
+		}
+	};
+
+
+</script>*@

@@ -1,0 +1,23 @@
+﻿@media only screen and (max-width: 75rem) {
+    .btn {
+        padding: 0.625rem 0.4rem;
+        font-size: 10px;
+        display: inline-block;
+    }
+    .mb-0 {
+        font-size: 15px;
+    }
+    strong {
+        font-weight: 500;
+        font-size: 14px;
+        color: #000;
+    }
+}
+
+@media screen and (min-width: 30rem) {
+    .mtn {
+        padding: 0.625rem 0.4rem;
+        font-size: 10px;
+        display: inline-block;
+    }
+}

@@ -1,0 +1,231 @@
+﻿@{
+    ViewData["Title"] = "... Şube Detayı";
+    Layout = "~/Views/Shared/SubeLayout.cshtml";
+
+}
+
+@section head{
+    <link href="~/Content/vendor/jquery-nice-select/css/nice-select.css" rel="stylesheet" asp-append-version="true">
+    <link href="~/Content/vendor/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    <link href="~/Content/vendor/fullcalendar/css/main.min.css" rel="stylesheet">
+    <style>
+/*        strong {
+            font-weight: 500;
+            font-size: 19px;
+            color: #000;
+        }
+
+        .mb-0 {
+            font-size: 19px;
+        }*/
+
+        .profile-pic {
+            color: transparent;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+            .profile-pic input {
+                display: none;
+            }
+
+            .profile-pic img {
+                position: absolute;
+                object-fit: cover;
+                width: 165px;
+                height: 165px;
+                box-shadow: 0 0 10px 0 rgba(255, 255, 255, .35);
+                border-radius: 100px;
+                z-index: 0;
+            }
+
+            .profile-pic .-label {
+                cursor: pointer;
+                height: 165px;
+                width: 165px;
+            }
+
+            .profile-pic:hover .-label {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: rgba(0, 0, 0, .8);
+                z-index: 10000;
+                color: #fafafa;
+                transition: background-color 0.2s ease-in-out;
+                border-radius: 100px;
+                margin-bottom: 0;
+            }
+
+            .profile-pic span {
+                display: inline-flex;
+                padding: 0.2em;
+                height: 2em;
+            }
+    </style>
+}
+
+<div class="row page-titles" id="myBreadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-controller="Sube" asp-action="Subeler">Şubeler</a></li>
+        <li class="breadcrumb-item active"><a asp-controller="Sube" asp-action="SubeDetay">Mersin Şubesi</a></li>
+    </ol>
+</div>
+
+
+<div class="row">
+    <div class="col-xl-6 col-lg-12 col-sm-12">
+        <div class="row">
+            <div class="col-xl-12">
+            <div class="card" style="height:auto;">
+            <div class="card-header border-0 pb-0">
+                <h2 class="card-title">@*Şube adı gelecek*@ Mersin Şubesi Bilgileri</h2>
+            </div>
+            <div class="card-body pb-0">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex px-0 justify-content-between">
+                        <strong>Açılış Tarihi</strong>
+                        <span class="mb-0">02/08/1997</span>
+                    </li>
+                    <li class="list-group-item d-flex px-0 justify-content-between">
+                        <strong>Yetkili</strong>
+                        <span class="mb-0">Selçuk Keskin</span>
+                    </li>
+                    <li class="list-group-item d-flex px-0 justify-content-between">
+                        <strong>Telefon</strong>
+                        <span class="mb-0">32547659836</span>
+                    </li>
+                    <li class="list-group-item d-flex px-0 justify-content-between">
+                        <strong>Email</strong>
+                        <span class="mb-0">mersin@@edusama.com</span>
+                    </li>
+                    <li class="list-group-item d-flex px-0 justify-content-between">
+                        <strong>Adres</strong>
+                        <span class="mb-0">Mersin 3493 Sk. No:134/A Yenişehir Mersin</span>
+                    </li>
+                    <li class="list-group-item d-flex px-0 justify-content-between">
+                        <strong>Personel Sayısı</strong>
+                        <span class="mb-0">40</span>
+                    </li>
+                    <li class="list-group-item d-flex px-0 justify-content-between">
+                        <strong>Öğrenci Sayısı</strong>
+                        <span class="mb-0">300</span>
+                    </li>
+                    <li class="list-group-item d-flex px-0 justify-content-between">
+                        <strong>Şube Durumu</strong>
+                        <span class="mb-0" style="color:green;">Aktif</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+            </div>
+
+        </div>
+    </div>
+    <div class="col-xl-6">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-xl-6 col-xxl-12">
+                                <div class="card-calendar style-1">
+                                    <input type='text' class="form-control d-none" id='datetimepicker' />
+                                </div>
+                            </div>
+                            <div class="col-xl-6 redial col-xxl-12">
+                                <p class="text-center">Aylık Tahsilat Durumu</p>
+                                <div id="redial"></div>
+                                <p class="my-4 text-center">Bugüne Kadar Gelen Ödemeler</p>
+                                <div class="row" style="text-align:center;">
+                                    <button class="btn btn-secondary" id="Paralar" onclick="Paralar()">Detaylı Görüntüle</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-8">
+                <div class="widget-stat card">
+                    <div class="card-body  p-4">
+                        <div class="media ai-icon">
+                            <span class="me-3 " style="background-color:white; color:green;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="27" height="27" fill="currentColor" class="bi bi-cash" viewBox="0 0 16 16">
+                                    <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z" />
+                                    <path d="M0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V6a2 2 0 0 1-2-2H3z" />
+                                </svg>
+                            </span>
+                            <div class="media-body">
+                                <p class="mb-1">Revenue</p>
+                                <h4 class="mb-0">364.50K</h4>
+                                <span class="badge badge-danger">-3.5%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Content/vendor/jquery-nice-select/js/jquery.nice-select.min.js"></script>
+    <script src="~/Content/vendor/bootstrap-datetimepicker/js/moment.js"></script>
+    <script src="~/Content/vendor/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="~/Content/vendor/apexchart/apexchart.js"></script>
+    <script src="~/Content/vendor/chart.js/Chart.bundle.min.js"></script>
+    <script src="~/Content/vendor/moment/moment.min.js"></script>
+    <script src="~/Content/vendor/fullcalendar/js/main.min.js"></script>
+    <script src="~/Content/js/plugins-init/fullcalendar-init.js"></script>
+    <script src="~/Content/js/dashboard/schedule.js"></script>
+
+  
+
+    <!-- Required vendors -->
+    <script src="~/Content/vendor/global/global.min.js"></script>
+    <script src="~/Content/vendor/chart.js/Chart.bundle.min.js"></script>
+    <!-- Apex Chart -->
+    <script src="~/Content/vendor/apexchart/apexchart.js"></script>
+
+    <script src="vendor/jquery-nice-select/js/jquery.nice-select.min.js"></script>
+
+
+    <script src="~/Content/vendor/flot/jquery.flot.js"></script>
+    <script src="~/Content/vendor/flot/jquery.flot.pie.js"></script>
+    <script src="~/Content/vendor/flot/jquery.flot.resize.js"></script>
+    <script src="~/Content/vendor/flot-spline/jquery.flot.spline.min.js"></script>
+    <script src="~/Content/js/plugins-init/flot-init.js"></script>
+
+    <script src="~/Content/js/custom.js"></script>
+    <script src="~/Content/js/dlabnav-init.js"></script>
+
+    <script>
+        var mycrumb = $("#myBreadcrumb");
+        $("#previousBreadcrumb").before(mycrumb);
+        $(function () {
+            $('#datetimepicker').datetimepicker({
+                inline: true,
+            });
+        });
+        $(document).ready(function () {
+            $(".booking-calender .fa.fa-clock-o").removeClass(this);
+            $(".booking-calender .fa.fa-clock-o").addClass('fa-clock');
+        });
+    </script>
+@*    <script>
+
+
+        function Paralar() {
+            $("#ParaField").show();
+        }
+
+
+    </script>*@
+
+}

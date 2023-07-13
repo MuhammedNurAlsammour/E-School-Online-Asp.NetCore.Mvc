@@ -1,0 +1,18 @@
+﻿@{
+    ViewData["Title"] = "Destek";
+}
+
+<div class="row page-titles" id="myBreadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active"><a asp-controller="Destek" asp-action="Destek">Destek</a></li>
+    </ol>
+</div>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            var mycrumb = $("#myBreadcrumb");
+            $("#previousBreadcrumb").before(mycrumb);
+        })
+    </script>
+}

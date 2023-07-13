@@ -1,0 +1,1656 @@
+﻿@{
+	ViewData["Title"] = "InsanKaynaklari";
+}
+
+
+@section head{
+	<link href="~/Content/vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet" asp-append-version="true">
+	<link href="~/Content/vendor/jquery-nice-select/css/nice-select.css" rel="stylesheet" asp-append-version="true">
+    <link href="~/Content/vendor/select2/css/select2.min.css" rel="stylesheet" asp-append-version="true" />
+
+
+            @*yeni @media*@
+    <link href="~/content/css/stylesheet.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/content/css/stylesheet1.css" rel="stylesheet" asp-append-version="true" />
+            @*yeni @media*@
+    <style>
+        .card-body {
+            padding: 0.3rem 1rem;
+        }
+        .thh{
+            text-align:center;
+        }
+        .table-responsive{
+            overflow-x: clip;
+        }
+    </style>
+}
+
+<div class="row page-titles" id="myBreadcrumb">
+	<ol class="breadcrumb">
+        <li class="breadcrumb-item active"><a asp-controller="InsanKaynaklari" asp-action="InsanKaynaklari">İnsan Kaynakları</a></li>
+	</ol>
+</div>
+
+<div class="row">
+	<div class="col-12">
+		<div class="card">
+			<div class="card-header">
+				<div class="col-xl-4">
+					<div class="d-flex">
+						<div class="col-xl-8">
+							<select class="default-select wide">
+								<option value="All" selected="selected">Şube Seçiniz</option>
+								<option value="1">Mersin</option>
+								<option value="2">İzmir</option>
+								<option value="3">İstanbul</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="card-toolbar">
+
+                    <button id="Siniflarim" onclick="Siniflarim()" class="btn btn-danger font-weight-bolder">Personel Listesi</button>
+
+					<button  id="taksitOdemelerim" onclick="taksitOdemelerim()" class="btn btn-danger font-weight-bolder">İzin Listesi</button>
+
+                    <button id="devamsizliklarim" onclick="devamsizliklarim()" class="btn btn-danger font-weight-bolder">Maaş Listesi</button>
+
+
+
+				</div>
+			</div>
+			<div class="card-body">
+				<div class="table-responsive">
+
+                    <div class="row" id="siniflarimField" hidden>
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="col-xl-4">
+                                        <div class="d-flex">
+                                            <div class="col-xl-8">
+                                                <select class="default-select wide">
+                                                    <option value="All" selected="selected">Tümünü Göster</option>
+                                                    <option value="1">Ayrıldı</option>
+                                                    <option value="2">Aktif</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-toolbar">
+                                        <a href="#PersonelEkleModal" data-bs-target="#PersonelEkleModal" data-bs-toggle="modal" class="btn btn-secondary font-weight-bolder">
+                                            <span class="svg-icon svg-icon-md">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                                                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+                                                </svg>
+                                            </span>Personel Ekle
+                                        </a>
+
+                                        <a href="#" class="btn btn-dark font-weight-bolder">
+                                            <span class="svg-icon svg-icon-md">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer-fill" viewBox="0 0 16 16">
+                                                    <path d="M5 1a2 2 0 0 0-2 2v1h10V3a2 2 0 0 0-2-2H5zm6 8H5a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1z" />
+                                                    <path d="M0 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-1v-2a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2H2a2 2 0 0 1-2-2V7zm2.5 1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z" />
+                                                </svg>
+                                            </span>Yazdır
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table id="siniflarimTable" class="display" style="min-width: 845px">
+                                            <thead>
+                                                <tr>
+
+                                                    <th class="bas thh">Ad Soyad</th>
+                                                    <th class="thh">Görevi</th>
+                                                    <th class="thh">Başlangıç Tarihi</th>
+                                                    <th class="thh">Bittiş Tarihi</th>
+
+                                                    <th class="thh">Özlük Dosyası</th>
+                                                    <th class="thh">Durum</th>
+
+                                                    <th class="thh" style="width:8rem">Aksiyon</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr class="odd">
+
+                                                    <td class="thh"><a href="#">Abdullah Köse</a></td>
+                                                    <td class="thh">Öğretmen</td>
+                                                    <td class="thh">02.06.2023</td>
+                                                    <td class="thh">02.06.2024</td>
+
+                                                    <td class="thh"><button href="#DosyalarEkleModal" data-bs-target="#DosyalarEkleModal" data-bs-toggle="modal" type="button" class="btn btn-outline-primary btn-xs" fdprocessedid="vvzjlt">Dosyalar</button></td>
+                                                    <td class="thh">
+                                                        <span class="badge light badge-danger" style="    width: 120px;">
+                                                            Ayrıldı
+                                                        </span>
+                                                    </td>
+                                                    <td class="thh">
+                                                        <a id="odevview" onclick="odevview()" class="btn btn-info shadow btn-xs sharp me-1"><i class="fa fa-eye"></i></a>
+                                                        <a id="odevview" onclick="odevview()" class="btn btn-dark shadow btn-xs sharp me-1">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-escape" viewBox="0 0 16 16">
+                                                                <path d="M8.538 1.02a.5.5 0 1 0-.076.998 6 6 0 1 1-6.445 6.444.5.5 0 0 0-.997.076A7 7 0 1 0 8.538 1.02Z" />
+                                                                <path d="M7.096 7.828a.5.5 0 0 0 .707-.707L2.707 2.025h2.768a.5.5 0 1 0 0-1H1.5a.5.5 0 0 0-.5.5V5.5a.5.5 0 0 0 1 0V2.732l5.096 5.096Z" />
+                                                            </svg>
+                                                        </a>
+                                                        <a href="#EditModal" data-bs-target="#EditModal" data-bs-toggle="modal" class="btn btn-warning shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+                                                        <a class="btn btn-primary shadow btn-xs sharp me-1"><i class="fa fa-trash"></i></a>
+
+
+                                                    </td>
+                                                </tr>
+
+                                                <tr class="even">
+
+                                                    <td class="thh"><a href="#">Abdullah Köse</a></td>
+
+                                                    <td class="thh">Muhasebe</td>
+                                                    <td class="thh">02.07.2023</td>
+                                                    <td class="thh">02.06.2024</td>
+                                                    <td class="thh"><button href="#DosyalarEkleModal" data-bs-target="#DosyalarEkleModal" data-bs-toggle="modal" type="button" class="btn btn-outline-primary btn-xs" fdprocessedid="vvzjlt">Dosyalar</button></td>
+                                                    <td class="thh">
+                                                        <span class="badge light badge-success" style="    width: 120px;">
+                                                            Devam Ediyor
+                                                        </span>
+                                                    </td>
+                                                    <td class="thh">
+                                                        <a id="odevview" onclick="odevview()" class="btn btn-info shadow btn-xs sharp me-1"><i class="fa fa-eye"></i></a>
+                                                        <a id="odevview" onclick="odevview()" class="btn btn-dark shadow btn-xs sharp me-1">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-escape" viewBox="0 0 16 16">
+                                                                <path d="M8.538 1.02a.5.5 0 1 0-.076.998 6 6 0 1 1-6.445 6.444.5.5 0 0 0-.997.076A7 7 0 1 0 8.538 1.02Z" />
+                                                                <path d="M7.096 7.828a.5.5 0 0 0 .707-.707L2.707 2.025h2.768a.5.5 0 1 0 0-1H1.5a.5.5 0 0 0-.5.5V5.5a.5.5 0 0 0 1 0V2.732l5.096 5.096Z" />
+                                                            </svg>
+                                                        </a>
+                                                        <a href="#EditModal" data-bs-target="#EditModal" data-bs-toggle="modal" class="btn btn-warning shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+                                                        <a class="btn btn-primary shadow btn-xs sharp me-1"><i class="fa fa-trash"></i></a>
+
+
+                                                    </td>
+                                                </tr>
+
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" id="taksitOdemelerimField" hidden>
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="col-xl-4">
+                                        <div class="d-flex">
+                                            <div class="col-xl-8">
+                                                <select class="default-select wide">
+                                                    <option value="All" selected="selected">Tümünü Göster</option>
+                                                    <option value="1">Onaylandı</option>
+                                                    <option value="2">Onay Bekliyor</option>
+                                                    <option value="3">Onaylanmadı</option>
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>                                    <div class="card-toolbar">
+                                        <a href="#IzinEkleModal" data-bs-target="#IzinEkleModal" data-bs-toggle="modal" class="btn btn-secondary font-weight-bolder">
+                                            <span class="svg-icon svg-icon-md">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                                                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+                                                </svg>
+                                            </span>İzin Ekle
+                                        </a>
+
+                                        <a href="#" class="btn btn-dark font-weight-bolder">
+                                            <span class="svg-icon svg-icon-md">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer-fill" viewBox="0 0 16 16">
+                                                    <path d="M5 1a2 2 0 0 0-2 2v1h10V3a2 2 0 0 0-2-2H5zm6 8H5a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1z" />
+                                                    <path d="M0 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-1v-2a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2H2a2 2 0 0 1-2-2V7zm2.5 1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z" />
+                                                </svg>
+                                            </span>Yazdır
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive" >
+                                        <table id="Izintable" class="display" style="min-width: 845px">
+                                            <thead>
+                                                <tr>
+
+                                                    <th class="bas thh">Ad Soyad</th>
+                                                    <th class="thh">İzin Başlangıç Tarihi</th>
+                                                    <th class="thh">İzin Bitiş Tarihi</th>
+                                                    <th class="thh">İzin Süresi</th>
+                                                    <th class="thh">Onay Durumu</th>
+
+                                                    <th class="thh" style="width:8rem">Aksiyon</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr class="odd">
+
+                                                    <td class="thh"><a href="#">Abdullah Köse</a></td>
+                                                    <td class="thh">02.06.2023</td>
+                                                    <td class="thh">03.06.2023</td>
+
+                                                    <td class="thh">1.Gün</td>
+                                                    <td class="thh">
+                                                        <span class="badge light badge-success " style="width:100px;">Onaylandı</span>
+                                                        @*                                            <span class="badge light badge-success">Successful</span>
+                                                        <span class="badge light badge-success">Successful</span>*@
+
+
+
+                                                    </td>
+
+                                                    <td class="thh">
+                                                        <a data-bs-toggle="modal" data-bs-target="#AciklamaModalCenter" class="btn btn-info shadow btn-xs sharp me-1"><i class="fa fa-eye"></i></a>
+
+                                                        <a class="btn btn-primary shadow btn-xs sharp me-1"><i class="fa fa-trash"></i></a>
+
+
+                                                    </td>
+                                                </tr>
+
+                                                <tr class="even">
+
+                                                    <td class="thh"><a href="#">Abdullah Köse</a></td>
+
+                                                    <td class="thh">02.06.2023</td>
+                                                    <td class="thh">03.06.2023</td>
+
+                                                    <td class="thh">1.Gün</td>
+                                                    <td class="thh">
+                                                        <span class="badge light badge-danger " style="width:100px;">Onaylanmadı</span>
+                                                        @*                                            <span class="badge light badge-success">Successful</span>
+                                                        <span class="badge light badge-success">Successful</span>*@
+
+
+
+
+                                                    </td>
+                                                    <td class="thh">
+                                                        <a data-bs-toggle="modal" data-bs-target="#AciklamaModalCenter" class="btn btn-info shadow btn-xs sharp me-1"><i class="fa fa-eye"></i></a>
+
+                                                        <a class="btn btn-primary shadow btn-xs sharp me-1"><i class="fa fa-trash"></i></a>
+
+
+                                                    </td>
+                                                </tr>
+
+                                                <tr class="odd">
+
+                                                    <td class="thh"><a href="#">Abdullah Köse</a></td>
+                                                    <td class="thh">02.06.2023</td>
+                                                    <td class="thh">03.06.2023</td>
+
+                                                    <td class="thh">1.Gün</td>
+                                                    <td class="thh">
+                                                        <span class="badge light badge-warning " style="width:100px;">Onay Bekliyor</span>
+                                                        @*                                            <span class="badge light badge-success">Successful</span>
+                                                        <span class="badge light badge-success">Successful</span>*@
+
+
+
+                                                    </td>
+
+                                                    <td class="thh">
+                                                        <a data-bs-toggle="modal" data-bs-target="#AciklamaModalCenter" class="btn btn-info shadow btn-xs sharp me-1"><i class="fa fa-eye"></i></a>
+
+                                                        <a class="btn btn-primary shadow btn-xs sharp me-1"><i class="fa fa-trash"></i></a>
+
+
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade bd-example-modal-s" tabindex="-1" role="dialog" aria-hidden="true" id="IzinEkleModal">
+                        <div class="modal-dialog modal-s">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">İzin Giriş Penceresi</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal">
+                                    </button>
+                                </div>
+                                @*			Özür dilerim, acaba neden izin alıyorsunuz?
+                                *@			<div class="modal-body">
+                                    <div class="basic-form">
+                                        <form action="#" id="IzinEkleForm" method="post">
+                                            @Html.AntiForgeryToken()
+
+
+                                            <div class="mb-3 row">
+                                                <label class="col-sm-4 col-form-label" style="font-size:12.25px;">Personel Seçiniz</label>
+                                                <div class="col-sm-8">
+                                                    <select class="form-control" id="PersonelArama" name="PersonelId" required>
+                                                        <option>Personel Seçiniz</option>
+                                                        <option>Selçuk Keskin</option>
+                                                        <option>Mustafa Bey</option>
+
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="mb-3 row">
+                                                <label class="col-sm-4 col-form-label" style="font-size:12.25px;">Başlangıç Günü</label>
+                                                <div class="col-sm-8">
+                                                    <input class="form-control input-daterange-datepicker" type="datetime-local" id="daterange" name="daterange" value="" data-old-val="">
+                                                </div>
+                                            </div>
+
+                                            <div class="mb-3 row">
+                                                <label class="col-sm-4 col-form-label" style="font-size:12.25px;">Bitiş Günü</label>
+                                                <div class="col-sm-8">
+                                                    <input class="form-control input-daterange-datepicker" type="datetime-local" id="daterange" name="daterange" value="" data-old-val="">
+                                                </div>
+                                            </div>
+
+                                            <div class="mb-3 row">
+                                                <label class="col-sm-4 col-form-label" style="font-size:12.25px;">Gün Türü</label>
+                                                <div class="col-sm-8">
+                                                    <select class="form-control" id="IzınTuru1" name="IzınTuru1Id" required>
+                                                        <option>Yarım Gün</option>
+                                                        <option>Tam Gün</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="mb-3 row">
+                                                <label class="col-sm-4 col-form-label" style="font-size:12.25px;">Ücret Türü </label>
+                                                <div class="col-sm-8">
+                                                    <select class="form-control" id="IzınTuru2" name="IzınTuru2Id" required>
+                                                        <option>Ücretli</option>
+                                                        <option>Ücretsiz</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="mb-3 row">
+                                                <label class="col-sm-4 col-form-label" style="font-size:12.25px;">Açıklama <span style="font-size:7px; display:block;">Gerekli Değil</span></label>
+                                                <div class="col-sm-8">
+                                                    <textarea class="form-control" rows="4" type="text" name="Aciklama" required maxlength="300"></textarea>
+
+                                                </div>
+                                            </div>
+
+
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-success" id="btnSubmit">Kaydet</button>
+
+                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Kapat</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+@*                    <div class="modal fade" id="exampleModalCenter">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Açıklama</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal">
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>iyi çalişin</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Kapat</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>*@
+                    <div class="modal fade" id="AciklamaModalCenter">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Açıklama Penceresi</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal">
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="basic-form">
+                                        <form action="#" id="AciklamaEkleForm" method="post">
+                                            @Html.AntiForgeryToken()
+
+
+                                                                               
+                                             <p>iyi çalişin</p>
+                                                    <hr />
+
+                                            <div class="mb-3 row">
+                                                <div class="col-sm-12">
+                                                    <textarea class="form-control" rows="4" type="text" name="Aciklama" required maxlength="300"></textarea>
+
+                                                </div>
+                                            </div>
+                                            <div class="row" style="justify-content:center;">
+
+                                                <div class="col-xl-4">
+                                                    <div class="form-check custom-checkbox mb-3 checkbox-secondary ">
+                                                        <input type="radio" class="form-check-input" id="customRadioBox1" name="optradioCustom">
+                                                        <label class="form-check-label" for="customRadioBox1">Onaylandı</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-4  ">
+                                                    <div class="form-check custom-checkbox mb-3 checkbox-primary ">
+                                                        <input type="radio" class="form-check-input" id="customRadioBox2" name="optradioCustom ">
+                                                        <label class="form-check-label" for="customRadioBox2">Onaylanmadı</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-success" id="btnSubmit">Kaydet</button>
+
+                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Kapat</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row" id="devamsizliklarimField" hidden>
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="col-xl-4">
+                                        <div class="d-flex">
+                                            <div class="col-xl-8">
+                                                <select class="default-select wide">
+                                                    <option value="All" selected="selected">Tümünü Göster</option>
+                                                    <option value="1">Öğretmen</option>
+                                                    <option value="2">Muhasebe</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>                                         <div class="card-toolbar">
+                                        <a href="#MaasEkleModal" data-bs-target="#MaasEkleModal" data-bs-toggle="modal" class="btn btn-secondary font-weight-bolder">
+                                            <span class="svg-icon svg-icon-md">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                                                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+                                                </svg>
+                                            </span>Maaş Ekle
+                                        </a>
+
+                                        <a href="#" class="btn btn-dark font-weight-bolder">
+                                            <span class="svg-icon svg-icon-md">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer-fill" viewBox="0 0 16 16">
+                                                    <path d="M5 1a2 2 0 0 0-2 2v1h10V3a2 2 0 0 0-2-2H5zm6 8H5a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1z" />
+                                                    <path d="M0 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-1v-2a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2H2a2 2 0 0 1-2-2V7zm2.5 1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z" />
+                                                </svg>
+                                            </span>Yazdır
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table id="devamsizliklarimTable" class="display" style="min-width: 845px">
+                                            <thead>
+                                                <tr>
+       
+                                                    <th class="bas thh">Ad Soyad</th>
+                                                    <th class="thh">Görevi</th>
+                                                    <th class="thh">Tarih</th>
+                                                    <th class="thh">Maaş Tutarı</th>
+                                                    <th class="thh" style="width:8rem">Aksiyon</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr class="odd">
+
+                                                    <td class="thh"><a href="#">ibo</a></td>
+                                                    <td class="thh">Öğretmen</td>
+                                                    <td class="thh">02.06.2023</td>
+
+                                                    <td class="thh">15,500TL</td>
+
+                                                    <td class="thh">
+                                                        <a id="odevview" onclick="odevview()" class="btn btn-info shadow btn-xs sharp me-1"><i class="fa fa-eye"></i></a>
+
+                                                        <a href="#DuzMaasEkleModal" data-bs-target="#DuzMaasEkleModal" data-bs-toggle="modal" class="btn btn-warning shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+                                                        <a class="btn btn-primary shadow btn-xs sharp me-1"><i class="fa fa-trash"></i></a>
+
+
+                                                    </td>
+                                                </tr>
+
+                                                <tr class="even">
+
+                                                    <td class="thh"><a href="#">Abdullah Köse</a></td>
+
+                                                    <td class="thh">Öğretmen</td>
+                                                    <td class="thh">02.07.2023</td>
+
+                                                    <td class="thh">20,000TL</td>
+
+                                                    <td class="thh">
+                                                        <a id="odevview" onclick="odevview()" class="btn btn-info shadow btn-xs sharp me-1"><i class="fa fa-eye"></i></a>
+
+                                                        <a href="#DuzMaasEkleModal" data-bs-target="#DuzMaasEkleModal" data-bs-toggle="modal" class="btn btn-warning shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+                                                        <a class="btn btn-primary shadow btn-xs sharp me-1"><i class="fa fa-trash"></i></a>
+
+
+                                                    </td>
+                                                </tr>
+
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<div class="modal fade bd-example-modal-s" tabindex="-1" role="dialog" aria-hidden="true" id="EditModal">
+    <div class="modal-dialog modal-s">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Personlel Edit Penceresi</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal">
+                </button>
+            </div>
+            @*			Özür dilerim, acaba neden izin alıyorsunuz?
+            *@			<div class="modal-body">
+                <div class="basic-form">
+                    <form action="#" id="EditEkleForm" method="post">
+                        @Html.AntiForgeryToken()
+
+                        <div class="mb-3 row">
+                            <label class="col-sm-4 col-form-label" style="font-size:12.25px; line-height: 2.4rem;">Adı</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="Adi" required>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-4 col-form-label" style="font-size:12.25px; line-height: 2.4rem;">Soyadı</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="Soyadi" required>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-4 col-form-label" style="font-size:12.25px; line-height: 1rem;">Rol Seç</label>
+                            <div class="col-sm-8">
+                                <select id="DuzRolArama" name="RolID" required>
+                                    <option>Rol Seçiniz</option>
+
+                                    <option>Öğretmen</option>
+                                    <option>İnsan Kaynakları</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-4 col-form-label" style="font-size:12.25px; line-height: 2.4rem;">Başlangıç Tarihi</label>
+                            <div class="col-sm-8">
+                                <input type="date" class="form-control" name="BaslamaTarihi" required>
+                            </div>
+                        </div>
+
+
+                        <div class="mb-3 row">
+                            <label class="col-sm-4 col-form-label" style="font-size:12.25px; line-height: 2.4rem;">Email Adresi</label>
+                            <div class="col-sm-8">
+                                <input type="email" class="form-control" name="Email" required>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-4 col-form-label" style="font-size:12.25px; line-height: 2.4rem;">Telefon</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="Telefon" maxlength="10" onkeypress="validate(event)" required>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-4 col-form-label" style="font-size:12.25px; line-height: 2.4rem;">Doğum Tarihi</label>
+                            <div class="col-sm-8">
+                                <input type="date" class="form-control" name="DogumTarihi" required>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-4 col-form-label" style="font-size:12.25px; line-height: 2.4rem;">TC Kimlik</label>
+                            <div class="col-sm-8">
+                                <input type="text" maxlength="11" onkeypress="validate(event)" class="form-control" name="IdentityNumber" required>
+                            </div>
+                        </div>
+
+                        <fieldset class="mb-3">
+                            <div class="row">
+                                <label class="col-form-label col-sm-4 pt-0" style="font-size:12.25px; line-height: 2.4rem;">Cinsiyet</label>
+                                <div class="col-sm-8">
+                                    <input class="form-check-input" type="radio" name="Cinsiyet" value="Kadın" checked>
+                                    <label class="form-check-label">
+                                        Kadın
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="Cinsiyet" value="Erkek">
+                                    <label class="form-check-label">
+                                        Erkek
+                                    </label>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <div class="mb-3 row">
+                            <label class="col-sm-4 col-form-label" style="font-size:12.25px; line-height: 2.4rem;">Adres</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="Adres" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 row">
+                            <label class="col-sm-4 col-form-label" style="font-size:12.25px; line-height: 2.4rem;">Açıklama</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="Aciklama" required>
+                            </div>
+                        </div>
+
+
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" id="btnSubmit">Kaydet</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Kapat</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" id="DosyalarEkleModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Dosya Ekleme Penceresi</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal">
+                </button>
+            </div>
+            @*			Özür dilerim, acaba neden izin alıyorsunuz?
+            *@			<div class="modal-body">
+                <div class="basic-form">
+                    <form action="#" id="PersonelEkleForm" method="post">
+                        @Html.AntiForgeryToken()
+
+
+                        <div class="table-responsive">
+                            <table id="DevamsizlikTable" class="table display mb-4 dataTablesCard order-table card-table text-black application" style="min-width: 400px">
+                                <thead>
+                                    <tr>
+
+
+                                        <th>
+                                            Belge Adı
+
+                                        </th>
+
+                                        <th>
+                                            Dosya Yükle
+
+                                        </th>
+                                        <th class="thh">
+                                            Ekle
+
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+
+                                        <td>
+
+                                            <input value="1.sınav" type="text" class="form-control" name="SinavinNotlari" placeholder="Not giriniz" required>
+
+                                        </td>
+
+                                        <td>
+
+                                            <input value="1.sınav" type="file" class="form-control" name="Sinavin" placeholder="Not giriniz" required>
+
+                                        </td>
+
+                                        <td class="thh">
+
+                                            <a class="btn btn-success shadow btn-lg"><i class="bi bi-check-circle"></i></a>
+
+                                        </td>
+
+
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" id="btnSubmit">Gönder</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Kapat</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade bd-example-modal-s" tabindex="-1" role="dialog" aria-hidden="true" id="PersonelEkleModal">
+    <div class="modal-dialog modal-s">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Personlel Giriş Penceresi</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal">
+                </button>
+            </div>
+            @*			Özür dilerim, acaba neden izin alıyorsunuz?
+            *@			<div class="modal-body">
+                <div class="basic-form">
+                    <form action="#" id="PersonelEkleForm" method="post">
+                        @Html.AntiForgeryToken()
+
+
+
+                        <div class="row">
+                            <div class="col-lg-6 mb-2">
+                                <div class="mb-3">
+                                    <label class="text-label form-label" style="font-size:12.25px; ">
+                                        Rol Seçiniz
+                                    </label>
+                                    <select id="RolArama" name="RolID" required>
+                                        <option>Rol Seçiniz</option>
+
+                                        <option>Öğretmen</option>
+                                        <option>İnsan Kaynakları</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 mb-2">
+                                <div class="mb-3">
+                                    <label class="text-label form-label" style="font-size:12.25px; ">
+                                        Şubesi Seçiniz
+                                    </label>
+                                    <select id="subeArama" name="SubeID" required>
+                                        <option>İzmir</option>
+                                        <option>Mersin</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6 mb-2">
+                                <div class="mb-3">
+                                    <label class="text-label form-label" style="font-size:12.25px; ">
+                                        Sözleşme Bitiş Tarihi
+                                    </label>
+                                    <input type="date" class="form-control" name="IseBaslamaTarihi" required>
+
+                                </div>
+                            </div>
+                            <div class="col-lg-6 mb-2">
+                                <div class="mb-3">
+                                    <label class="text-label form-label" style="font-size:12.25px; ">
+                                        Sözleşme Başlangıç Tarihi
+                                    </label>
+                                    <input type="date" class="form-control" name="IseBaslamaTarihi" required>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="row">
+                            <div class="col-lg-6 mb-2">
+                                <div class="mb-3">
+                                    <label class="text-label form-label" style="font-size:12.25px; ">
+                                        Adı
+                                    </label>
+                                    <input type="text" class="form-control" name="Adi" required>
+
+                                </div>
+                            </div>
+                            <div class="col-lg-6 mb-2">
+                                <div class="mb-3">
+                                    <label class="text-label form-label" style="font-size:12.25px; ">
+                                        Soyadı
+                                    </label>
+                                    <input type="text" class="form-control" name="Soyadi" required>
+
+                                </div>
+                            </div>
+
+                        </div>   
+                        <div class="row">
+                            <div class="col-lg-6 mb-2">
+                                <div class="mb-3">
+                                    <label class="text-label form-label" style="font-size:12.25px; ">
+                                        Email Adresi
+                                    </label>
+                                    <input type="email" class="form-control" name="Email" required>
+
+                                </div>
+                            </div>
+                            <div class="col-lg-6 mb-2">
+                                <div class="mb-3">
+                                    <label class="text-label form-label" style="font-size:12.25px; ">
+                                        Telefon
+                                    </label>
+                                <input type="text" class="form-control" name="Telefon" maxlength="10" onkeypress="validate(event)" required>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-lg-6 mb-2">
+                                <div class="mb-3">
+                                    <label class="text-label form-label" style="font-size:12.25px; ">
+                                        Doğum Tarihi
+                                    </label>
+                                    <input type="date" class="form-control" name="DogumTarihi" required>
+
+                                </div>
+                            </div>
+                            <div class="col-lg-6 mb-2">
+                                <div class="mb-3">
+                                    <label class="text-label form-label" style="font-size:12.25px; ">
+                                        TC Kimlik
+                                    </label>
+                                <input type="text" maxlength="11" onkeypress="validate(event)" class="form-control" name="IdentityNumber" required>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-6 mb-2">
+                                <div class="mb-3">
+                                    <label class="text-label form-label" style="font-size:12.25px; ">
+                                        Sözleşme Türü
+                                    </label>
+                                    <select id="turuArama" class="form-control" name="SubeID" required>
+                                        <option>Tam Zamanlı</option>
+                                        <option>Yarı Zamanlı</option>
+                                        <option>Saat Ücretli</option>
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 mb-2">
+                                <fieldset class="mb-3">
+                                    <div class="row">
+                                        <label class="col-form-label col-sm-4 pt-0" style="font-size:12.25px; line-height: 2.4rem;">Cinsiyet</label>
+                                        <div class="col-sm-8">
+                                            <input class="form-check-input" type="radio" name="Cinsiyet" value="Kadın" checked>
+                                            <label class="form-check-label">
+                                                Kadın
+                                            </label>
+                                            <input class="form-check-input" type="radio" name="Cinsiyet" value="Erkek">
+                                            <label class="form-check-label">
+                                                Erkek
+                                            </label>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+
+                        </div>
+
+
+
+
+
+                        <div class="row">
+                            <div class="col-lg-12 mb-2">
+
+                                <div class="mb-3">
+                                    <label class="text-label form-label" style="font-size:12.25px; ">
+                                        Adres
+                                    </label>
+                                    <textarea class="form-control" name="Adres" maxlength="300" required></textarea>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-lg-12 mb-2">
+                                <div class="mb-3">
+                                    <label class="text-label form-label" style="font-size:12.25px; ">
+                                        Açıklama
+                                    </label>
+                                    <textarea  class="form-control" name="Aciklama" maxlength="300" required></textarea>
+
+                                   </div>
+                            </div>
+
+                        </div>
+
+
+
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" id="btnSubmit">Kaydet</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Kapat</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true" id="MaasEkleModal">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Maaş Giriş Penceresi</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal">
+                </button>
+            </div>
+            @*			Özür dilerim, acaba neden izin alıyorsunuz?
+            *@			<div class="modal-body">
+                <div class="basic-form">
+                    <form action="#" id="MaasEkleForm" method="post">
+
+                        @*						<div class="mb-3 row">
+                        <label class="col-sm-3 col-form-label">Başlangiç/Bittiş</label>
+                        <div class="col-sm-9">
+                        <input class="form-control input-daterange-datepicker" type="text" name="daterange" value="01/01/2015 - 01/31/2015">
+                        </div>
+                        </div>
+                        <div class="mb-3 row">
+                        <label class="col-sm-3 col-form-label">Başlangiç/Bittiş</label>
+                        <div class="col-sm-9">
+                        <input type="text" class="form-control" placeholder="2017-06-04" id="mdate" data-dtp="dtp_3dAdx">
+                        </div>
+                        </div>*@
+
+                        <div class="mb-3 row">
+                            <label class="col-sm-3 col-form-label">Personel Türü</label>
+                            <div class="col-sm-9">
+                                <select class="form-control" id="Maas" name="IzınTuru1Id" required>
+                                    <option>Seçiniz</option>
+                                    <option>Öğretmen</option>
+                                    <option>Diğer</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        @*Öğretmen*@
+                        <div class="mb-3 row" id="dorto" style="display:none;">
+                            <label class="col-sm-3 col-form-label" style="font-size:12.25px;">Personel Seçiniz</label>
+                            <div class="col-sm-9">
+                                <select class="form-control" id="PersonelArama" name="PersonelId" required>
+                                    <option>Personel Seçiniz</option>
+                                    <option>Selçuk Keskin</option>
+                                    <option>Mustafa Bey</option>
+
+                                </select>
+                            </div>
+                        </div>
+                        <div id="biro" style="display:none;">
+
+                            <div class="row" id="bir" style="display:flex;width:100%;margin: 0px 0px 14px 0px;justify-content: space-between;">
+
+                                <div class="row" id="ogsaat" style="display: flex;width: 50%;float: left;padding: 0px;">
+                                    <label class="col-sm-7 col-form-label" style="float: left;line-height: 2rem;">Aylık Ders Saati</label>
+                                    <div class="col-sm-5" style="float: left;padding: 0px;margin: 0px;">
+                                        <input type="text" class="form-control" id="ogsaat" name="ogsaat" placeholder="" required="">
+                                    </div>
+                                </div>
+
+
+                                <div class="row" id="saatucreti" style="display: flex; width: 50%; float: right;">
+                                    <label class="col-sm-7 col-form-label" style=" line-height: 2rem;">Ders Saat Ücreti</label>
+                                    <div class="col-sm-5" style="float: right;padding: 0px;">
+                                        <input type="text" class="form-control" id="saatucreti" name="saatucreti" placeholder="" required>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+                        <div id="ikio" style="display:none;">
+                            <div class="row" id="iki" style="display:flex;width:100%;margin: 0px 0px 14px 0px;justify-content: space-between;">
+
+                                <div class="row" id="ekucreti" style="display: flex;width: 50%;float: left;padding: 0px;">
+                                    <label class="col-sm-7 col-form-label" style="float: left;line-height: 2rem;">Ek Ücretler</label>
+                                    <div class="col-sm-5" style="float: left;padding: 0px;margin: 0px;">
+                                        <input type="text" class="form-control" id="ekucreti" name="ekucreti" placeholder="" required>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="row" id="Sozlesmegr" style="display: flex; width: 50%; float: right;">
+                                    <label class="col-sm-7 col-form-label" style=" line-height: 2rem;">Tarih</label>
+                                    <div class="col-sm-5" style="float: right;padding: 0px;">
+                                        <input type="date" class="form-control" id="tarihbitd" name="tarihbitd" placeholder="" required>
+
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+
+                        @*Diğer*@
+
+                        <div class="mb-3 row" id="dortde" style="display:none;">
+                            <label class="col-sm-3 col-form-label" style="font-size:12.25px;">Personel Seçiniz</label>
+                            <div class="col-sm-9">
+                                <select class="form-control" id="PersonelArama" name="PersonelId" required>
+                                    <option>Personel Seçiniz</option>
+                                    <option>Selçuk Keskin</option>
+                                    <option>Mustafa Bey</option>
+
+                                </select>
+                            </div>
+                        </div>
+                        <div id="birde" style="display:none;">
+
+                            <div class="row" id="bird" style="display:flex;width:100%;margin: 0px 0px 14px 0px;justify-content: space-between;">
+
+                                <div class="row" id="degsaat" style="display: flex;width: 50%;float: left;padding: 0px;">
+                                    <label class="col-sm-7 col-form-label" style="float: left;line-height: 2rem;">Aylık Maaş Tutarı</label>
+                                    <div class="col-sm-5" style="float: left;padding: 0px;margin: 0px;">
+                                        <input type="text" class="form-control" id="degsaat" name="degsaat" placeholder="" required="">
+                                    </div>
+                                </div>
+
+
+                                <div class="row" id="ekucretid" style="display: flex;width: 50%;float: left;padding: 0px;">
+                                    <label class="col-sm-7 col-form-label" style="float: left;line-height: 2rem;">Ek Ücretler</label>
+                                    <div class="col-sm-5" style="float: left;padding: 0px;margin: 0px;">
+                                        <input type="text" class="form-control" id="ekucretid" name="ekucretid" placeholder="" required>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+                        <div id="ikide" style="display:none;">
+                            <div class="row" id="ikid" style="display:flex;width:100%;margin: 0px 0px 14px 0px;justify-content: space-between;">
+
+                                <div class="row" id="Calismad" style="display: flex; width: 50%; float: left; padding:0px;">
+                                    <label class="col-sm-7 col-form-label" style="float: left;line-height: 2rem;">Çalışma Türü</label>
+                                    <div class="col-sm-5" style="float: left;padding: 0px; margin:0px;">
+                                        <select class="form-control" id="Calismad" name="Calismad" required>
+                                            <option>Tam Zamanlı</option>
+                                            <option>Yarı Zamanlı</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                                <div class="row" id="Sozlesmegr" style="display: flex; width: 50%; float: right;">
+                                    <label class="col-sm-7 col-form-label" style=" line-height: 2rem;">Tarih</label>
+                                    <div class="col-sm-5" style="float: right;padding: 0px;">
+                                        <input type="date" class="form-control" id="tarihbitd" name="tarihbitd" placeholder="" required>
+
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+
+
+
+
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" id="btnSubmit">Kaydet</button>
+
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Kapat</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true" id="DuzMaasEkleModal">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Maaş Giriş Penceresi</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal">
+                </button>
+            </div>
+            @*			Özür dilerim, acaba neden izin alıyorsunuz?
+            *@			<div class="modal-body">
+                <div class="basic-form">
+                    <form action="#" id="MaasEkleForm" method="post">
+
+                        @*						<div class="mb-3 row">
+                        <label class="col-sm-3 col-form-label">Başlangiç/Bittiş</label>
+                        <div class="col-sm-9">
+                        <input class="form-control input-daterange-datepicker" type="text" name="daterange" value="01/01/2015 - 01/31/2015">
+                        </div>
+                        </div>
+                        <div class="mb-3 row">
+                        <label class="col-sm-3 col-form-label">Başlangiç/Bittiş</label>
+                        <div class="col-sm-9">
+                        <input type="text" class="form-control" placeholder="2017-06-04" id="mdate" data-dtp="dtp_3dAdx">
+                        </div>
+                        </div>*@
+
+                        <div class="mb-3 row">
+                            <label class="col-sm-3 col-form-label">Personel Türü</label>
+                            <div class="col-sm-9">
+                                <select class="form-control" id="DuzMaas" name="IzınTuru1Id" required>
+                                    <option>Seçiniz</option>
+                                    <option>Öğretmen</option>
+                                    <option>Diğer</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        @*Öğretmen*@
+                        <div class="mb-3 row" id="dortod" style="display:none;">
+                            <label class="col-sm-3 col-form-label" style="font-size:12.25px;">Personel Seçiniz</label>
+                            <div class="col-sm-9">
+                                <select class="form-control" id="PersonelArama" name="PersonelId" required>
+                                    <option>Personel Seçiniz</option>
+                                    <option>Selçuk Keskin</option>
+                                    <option>Mustafa Bey</option>
+
+                                </select>
+                            </div>
+                        </div>
+                        <div id="birod" style="display:none;">
+
+                            <div class="row" id="bir" style="display:flex;width:100%;margin: 0px 0px 14px 0px;justify-content: space-between;">
+
+                                <div class="row" id="ogsaat" style="display: flex;width: 50%;float: left;padding: 0px;">
+                                    <label class="col-sm-7 col-form-label" style="float: left;line-height: 2rem;">Aylık Ders Saati</label>
+                                    <div class="col-sm-5" style="float: left;padding: 0px;margin: 0px;">
+                                        <input type="text" class="form-control" id="ogsaat" name="ogsaat" placeholder="" required="">
+                                    </div>
+                                </div>
+
+
+                                <div class="row" id="saatucreti" style="display: flex; width: 50%; float: right;">
+                                    <label class="col-sm-7 col-form-label" style=" line-height: 2rem;">Ders Saat Ücreti</label>
+                                    <div class="col-sm-5" style="float: right;padding: 0px;">
+                                        <input type="text" class="form-control" id="saatucreti" name="saatucreti" placeholder="" required>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+                        <div id="ikiod" style="display:none;">
+                            <div class="row" id="iki" style="display:flex;width:100%;margin: 0px 0px 14px 0px;justify-content: space-between;">
+
+                                <div class="row" id="ekucreti" style="display: flex;width: 50%;float: left;padding: 0px;">
+                                    <label class="col-sm-7 col-form-label" style="float: left;line-height: 2rem;">Ek Ücretler</label>
+                                    <div class="col-sm-5" style="float: left;padding: 0px;margin: 0px;">
+                                        <input type="text" class="form-control" id="ekucreti" name="ekucreti" placeholder="" required>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="row" id="Sozlesmegr" style="display: flex; width: 50%; float: right;">
+                                    <label class="col-sm-7 col-form-label" style=" line-height: 2rem;">Tarih</label>
+                                    <div class="col-sm-5" style="float: right;padding: 0px;">
+                                        <input type="date" class="form-control" id="tarihbitd" name="tarihbitd" placeholder="" required>
+
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+
+                        @*Diğer*@
+
+                        <div class="mb-3 row" id="dortded" style="display:none;">
+                            <label class="col-sm-3 col-form-label" style="font-size:12.25px;">Personel Seçiniz</label>
+                            <div class="col-sm-9">
+                                <select class="form-control" id="PersonelArama" name="PersonelId" required>
+                                    <option>Personel Seçiniz</option>
+                                    <option>Selçuk Keskin</option>
+                                    <option>Mustafa Bey</option>
+
+                                </select>
+                            </div>
+                        </div>
+                        <div id="birded" style="display:none;">
+
+                            <div class="row" id="bird" style="display:flex;width:100%;margin: 0px 0px 14px 0px;justify-content: space-between;">
+
+                                <div class="row" id="degsaat" style="display: flex;width: 50%;float: left;padding: 0px;">
+                                    <label class="col-sm-7 col-form-label" style="float: left;line-height: 2rem;">Aylık Maaş Tutarı</label>
+                                    <div class="col-sm-5" style="float: left;padding: 0px;margin: 0px;">
+                                        <input type="text" class="form-control" id="degsaat" name="degsaat" placeholder="" required="">
+                                    </div>
+                                </div>
+
+
+                                <div class="row" id="ekucretid" style="display: flex;width: 50%;float: left;padding: 0px;">
+                                    <label class="col-sm-7 col-form-label" style="float: left;line-height: 2rem;">Ek Ücretler</label>
+                                    <div class="col-sm-5" style="float: left;padding: 0px;margin: 0px;">
+                                        <input type="text" class="form-control" id="ekucretid" name="ekucretid" placeholder="" required>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+                        <div id="ikided" style="display:none;">
+                            <div class="row" id="ikid" style="display:flex;width:100%;margin: 0px 0px 14px 0px;justify-content: space-between;">
+
+                                <div class="row" id="Calismad" style="display: flex; width: 50%; float: left; padding:0px;">
+                                    <label class="col-sm-7 col-form-label" style="float: left;line-height: 2rem;">Çalışma Türü</label>
+                                    <div class="col-sm-5" style="float: left;padding: 0px; margin:0px;">
+                                        <select class="form-control" id="Calismad" name="Calismad" required>
+                                            <option>Tam Zamanlı</option>
+                                            <option>Yarı Zamanlı</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                                <div class="row" id="Sozlesmegr" style="display: flex; width: 50%; float: right;">
+                                    <label class="col-sm-7 col-form-label" style=" line-height: 2rem;">Tarih</label>
+                                    <div class="col-sm-5" style="float: right;padding: 0px;">
+                                        <input type="date" class="form-control" id="tarihbitd" name="tarihbitd" placeholder="" required>
+
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+
+
+
+
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" id="btnSubmit">Kaydet</button>
+
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Kapat</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Content/vendor/datatables/js/jquery.dataTables.min.js" asp-append-version="true"></script>
+    <script src="~/Content/vendor/jquery-nice-select/js/jquery.nice-select.min.js" asp-append-version="true"></script>,
+    <script src="~/Content/vendor/select2/js/select2.full.min.js" asp-append-version="true"></script>
+
+    <script>
+        $(document).ready(function () {
+            $("#DuzRolArama").select2({
+                dropdownParent: $('#EditModal')
+            });
+
+            $("#RolArama").select2({
+                dropdownParent: $('#PersonelEkleModal')
+            });
+
+            $("#subeArama").select2({
+                dropdownParent: $('#PersonelEkleModal')
+            });
+            var loadFile = function (event) {
+                var image = document.getElementById("output");
+                image.src = URL.createObjectURL(event.target.files[0]);
+            };
+            var mycrumb = $("#myBreadcrumb");
+            $("#previousBreadcrumb").before(mycrumb);
+            var table = $('#siniflarimTable').DataTable({
+                searching: true,
+                paging: true,
+                select: false,
+                info: false,
+                lengthChange: false,
+                language: {
+                    paginate: {
+                        next: '<i class="fa fa-angle-double-right" aria-hidden="true"></i>',
+                        previous: '<i class="fa fa-angle-double-left" aria-hidden="true"></i>'
+                    }
+                }
+            });
+            var table = $('#Izintable').DataTable({
+                searching: true,
+                paging: true,
+                select: false,
+                info: false,
+                lengthChange: false,
+                language: {
+                    paginate: {
+                        next: '<i class="fa fa-angle-double-right" aria-hidden="true"></i>',
+                        previous: '<i class="fa fa-angle-double-left" aria-hidden="true"></i>'
+                    }
+                }
+            });
+            var table = $('#devamsizliklarimTable').DataTable({
+                searching: true,
+                paging: true,
+                select: false,
+                info: false,
+                lengthChange: false,
+                language: {
+                    paginate: {
+                        next: '<i class="fa fa-angle-double-right" aria-hidden="true"></i>',
+                        previous: '<i class="fa fa-angle-double-left" aria-hidden="true"></i>'
+                    }
+                }
+            });
+            var table = $('#sinavSonuclarimTable').DataTable({
+                searching: true,
+                paging: true,
+                select: false,
+                info: false,
+                lengthChange: false,
+                language: {
+                    paginate: {
+                        next: '<i class="fa fa-angle-double-right" aria-hidden="true"></i>',
+                        previous: '<i class="fa fa-angle-double-left" aria-hidden="true"></i>'
+                    }
+                }
+            });
+        })
+        function Siniflarim() {
+            $("#siniflarimField").removeAttr('hidden');
+
+
+            // ابحث عن زر الموافقة
+            var approveButton = document.querySelector('.thh .btn-success');
+
+            // قم بإضافة حدث النقر على الزر
+            approveButton.addEventListener('click', function () {
+                // ابحث عن الصف الذي يحتوي على الزر المستهدف
+                var targetRow = approveButton.closest('tr');
+
+                // انشئ صفًا جديدًا
+                var newRow = document.createElement('tr');
+
+                // إنشاء العناصر الفرعية للصف
+                var td1 = document.createElement('td');
+                var inputText = document.createElement('input');
+                inputText.type = 'text';
+                inputText.className = 'form-control';
+                inputText.name = 'SinavinNotlari';
+                inputText.placeholder = 'Not giriniz';
+                inputText.required = true;
+                td1.appendChild(inputText);
+
+                // إنشاء العناصر الفرعية للصف
+                var td2 = document.createElement('td');
+                var inputFile = document.createElement('input');
+                inputFile.type = 'file';
+                inputFile.className = 'form-control';
+                inputFile.name = 'Sinavin';
+                inputFile.placeholder = 'Not giriniz';
+                inputFile.required = true;
+                td2.appendChild(inputFile);
+
+                var td3 = document.createElement('td');
+                td3.className = 'thh';
+                var deleteButton = document.createElement('a');
+                deleteButton.className = 'btn btn-danger shadow btn-lg';
+                var deleteIcon = document.createElement('i');
+                deleteIcon.className = 'bi bi-x-circle';
+                deleteButton.appendChild(deleteIcon);
+                td3.appendChild(deleteButton);
+
+                // أضف العناصر الفرعية إلى الصف الجديد
+                newRow.appendChild(td1);
+                newRow.appendChild(td2);
+                newRow.appendChild(td3);
+
+                // أضف الصف الجديد بعد الصف المستهدف
+                targetRow.parentNode.insertBefore(newRow, targetRow.nextSibling);
+
+
+
+
+                // أضف استماعًا لحدث النقر
+                deleteButton.addEventListener('click', function () {
+                    // احصل على الصف الذي يحتوي على الزر المنقر
+                    var row = this.closest('tr');
+
+                    // قم بإزالة الصف من الجدول
+                    row.parentNode.removeChild(row);
+                });
+
+
+            });
+            $("#devamsizliklarimField").attr('hidden', true);
+            $("#sinavSonuclarimField").attr('hidden', true);
+            $("#taksitOdemelerimField").attr('hidden', true);
+        }
+        function taksitOdemelerim() {
+            $("#taksitOdemelerimField").removeAttr('hidden');
+            $("#devamsizliklarimField").attr('hidden', true);
+            $("#sinavSonuclarimField").attr('hidden', true);
+            $("#siniflarimField").attr('hidden', true);
+        }
+        function devamsizliklarim() {
+            $("#devamsizliklarimField").removeAttr('hidden');
+            $("#taksitOdemelerimField").attr('hidden', true);
+            $("#sinavSonuclarimField").attr('hidden', true);
+            $("#siniflarimField").attr('hidden', true);
+        }
+        function sinavSonuclarim() {
+            $("#sinavSonuclarimField").removeAttr('hidden');
+            $("#taksitOdemelerimField").attr('hidden', true);
+            $("#devamsizliklarimField").attr('hidden', true);
+            $("#siniflarimField").attr('hidden', true);
+        }
+
+
+
+
+
+
+
+    </script>
+}
+
+<script>
+    var selectElement = document.getElementById("Maas");
+
+    selectElement.onchange = function () {
+        var selectedOption = this.options[this.selectedIndex].text;
+
+        if (selectedOption == "Öğretmen") {
+            document.getElementById("biro").style.display = "flex";
+            document.getElementById("ikio").style.display = "flex";
+            document.getElementById("dorto").style.display = "flex";
+
+
+            document.getElementById("birde").style.display = "none";
+            document.getElementById("ikide").style.display = "none";
+            document.getElementById("dortde").style.display = "none";
+
+        }
+        else if (selectedOption == "Diğer") {
+            document.getElementById("birde").style.display = "flex";
+            document.getElementById("ikide").style.display = "flex";
+            document.getElementById("dortde").style.display = "flex";
+
+
+            document.getElementById("biro").style.display = "none";
+            document.getElementById("ikio").style.display = "none";
+            document.getElementById("dorto").style.display = "none";
+
+
+        }
+        else {
+            /* Öğretmen و Diğer  الأختيار */
+            document.getElementById("biro").style.display = "none";
+            document.getElementById("ikio").style.display = "none";
+            document.getElementById("dorto").style.display = "none";
+
+
+            document.getElementById("birde").style.display = "none";
+            document.getElementById("ikide").style.display = "none";
+            document.getElementById("dortde").style.display = "none";
+
+        }
+    };
+
+
+</script>
+
+
+
+<script>
+    var selectElement = document.getElementById("DuzMaas");
+
+    selectElement.onchange = function () {
+        var selectedOption = this.options[this.selectedIndex].text;
+
+        if (selectedOption == "Öğretmen") {
+            document.getElementById("birod").style.display = "flex";
+            document.getElementById("ikiod").style.display = "flex";
+            document.getElementById("dortod").style.display = "flex";
+
+
+            document.getElementById("birded").style.display = "none";
+            document.getElementById("ikided").style.display = "none";
+            document.getElementById("dortded").style.display = "none";
+
+        }
+        else if (selectedOption == "Diğer") {
+            document.getElementById("birded").style.display = "flex";
+            document.getElementById("ikided").style.display = "flex";
+            document.getElementById("dortded").style.display = "flex";
+
+
+            document.getElementById("birod").style.display = "none";
+            document.getElementById("ikiod").style.display = "none";
+            document.getElementById("dortod").style.display = "none";
+
+
+        }
+        else {
+            /* Öğretmen و Diğer  الأختيار */
+            document.getElementById("birod").style.display = "none";
+            document.getElementById("ikiod").style.display = "none";
+            document.getElementById("dortod").style.display = "none";
+
+
+            document.getElementById("birded").style.display = "none";
+            document.getElementById("ikided").style.display = "none";
+            document.getElementById("dortded").style.display = "none";
+
+        }
+    };
+
+
+</script>
+
+@*
+<script>
+    var selectElement = document.getElementById("Sozlesmeturu");
+
+    selectElement.onchange = function () {
+        var selectedOption = this.options[this.selectedIndex].text;
+
+        if (selectedOption == "Süreli") {
+
+            document.getElementById("uco").style.display = "flex";
+
+
+
+        }
+        else if (selectedOption == "Süresiz") {
+
+            document.getElementById("uco").style.display = "none";
+
+
+        }
+        else {
+            /* Öğretmen و Diğer  الأختيار */
+
+            document.getElementById("uco").style.display = "none";
+
+        }
+    };
+
+
+</script>
+
+<script>
+    var selectElement = document.getElementById("Sozlesmeturud");
+
+    selectElement.onchange = function () {
+        var selectedOption = this.options[this.selectedIndex].text;
+
+        if (selectedOption == "Süreli") {
+
+            document.getElementById("ucde").style.display = "flex";
+
+
+
+        }
+        else if (selectedOption == "Süresiz") {
+
+            document.getElementById("ucde").style.display = "none";
+
+
+        }
+        else {
+            /* Öğretmen و Diğer  الأختيار */
+
+            document.getElementById("ucde").style.display = "none";
+
+        }
+    };
+
+
+</script>*@

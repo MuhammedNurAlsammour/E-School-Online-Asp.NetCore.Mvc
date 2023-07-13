@@ -1,0 +1,769 @@
+﻿@{
+    ViewData["Title"] = "Kullanıcılar";
+}
+
+
+
+@*Burada BigDataSpeed projesindeki yapılanmayı kullanmalıyız ki hızlı çalıştırabilelim.*@
+@*Detaylı görüntüleme tuşuna bastığımızda DataTables.net table'ında ilgili role ait kullanıcılar listelenecek.*@
+
+
+@section head{
+    <link href="~/Content/vendor/jquery-nice-select/css/nice-select.css" rel="stylesheet" asp-append-version="true">
+
+
+    <style>
+        .thh{
+            text-align:center;
+        }
+    </style>
+}
+
+<div class="row page-titles" id="myBreadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active"><a asp-controller="Kullanici" asp-action="Kullanicilar">Kullanıcılar</a></li>
+    </ol>
+</div>
+
+<div class="row">
+    <div class="col-xl-3 col-xxl-6 col-lg-6 col-sm-6">
+        <div class="widget-stat card bg-info">
+            <div class="card-body p-4">
+                <div class="media">
+                    <span class="me-3">
+                        <i class="flaticon-381-user-7"></i>
+                    </span>
+                    <div class="media-body text-white text-end">
+                        <a asp-controller="Kullanici" asp-action="Mudurler" style="color: #fff;">
+                            <h4>MÜDÜRLER</h4>
+                            <h3 class="text-white">20</h3>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-xxl-6 col-lg-6 col-sm-6">
+        <div class="widget-stat card bg-primary">
+            <div class="card-body p-4">
+                <div class="media">
+                    <span class="me-3">
+                        <i class="flaticon-381-user-7"></i>
+                    </span>
+                    <div class="media-body text-white text-end">
+                                               
+                        <a asp-controller="Kullanici" asp-action="Ogretmenler" style="color: #fff;">
+
+                        <h4>ÖĞRETMENLER</h4>
+                        <h3 class="text-white">50</h3>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-xxl-6 col-lg-6 col-sm-6">
+        <div class="widget-stat card bg-primary">
+            <div class="card-body p-4">
+                <div class="media">
+                    <span class="me-3">
+                        <i class="flaticon-381-user-7"></i>
+                    </span>
+                    <div class="media-body text-white text-end">
+                                              
+                        <a asp-controller="Kullanici" asp-action="DigerPersoneller" style="color: #fff;">
+
+                        <h4>PERSONELLER</h4>
+                        <h3 class="text-white">30</h3>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-xxl-6 col-lg-6 col-sm-6">
+        <div class="widget-stat card bg-primary">
+            <div class="card-body p-4">
+                <div class="media">
+                    <span class="me-3">
+                        <i class="flaticon-381-user-7"></i>
+                    </span>
+                    <div class="media-body text-white text-end">
+                                               
+                        <a asp-controller="Kullanici" asp-action="Ogrenciler" style="color: #fff;">
+
+                        <h4>ÖĞRENCİLER</h4>
+                        <h3 class="text-white">900</h3>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Müdürler Listesi</h4>
+                <div class="card-toolbar">
+                    <a asp-controller="Kullanici" asp-action="Mudurler" class="btn btn-primary font-weight-bolder">
+                        <span class="svg-icon svg-icon-md">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+                                <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
+                            </svg>
+                        </span>Detaylı İşlemler
+                    </a>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-responsive-md">
+                        <thead>
+                            <tr>
+
+                                <th class="bas thh">Kullanıcı adı</th>
+                                <th class="thh">Oluşturulma Tarihi</th>
+                                <th class="thh">Şubesi</th>
+                                <th class="thh">E-Posta Adresi</th>
+                                <th class="thh">Durumu</th>
+
+                                <th class="thh" style="width:8rem">Aksiyon</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="odd">
+
+                                <td class="thh"><a href="#">Abdullah Köse</a></td>
+                                <td class="thh">02.06.2023</td>
+                                <td class="thh">Mersin</td>
+
+                                <td class="thh">Selcuk@gmail.com</td>
+                                <td class="thh">
+                                    <span class="badge light badge-success " style="width:100px;">Aktif Kullanıcı</span>
+                                    @*                                            <span class="badge light badge-success">Successful</span>
+                                    <span class="badge light badge-success">Successful</span>*@
+
+
+
+                                </td>
+
+                                <td class="thh">
+                                    <a data-bs-toggle="modal" data-bs-target="#exampleModalCenter" class="btn btn-info shadow btn-xs sharp me-1"><i class="fa fa-eye"></i></a>
+
+                                    <a data-bs-toggle="modal" data-bs-target="#AciklamaModalCenter" class="btn btn-warning shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+                                    <a class="btn btn-primary shadow btn-xs sharp me-1"><i class="fa fa-trash"></i></a>
+                                    <a class="btn btn-dark shadow btn-xs sharp me-1"><i class="bi bi-key"></i></a>
+                                    <a class="btn btn-light shadow btn-xs sharp me-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill-lock" viewBox="0 0 16 16">
+                                            <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-9 8c0 1 1 1 1 1h5v-1a1.9 1.9 0 0 1 .01-.2 4.49 4.49 0 0 1 1.534-3.693C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4Zm7 0a1 1 0 0 1 1-1v-1a2 2 0 1 1 4 0v1a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1v-2Zm3-3a1 1 0 0 0-1 1v1h2v-1a1 1 0 0 0-1-1Z" />
+                                        </svg>
+                                    </a>
+
+
+                                </td>
+                            </tr>
+
+                            <tr class="even">
+
+                                <td class="thh"><a href="#">Abdullah Köse</a></td>
+                                <td class="thh">02.06.2023</td>
+                                <td class="thh">Mersin</td>
+
+                                <td class="thh">Selcuk@gmail.com</td>
+                                <td class="thh">
+                                    <span class="badge light badge-danger " style="width:100px;">Askıya Alındı</span>
+                                    @*                                            <span class="badge light badge-success">Successful</span>
+                                    <span class="badge light badge-success">Successful</span>*@
+
+
+
+
+                                </td>
+                                <td class="thh">
+                                    <a data-bs-toggle="modal" data-bs-target="#exampleModalCenter" class="btn btn-info shadow btn-xs sharp me-1"><i class="fa fa-eye"></i></a>
+
+                                    <a data-bs-toggle="modal" data-bs-target="#AciklamaModalCenter" class="btn btn-warning shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+                                    <a class="btn btn-primary shadow btn-xs sharp me-1"><i class="fa fa-trash"></i></a>
+                                    <a class="btn btn-dark shadow btn-xs sharp me-1"><i class="bi bi-key"></i></a>
+                                    <a class="btn btn-light shadow btn-xs sharp me-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill-lock" viewBox="0 0 16 16">
+                                            <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-9 8c0 1 1 1 1 1h5v-1a1.9 1.9 0 0 1 .01-.2 4.49 4.49 0 0 1 1.534-3.693C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4Zm7 0a1 1 0 0 1 1-1v-1a2 2 0 1 1 4 0v1a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1v-2Zm3-3a1 1 0 0 0-1 1v1h2v-1a1 1 0 0 0-1-1Z" />
+                                        </svg>
+                                    </a>
+
+                                </td>
+                            </tr>
+
+                            <tr class="odd">
+
+                                <td class="thh"><a href="#">Abdullah Köse</a></td>
+                                <td class="thh">02.06.2023</td>
+                                <td class="thh">Mersin</td>
+
+                                <td class="thh">Selcuk@gmail.com</td>
+                                <td class="thh">
+                                    <span class="badge light badge-success " style="width:100px;">Aktif Kullanıcı</span>
+                                    @*                                            <span class="badge light badge-success">Successful</span>
+                                    <span class="badge light badge-success">Successful</span>*@
+
+
+
+                                </td>
+
+                                <td class="thh">
+                                    <a data-bs-toggle="modal" data-bs-target="#exampleModalCenter" class="btn btn-info shadow btn-xs sharp me-1"><i class="fa fa-eye"></i></a>
+
+                                    <a data-bs-toggle="modal" data-bs-target="#AciklamaModalCenter" class="btn btn-warning shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+                                    <a class="btn btn-primary shadow btn-xs sharp me-1"><i class="fa fa-trash"></i></a>
+                                    <a class="btn btn-dark shadow btn-xs sharp me-1"><i class="bi bi-key"></i></a>
+                                    <a class="btn btn-light shadow btn-xs sharp me-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill-lock" viewBox="0 0 16 16">
+                                            <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-9 8c0 1 1 1 1 1h5v-1a1.9 1.9 0 0 1 .01-.2 4.49 4.49 0 0 1 1.534-3.693C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4Zm7 0a1 1 0 0 1 1-1v-1a2 2 0 1 1 4 0v1a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1v-2Zm3-3a1 1 0 0 0-1 1v1h2v-1a1 1 0 0 0-1-1Z" />
+                                        </svg>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Öğretmenler Listesi</h4>
+                <div class="card-toolbar">
+                    <a asp-controller="Kullanici" asp-action="Ogretmenler" class="btn btn-primary font-weight-bolder">
+                        <span class="svg-icon svg-icon-md">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+                                <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
+                            </svg>
+                        </span>Detaylı İşlemler
+                    </a>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-responsive-md">
+                        <thead>
+                            <tr>
+
+                                <th class="bas thh">Kullanıcı adı</th>
+                                <th class="thh">Oluşturulma Tarihi</th>
+                                <th class="thh">Şubesi</th>
+                                <th class="thh">E-Posta Adresi</th>
+                                <th class="thh">Durumu</th>
+
+                                <th class="thh" style="width:8rem">Aksiyon</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="odd">
+
+                                <td class="thh"><a href="#">Abdullah Köse</a></td>
+                                <td class="thh">02.06.2023</td>
+                                <td class="thh">Mersin</td>
+
+                                <td class="thh">Selcuk@gmail.com</td>
+                                <td class="thh">
+                                    <span class="badge light badge-success " style="width:100px;">Aktif Kullanıcı</span>
+                                    @*                                            <span class="badge light badge-success">Successful</span>
+                                    <span class="badge light badge-success">Successful</span>*@
+
+
+
+                                </td>
+
+                                <td class="thh">
+                                    <a data-bs-toggle="modal" data-bs-target="#exampleModalCenter" class="btn btn-info shadow btn-xs sharp me-1"><i class="fa fa-eye"></i></a>
+
+                                    <a data-bs-toggle="modal" data-bs-target="#AciklamaModalCenter" class="btn btn-warning shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+                                    <a class="btn btn-primary shadow btn-xs sharp me-1"><i class="fa fa-trash"></i></a>
+                                    <a class="btn btn-dark shadow btn-xs sharp me-1"><i class="bi bi-key"></i></a>
+                                    <a class="btn btn-light shadow btn-xs sharp me-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill-lock" viewBox="0 0 16 16">
+                                            <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-9 8c0 1 1 1 1 1h5v-1a1.9 1.9 0 0 1 .01-.2 4.49 4.49 0 0 1 1.534-3.693C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4Zm7 0a1 1 0 0 1 1-1v-1a2 2 0 1 1 4 0v1a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1v-2Zm3-3a1 1 0 0 0-1 1v1h2v-1a1 1 0 0 0-1-1Z" />
+                                        </svg>
+                                    </a>
+                                </td>
+                            </tr>
+
+                            <tr class="even">
+
+                                <td class="thh"><a href="#">Abdullah Köse</a></td>
+                                <td class="thh">02.06.2023</td>
+                                <td class="thh">Mersin</td>
+
+                                <td class="thh">Selcuk@gmail.com</td>
+                                <td class="thh">
+                                    <span class="badge light badge-danger " style="width:100px;">Askıya Alındı</span>
+                                    @*                                            <span class="badge light badge-success">Successful</span>
+                                    <span class="badge light badge-success">Successful</span>*@
+
+
+
+
+                                </td>
+                                <td class="thh">
+                                    <a data-bs-toggle="modal" data-bs-target="#exampleModalCenter" class="btn btn-info shadow btn-xs sharp me-1"><i class="fa fa-eye"></i></a>
+
+                                    <a data-bs-toggle="modal" data-bs-target="#AciklamaModalCenter" class="btn btn-warning shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+                                    <a class="btn btn-primary shadow btn-xs sharp me-1"><i class="fa fa-trash"></i></a>
+                                    <a class="btn btn-dark shadow btn-xs sharp me-1"><i class="bi bi-key"></i></a>
+                                    <a class="btn btn-light shadow btn-xs sharp me-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill-lock" viewBox="0 0 16 16">
+                                            <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-9 8c0 1 1 1 1 1h5v-1a1.9 1.9 0 0 1 .01-.2 4.49 4.49 0 0 1 1.534-3.693C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4Zm7 0a1 1 0 0 1 1-1v-1a2 2 0 1 1 4 0v1a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1v-2Zm3-3a1 1 0 0 0-1 1v1h2v-1a1 1 0 0 0-1-1Z" />
+                                        </svg>
+                                    </a>
+
+                                </td>
+                            </tr>
+
+                            <tr class="odd">
+
+                                <td class="thh"><a href="#">Abdullah Köse</a></td>
+                                <td class="thh">02.06.2023</td>
+                                <td class="thh">Mersin</td>
+
+                                <td class="thh">Selcuk@gmail.com</td>
+                                <td class="thh">
+                                    <span class="badge light badge-success " style="width:100px;">Aktif Kullanıcı</span>
+                                    @*                                            <span class="badge light badge-success">Successful</span>
+                                    <span class="badge light badge-success">Successful</span>*@
+
+
+
+                                </td>
+
+                                <td class="thh">
+                                    <a data-bs-toggle="modal" data-bs-target="#exampleModalCenter" class="btn btn-info shadow btn-xs sharp me-1"><i class="fa fa-eye"></i></a>
+
+                                    <a data-bs-toggle="modal" data-bs-target="#AciklamaModalCenter" class="btn btn-warning shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+                                    <a class="btn btn-primary shadow btn-xs sharp me-1"><i class="fa fa-trash"></i></a>
+                                    <a class="btn btn-dark shadow btn-xs sharp me-1"><i class="bi bi-key"></i></a>
+                                    <a class="btn btn-light shadow btn-xs sharp me-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill-lock" viewBox="0 0 16 16">
+                                            <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-9 8c0 1 1 1 1 1h5v-1a1.9 1.9 0 0 1 .01-.2 4.49 4.49 0 0 1 1.534-3.693C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4Zm7 0a1 1 0 0 1 1-1v-1a2 2 0 1 1 4 0v1a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1v-2Zm3-3a1 1 0 0 0-1 1v1h2v-1a1 1 0 0 0-1-1Z" />
+                                        </svg>
+                                    </a>
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Personeller Listesi</h4>
+                <div class="card-toolbar">
+                    <a asp-controller="Kullanici" asp-action="DigerPersoneller" class="btn btn-primary font-weight-bolder">
+                        <span class="svg-icon svg-icon-md">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+                                <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
+                            </svg>
+                        </span>Detaylı İşlemler
+                    </a>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-responsive-md">
+                        <thead>
+                            <tr>
+
+                                <th class="bas thh">Kullanıcı adı</th>
+                                <th class="thh">Oluşturulma Tarihi</th>
+                                <th class="thh">Şubesi</th>
+                                <th class="thh">E-Posta Adresi</th>
+                                <th class="thh">Durumu</th>
+
+                                <th class="thh" style="width:8rem">Aksiyon</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="odd">
+
+                                <td class="thh"><a href="#">Abdullah Köse</a></td>
+                                <td class="thh">02.06.2023</td>
+                                <td class="thh">Mersin</td>
+
+                                <td class="thh">Selcuk@gmail.com</td>
+                                <td class="thh">
+                                    <span class="badge light badge-success " style="width:100px;">Aktif Kullanıcı</span>
+                                    @*                                            <span class="badge light badge-success">Successful</span>
+                                    <span class="badge light badge-success">Successful</span>*@
+
+
+
+                                </td>
+
+                                <td class="thh">
+                                    <a data-bs-toggle="modal" data-bs-target="#exampleModalCenter" class="btn btn-info shadow btn-xs sharp me-1"><i class="fa fa-eye"></i></a>
+
+                                    <a data-bs-toggle="modal" data-bs-target="#AciklamaModalCenter" class="btn btn-warning shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+                                    <a class="btn btn-primary shadow btn-xs sharp me-1"><i class="fa fa-trash"></i></a>
+                                    <a class="btn btn-dark shadow btn-xs sharp me-1"><i class="bi bi-key"></i></a>
+                                    <a class="btn btn-light shadow btn-xs sharp me-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill-lock" viewBox="0 0 16 16">
+                                            <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-9 8c0 1 1 1 1 1h5v-1a1.9 1.9 0 0 1 .01-.2 4.49 4.49 0 0 1 1.534-3.693C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4Zm7 0a1 1 0 0 1 1-1v-1a2 2 0 1 1 4 0v1a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1v-2Zm3-3a1 1 0 0 0-1 1v1h2v-1a1 1 0 0 0-1-1Z" />
+                                        </svg>
+                                    </a>
+
+                                </td>
+                            </tr>
+
+                            <tr class="even">
+
+                                <td class="thh"><a href="#">Abdullah Köse</a></td>
+                                <td class="thh">02.06.2023</td>
+                                <td class="thh">Mersin</td>
+
+                                <td class="thh">Selcuk@gmail.com</td>
+                                <td class="thh">
+                                    <span class="badge light badge-danger " style="width:100px;">Askıya Alındı</span>
+                                    @*                                            <span class="badge light badge-success">Successful</span>
+                                    <span class="badge light badge-success">Successful</span>*@
+
+
+
+
+                                </td>
+                                <td class="thh">
+                                    <a data-bs-toggle="modal" data-bs-target="#exampleModalCenter" class="btn btn-info shadow btn-xs sharp me-1"><i class="fa fa-eye"></i></a>
+
+                                    <a data-bs-toggle="modal" data-bs-target="#AciklamaModalCenter" class="btn btn-warning shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+                                    <a class="btn btn-primary shadow btn-xs sharp me-1"><i class="fa fa-trash"></i></a>
+                                    <a class="btn btn-dark shadow btn-xs sharp me-1"><i class="bi bi-key"></i></a>
+                                    <a class="btn btn-light shadow btn-xs sharp me-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill-lock" viewBox="0 0 16 16">
+                                            <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-9 8c0 1 1 1 1 1h5v-1a1.9 1.9 0 0 1 .01-.2 4.49 4.49 0 0 1 1.534-3.693C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4Zm7 0a1 1 0 0 1 1-1v-1a2 2 0 1 1 4 0v1a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1v-2Zm3-3a1 1 0 0 0-1 1v1h2v-1a1 1 0 0 0-1-1Z" />
+                                        </svg>
+                                    </a>
+                                </td>
+                            </tr>
+
+                            <tr class="odd">
+
+                                <td class="thh"><a href="#">Abdullah Köse</a></td>
+                                <td class="thh">02.06.2023</td>
+                                <td class="thh">Mersin</td>
+
+                                <td class="thh">Selcuk@gmail.com</td>
+                                <td class="thh">
+                                    <span class="badge light badge-success " style="width:100px;">Aktif Kullanıcı</span>
+                                    @*                                            <span class="badge light badge-success">Successful</span>
+                                    <span class="badge light badge-success">Successful</span>*@
+
+
+
+                                </td>
+
+                                <td class="thh">
+                                    <a data-bs-toggle="modal" data-bs-target="#exampleModalCenter" class="btn btn-info shadow btn-xs sharp me-1"><i class="fa fa-eye"></i></a>
+
+                                    <a data-bs-toggle="modal" data-bs-target="#AciklamaModalCenter" class="btn btn-warning shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+                                    <a class="btn btn-primary shadow btn-xs sharp me-1"><i class="fa fa-trash"></i></a>
+                                    <a class="btn btn-dark shadow btn-xs sharp me-1"><i class="bi bi-key"></i></a>
+                                    <a class="btn btn-light shadow btn-xs sharp me-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill-lock" viewBox="0 0 16 16">
+                                            <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-9 8c0 1 1 1 1 1h5v-1a1.9 1.9 0 0 1 .01-.2 4.49 4.49 0 0 1 1.534-3.693C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4Zm7 0a1 1 0 0 1 1-1v-1a2 2 0 1 1 4 0v1a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1v-2Zm3-3a1 1 0 0 0-1 1v1h2v-1a1 1 0 0 0-1-1Z" />
+                                        </svg>
+                                    </a>
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Öğrenciler Listesi</h4>
+                <div class="card-toolbar">
+                    <a asp-controller="Kullanici" asp-action="Ogrenciler" class="btn btn-primary font-weight-bolder">
+                        <span class="svg-icon svg-icon-md">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+                                <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
+                            </svg>
+                        </span>Detaylı İşlemler
+                    </a>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-responsive-md">
+                        <thead>
+                            <tr>
+            
+                                <th class="bas thh">Kullanıcı adı</th>
+                                <th class="thh">Oluşturulma Tarihi</th>
+                                <th class="thh">Şubesi</th>
+                                <th class="thh">E-Posta Adresi</th>
+                                <th class="thh">Durumu</th>
+
+                                <th class="thh" style="width:8rem">Aksiyon</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="odd">
+
+                                <td class="thh"><a href="#">Abdullah Köse</a></td>
+                                <td class="thh">02.06.2023</td>
+                                <td class="thh">Mersin</td>
+
+                                <td class="thh">Selcuk@gmail.com</td>
+                                <td class="thh">
+                                    <span class="badge light badge-success " style="width:100px;">Aktif Kullanıcı</span>
+                                    @*                                            <span class="badge light badge-success">Successful</span>
+                                    <span class="badge light badge-success">Successful</span>*@
+
+
+
+                                </td>
+
+                                <td class="thh">
+                                    <a data-bs-toggle="modal" data-bs-target="#exampleModalCenter" class="btn btn-info shadow btn-xs sharp me-1"><i class="fa fa-eye"></i></a>
+
+                                    <a data-bs-toggle="modal" data-bs-target="#AciklamaModalCenter" class="btn btn-warning shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+                                    <a class="btn btn-primary shadow btn-xs sharp me-1"><i class="fa fa-trash"></i></a>
+                                    <a class="btn btn-dark shadow btn-xs sharp me-1"><i class="bi bi-key"></i></a>
+                                    <a class="btn btn-light shadow btn-xs sharp me-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill-lock" viewBox="0 0 16 16">
+                                            <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-9 8c0 1 1 1 1 1h5v-1a1.9 1.9 0 0 1 .01-.2 4.49 4.49 0 0 1 1.534-3.693C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4Zm7 0a1 1 0 0 1 1-1v-1a2 2 0 1 1 4 0v1a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1v-2Zm3-3a1 1 0 0 0-1 1v1h2v-1a1 1 0 0 0-1-1Z" />
+                                        </svg>
+                                    </a>
+                                </td>
+                            </tr>
+
+                            <tr class="even">
+
+                                <td class="thh"><a href="#">Abdullah Köse</a></td>
+                                <td class="thh">02.06.2023</td>
+                                <td class="thh">Mersin</td>
+
+                                <td class="thh">Selcuk@gmail.com</td>
+                                <td class="thh">
+                                    <span class="badge light badge-danger " style="width:100px;">Askıya Alındı</span>
+                                    @*                                            <span class="badge light badge-success">Successful</span>
+                                    <span class="badge light badge-success">Successful</span>*@
+
+
+
+
+                                </td>
+                                <td class="thh">
+                                    <a data-bs-toggle="modal" data-bs-target="#exampleModalCenter" class="btn btn-info shadow btn-xs sharp me-1"><i class="fa fa-eye"></i></a>
+
+                                    <a data-bs-toggle="modal" data-bs-target="#AciklamaModalCenter" class="btn btn-warning shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+                                    <a class="btn btn-primary shadow btn-xs sharp me-1"><i class="fa fa-trash"></i></a>
+                                    <a class="btn btn-dark shadow btn-xs sharp me-1"><i class="bi bi-key"></i></a>
+                                    <a class="btn btn-light shadow btn-xs sharp me-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill-lock" viewBox="0 0 16 16">
+                                            <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-9 8c0 1 1 1 1 1h5v-1a1.9 1.9 0 0 1 .01-.2 4.49 4.49 0 0 1 1.534-3.693C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4Zm7 0a1 1 0 0 1 1-1v-1a2 2 0 1 1 4 0v1a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1v-2Zm3-3a1 1 0 0 0-1 1v1h2v-1a1 1 0 0 0-1-1Z" />
+                                        </svg>
+                                    </a>
+
+                                </td>
+                            </tr>
+
+                            <tr class="odd">
+
+                                <td class="thh"><a href="#">Abdullah Köse</a></td>
+                                <td class="thh">02.06.2023</td>
+                                <td class="thh">Mersin</td>
+
+                                <td class="thh">Selcuk@gmail.com</td>
+                                <td class="thh">
+                                    <span class="badge light badge-success " style="width:100px;">Aktif Kullanıcı</span>
+                                    @*                                            <span class="badge light badge-success">Successful</span>
+                                    <span class="badge light badge-success">Successful</span>*@
+
+
+
+                                </td>
+
+                                <td class="thh">
+                                    <a data-bs-toggle="modal" data-bs-target="#exampleModalCenter" class="btn btn-info shadow btn-xs sharp me-1"><i class="fa fa-eye"></i></a>
+
+                                    <a data-bs-toggle="modal" data-bs-target="#AciklamaModalCenter" class="btn btn-warning shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+                                    <a class="btn btn-primary shadow btn-xs sharp me-1"><i class="fa fa-trash"></i></a>
+                                    <a class="btn btn-dark shadow btn-xs sharp me-1"><i class="bi bi-key"></i></a>
+                                    <a class="btn btn-light shadow btn-xs sharp me-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill-lock" viewBox="0 0 16 16">
+                                            <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-9 8c0 1 1 1 1 1h5v-1a1.9 1.9 0 0 1 .01-.2 4.49 4.49 0 0 1 1.534-3.693C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4Zm7 0a1 1 0 0 1 1-1v-1a2 2 0 1 1 4 0v1a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1v-2Zm3-3a1 1 0 0 0-1 1v1h2v-1a1 1 0 0 0-1-1Z" />
+                                        </svg>
+                                    </a>
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Veliler Listesi</h4>
+                <div class="card-toolbar">
+                    <a asp-controller="Kullanici" asp-action="Veliler" class="btn btn-primary font-weight-bolder">
+                        <span class="svg-icon svg-icon-md">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+                                <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
+                            </svg>
+                        </span>Detaylı İşlemler
+                    </a>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-responsive-md">
+                        <thead>
+                            <tr>
+
+                                <th class="bas thh">Kullanıcı adı</th>
+                                <th class="thh">Oluşturulma Tarihi</th>
+                                <th class="thh">Şubesi</th>
+                                <th class="thh">E-Posta Adresi</th>
+                                <th class="thh">Durumu</th>
+
+                                <th class="thh" style="width:8rem">Aksiyon</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="odd">
+
+                                <td class="thh"><a href="#">Abdullah Köse</a></td>
+                                <td class="thh">02.06.2023</td>
+                                <td class="thh">Mersin</td>
+
+                                <td class="thh">Selcuk@gmail.com</td>
+                                <td class="thh">
+                                    <span class="badge light badge-success " style="width:100px;">Aktif Kullanıcı</span>
+                                    @*                                            <span class="badge light badge-success">Successful</span>
+                                    <span class="badge light badge-success">Successful</span>*@
+
+
+
+                                </td>
+
+                                <td class="thh">
+                                    <a data-bs-toggle="modal" data-bs-target="#exampleModalCenter" class="btn btn-info shadow btn-xs sharp me-1"><i class="fa fa-eye"></i></a>
+
+                                    <a data-bs-toggle="modal" data-bs-target="#AciklamaModalCenter" class="btn btn-warning shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+                                    <a class="btn btn-primary shadow btn-xs sharp me-1"><i class="fa fa-trash"></i></a>
+                                    <a class="btn btn-dark shadow btn-xs sharp me-1"><i class="bi bi-key"></i></a>
+                                    <a class="btn btn-light shadow btn-xs sharp me-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill-lock" viewBox="0 0 16 16">
+                                            <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-9 8c0 1 1 1 1 1h5v-1a1.9 1.9 0 0 1 .01-.2 4.49 4.49 0 0 1 1.534-3.693C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4Zm7 0a1 1 0 0 1 1-1v-1a2 2 0 1 1 4 0v1a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1v-2Zm3-3a1 1 0 0 0-1 1v1h2v-1a1 1 0 0 0-1-1Z" />
+                                        </svg>
+                                    </a>
+
+                                </td>
+                            </tr>
+
+                            <tr class="even">
+
+                                <td class="thh"><a href="#">Abdullah Köse</a></td>
+                                <td class="thh">02.06.2023</td>
+                                <td class="thh">Mersin</td>
+
+                                <td class="thh">Selcuk@gmail.com</td>
+                                <td class="thh">
+                                    <span class="badge light badge-danger " style="width:100px;">Askıya Alındı</span>
+                                    @*                                            <span class="badge light badge-success">Successful</span>
+                                    <span class="badge light badge-success">Successful</span>*@
+
+
+
+
+                                </td>
+                                <td class="thh">
+                                    <a data-bs-toggle="modal" data-bs-target="#exampleModalCenter" class="btn btn-info shadow btn-xs sharp me-1"><i class="fa fa-eye"></i></a>
+
+                                    <a data-bs-toggle="modal" data-bs-target="#AciklamaModalCenter" class="btn btn-warning shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+                                    <a class="btn btn-primary shadow btn-xs sharp me-1"><i class="fa fa-trash"></i></a>
+                                    <a class="btn btn-dark shadow btn-xs sharp me-1"><i class="bi bi-key"></i></a>
+                                    <a class="btn btn-light shadow btn-xs sharp me-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill-lock" viewBox="0 0 16 16">
+                                            <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-9 8c0 1 1 1 1 1h5v-1a1.9 1.9 0 0 1 .01-.2 4.49 4.49 0 0 1 1.534-3.693C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4Zm7 0a1 1 0 0 1 1-1v-1a2 2 0 1 1 4 0v1a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1v-2Zm3-3a1 1 0 0 0-1 1v1h2v-1a1 1 0 0 0-1-1Z" />
+                                        </svg>
+                                    </a>
+
+                                </td>
+                            </tr>
+
+                            <tr class="odd">
+
+                                <td class="thh"><a href="#">Abdullah Köse</a></td>
+                                <td class="thh">02.06.2023</td>
+                                <td class="thh">Mersin</td>
+
+                                <td class="thh">Selcuk@gmail.com</td>
+                                <td class="thh">
+                                    <span class="badge light badge-success " style="width:100px;">Aktif Kullanıcı</span>
+                                    @*                                            <span class="badge light badge-success">Successful</span>
+                                    <span class="badge light badge-success">Successful</span>*@
+
+
+
+                                </td>
+
+                                <td class="thh">
+                                    <a data-bs-toggle="modal" data-bs-target="#exampleModalCenter" class="btn btn-info shadow btn-xs sharp me-1"><i class="fa fa-eye"></i></a>
+
+                                    <a data-bs-toggle="modal" data-bs-target="#AciklamaModalCenter" class="btn btn-warning shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+                                    <a class="btn btn-primary shadow btn-xs sharp me-1"><i class="fa fa-trash"></i></a>
+                                    <a class="btn btn-dark shadow btn-xs sharp me-1"><i class="bi bi-key"></i></a>
+                                    <a class="btn btn-light shadow btn-xs sharp me-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill-lock" viewBox="0 0 16 16">
+                                            <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-9 8c0 1 1 1 1 1h5v-1a1.9 1.9 0 0 1 .01-.2 4.49 4.49 0 0 1 1.534-3.693C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4Zm7 0a1 1 0 0 1 1-1v-1a2 2 0 1 1 4 0v1a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1v-2Zm3-3a1 1 0 0 0-1 1v1h2v-1a1 1 0 0 0-1-1Z" />
+                                        </svg>
+                                    </a>
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Content/vendor/jquery-nice-select/js/jquery.nice-select.min.js" asp-append-version="true"></script>
+    <script>
+        $(document).ready(function () {
+            var mycrumb = $("#myBreadcrumb");
+            $("#previousBreadcrumb").before(mycrumb);
+        })
+    </script>
+}

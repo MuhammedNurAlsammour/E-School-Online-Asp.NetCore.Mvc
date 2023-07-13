@@ -1,0 +1,85 @@
+﻿@use postcss-nested;
+@use postcss-cssnext;
+
+@import url('https://fonts.googleapis.com/css?family=Raleway:300,400,700');
+
+body {
+    font-family: 'Raleway', sans-serif;
+}
+
+.wrapper {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 30px;
+}
+
+.site-header {
+    margin-bottom: 40px;
+    &__title
+
+{
+    text-align: center;
+    background: #eee;
+    padding: 15px;
+    border-radius: 4px;
+    color: #9c9c9c;
+    font-size: 28px;
+    &__light
+
+{
+    font-weight: 300;
+    color: #adadad;
+}
+
+}
+}
+
+.map-container {
+}
+
+.city {
+    fill: #CCCCCC;
+    fill-opacity: 1;
+    stroke: white;
+    stroke-opacity: 1;
+    stroke-width: 0.5;
+    transition: all .3s ease-out;
+    cursor: pointer;
+    &:hover
+
+{
+    fill: #a9a9a9;
+}
+
+}
+
+.show-city-name {
+    background-color: #f39c12;
+    border-radius: 10px;
+    color: #fff;
+    position: absolute;
+    padding: 15px 25px;
+    opacity: 0;
+    visibility: hidden;
+    font-size: 16px;
+    &--active
+
+{
+    opacity: 1;
+    visibility: visible
+}
+
+}
+
+.site-footer {
+    text-align: center;
+    font-size: 12px;
+    margin-top: 40px;
+    color: #ababab;
+    &__link
+
+{
+    color: #3498db;
+    font-weight: 700;
+}
+}

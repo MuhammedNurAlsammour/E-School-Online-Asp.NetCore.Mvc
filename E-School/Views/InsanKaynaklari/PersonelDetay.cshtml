@@ -1,0 +1,483 @@
+﻿ @{
+	ViewData["Title"] = "PersonelDetay";
+	Layout = "~/Views/Shared/insanKaynakLayout.cshtml";
+
+}
+
+
+@section head{
+	<link href="~/Content/vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet" asp-append-version="true">
+	<link href="~/Content/vendor/jquery-nice-select/css/nice-select.css" rel="stylesheet" asp-append-version="true">
+	<link href="~/Content/vendor/select2/css/select2.min.css" rel="stylesheet" asp-append-version="true" />
+
+	<style>
+
+		.thh{
+			text-align:center;
+		}
+
+	</style>
+}
+
+
+<div class="row page-titles" id="myBreadcrumb">
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item "><a asp-controller="InsanKaynaklari" asp-action="InsanKaynaklari">İnsan Kaynakları İzinler</a></li>
+		<li class="breadcrumb-item active"><a asp-controller="InsanKaynaklari" asp-action="PersonelDetay">Personel Detayları</a></li>
+	</ol>
+</div>
+
+
+<div class="row">
+	<div class="col-12">
+		<div class="card">
+			<div class="card-header">
+				<h4>Şube Seçiniz</h4>
+				<div class="col-xl-4">
+					<div class="d-flex">
+						<div class="col-xl-8">
+							<select class="default-select wide">
+								<option value="All" selected="selected">Tümünü Göster</option>
+								<option value="1">Mersin</option>
+								<option value="2">İzmir</option>
+								<option value="3">İstanbul</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="card-toolbar">
+					<a href="#PersonelEkleModal" data-bs-target="#PersonelEkleModal" data-bs-toggle="modal" class="btn btn-secondary font-weight-bolder">
+						<span class="svg-icon svg-icon-md">
+							<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+								<path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+							</svg>
+						</span>Personel Ekle
+					</a>
+					<a href="#" class="btn btn-danger font-weight-bolder">
+						<span class="svg-icon svg-icon-md">
+							<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-dash-circle-fill" viewBox="0 0 16 16">
+								<path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1h-7z" />
+							</svg>
+						</span>Personel Sil
+					</a>
+					<a href="#" class="btn btn-dark font-weight-bolder">
+						<span class="svg-icon svg-icon-md">
+							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer-fill" viewBox="0 0 16 16">
+								<path d="M5 1a2 2 0 0 0-2 2v1h10V3a2 2 0 0 0-2-2H5zm6 8H5a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1z" />
+								<path d="M0 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-1v-2a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2H2a2 2 0 0 1-2-2V7zm2.5 1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z" />
+							</svg>
+						</span>Yazdır
+					</a>
+				</div>
+			</div>
+			<div class="card-body">
+				<div class="table-responsive">
+					<table id="demirbaslarTable" class="display" style="min-width: 845px">
+						<thead>
+							<tr>
+
+								<th class="bas thh">Ad Soyad</th>
+								<th class="thh">Görevi</th>
+								<th class="thh">Başlangıç Tarihi</th>
+								<th class="thh">Bittiş Tarihi</th>
+
+								<th class="thh">Özlük Dosyası</th>
+								<th class="thh">Durum</th>
+
+								<th class="thh" style="width:8rem">Aksiyon</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="odd">
+
+								<td class="thh"><a href="#">Abdullah Köse</a></td>
+								<td class="thh">Öğretmen</td>
+								<td class="thh">02.06.2023</td>
+								<td class="thh">02.06.2024</td>
+
+								<td class="thh"><button href="#DosyalarEkleModal" data-bs-target="#DosyalarEkleModal" data-bs-toggle="modal" type="button" class="btn btn-outline-primary btn-xs" fdprocessedid="vvzjlt">Dosyalar</button></td>
+								<td class="thh">
+									<span class="badge light badge-danger">
+										<i class="fa fa-circle text-danger me-1"></i>
+										Ayrıldı
+									</span>
+								</td>
+								<td class="thh">
+									<a id="odevview" onclick="odevview()" class="btn btn-info shadow btn-xs sharp me-1"><i class="fa fa-eye"></i></a>
+									<a id="odevview" onclick="odevview()" class="btn btn-dark shadow btn-xs sharp me-1">
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-escape" viewBox="0 0 16 16">
+											<path d="M8.538 1.02a.5.5 0 1 0-.076.998 6 6 0 1 1-6.445 6.444.5.5 0 0 0-.997.076A7 7 0 1 0 8.538 1.02Z" />
+											<path d="M7.096 7.828a.5.5 0 0 0 .707-.707L2.707 2.025h2.768a.5.5 0 1 0 0-1H1.5a.5.5 0 0 0-.5.5V5.5a.5.5 0 0 0 1 0V2.732l5.096 5.096Z" />
+										</svg>
+									</a>
+									<a href="#EditModal" data-bs-target="#EditModal" data-bs-toggle="modal" class="btn btn-warning shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+									<a class="btn btn-primary shadow btn-xs sharp me-1"><i class="fa fa-trash"></i></a>
+
+
+								</td>
+							</tr>
+
+							<tr class="even">
+
+								<td class="thh"><a href="#">Abdullah Köse</a></td>
+
+								<td class="thh">Muhasebe</td>
+								<td class="thh">02.07.2023</td>
+								<td class="thh">02.06.2024</td>
+								<td class="thh"><button href="#DosyalarEkleModal" data-bs-target="#DosyalarEkleModal" data-bs-toggle="modal" type="button" class="btn btn-outline-primary btn-xs" fdprocessedid="vvzjlt">Dosyalar</button></td>
+								<td class="thh">
+									<span class="badge light badge-success" style="    width: 69px;">
+										<i class="fa fa-circle text-success me-1"></i>
+										Aktif
+									</span>
+								</td>
+								<td class="thh">
+									<a id="odevview" onclick="odevview()" class="btn btn-info shadow btn-xs sharp me-1"><i class="fa fa-eye"></i></a>
+									<a id="odevview" onclick="odevview()" class="btn btn-dark shadow btn-xs sharp me-1">
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-escape" viewBox="0 0 16 16">
+											<path d="M8.538 1.02a.5.5 0 1 0-.076.998 6 6 0 1 1-6.445 6.444.5.5 0 0 0-.997.076A7 7 0 1 0 8.538 1.02Z" />
+											<path d="M7.096 7.828a.5.5 0 0 0 .707-.707L2.707 2.025h2.768a.5.5 0 1 0 0-1H1.5a.5.5 0 0 0-.5.5V5.5a.5.5 0 0 0 1 0V2.732l5.096 5.096Z" />
+										</svg>
+									</a>
+									<a href="#EditModal" data-bs-target="#EditModal" data-bs-toggle="modal" class="btn btn-warning shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+									<a class="btn btn-primary shadow btn-xs sharp me-1"><i class="fa fa-trash"></i></a>
+
+
+								</td>
+							</tr>
+
+
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade bd-example-modal-s" tabindex="-1" role="dialog" aria-hidden="true" id="PersonelEkleModal">
+	<div class="modal-dialog modal-s">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Personlel Giriş Penceresi</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal">
+				</button>
+			</div>
+			@*			Özür dilerim, acaba neden izin alıyorsunuz?
+			*@			<div class="modal-body">
+				<div class="basic-form">
+					<form action="#" id="PersonelEkleForm" method="post">
+						@Html.AntiForgeryToken()
+
+
+						<div class="mb-3 row">
+							<label class="col-sm-4 col-form-label" style="font-size:12.25px; line-height: 1rem;">Rol Seç</label>
+							<div class="col-sm-8">
+								<select id="RolArama" name="RolID" required>
+									<option>Rol Seçiniz</option>
+
+									<option>Öğretmen</option>
+									<option>İnsan Kaynakları</option>
+								</select>
+							</div>
+						</div>
+						<div class="mb-3 row">
+							<label class="col-sm-4 col-form-label" style="font-size:12.25px; line-height: 2.4rem;">İşe Başlama Tarihi</label>
+							<div class="col-sm-8">
+								<input type="date" class="form-control" name="IseBaslamaTarihi" required>
+							</div>
+						</div>
+						<div class="mb-3 row">
+							<label class="col-sm-4 col-form-label" style="font-size:12.25px; line-height: 1rem;">Şubesi</label>
+							<div class="col-sm-8">
+								@*Şubeyi sadece adminler seçecek.*@
+								<select id="subeArama" name="SubeID" required>
+									<option>İzmir</option>
+									<option>Mersin</option>
+								</select>
+							</div>
+						</div>
+						<div class="mb-3 row">
+							<label class="col-sm-4 col-form-label" style="font-size:12.25px; line-height: 2.4rem;">Adı</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" name="Adi" required>
+							</div>
+						</div>
+						<div class="mb-3 row">
+							<label class="col-sm-4 col-form-label" style="font-size:12.25px; line-height: 2.4rem;">Soyadı</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" name="Soyadi" required>
+							</div>
+						</div>
+						<div class="mb-3 row">
+							<label class="col-sm-4 col-form-label" style="font-size:12.25px; line-height: 2.4rem;">Email Adresi</label>
+							<div class="col-sm-8">
+								<input type="email" class="form-control" name="Email" required>
+							</div>
+						</div>
+						<div class="mb-3 row">
+							<label class="col-sm-4 col-form-label" style="font-size:12.25px; line-height: 2.4rem;">Telefon</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" name="Telefon" maxlength="10" onkeypress="validate(event)" required>
+							</div>
+						</div>
+						<div class="mb-3 row">
+							<label class="col-sm-4 col-form-label" style="font-size:12.25px; line-height: 2.4rem;">Doğum Tarihi</label>
+							<div class="col-sm-8">
+								<input type="date" class="form-control" name="DogumTarihi" required>
+							</div>
+						</div>
+						<div class="mb-3 row">
+							<label class="col-sm-4 col-form-label" style="font-size:12.25px; line-height: 2.4rem;">TC Kimlik</label>
+							<div class="col-sm-8">
+								<input type="text" maxlength="11" onkeypress="validate(event)" class="form-control" name="IdentityNumber" required>
+							</div>
+						</div>
+						<fieldset class="mb-3">
+							<div class="row">
+								<label class="col-form-label col-sm-4 pt-0" style="font-size:12.25px; line-height: 2.4rem;">Cinsiyet</label>
+								<div class="col-sm-8">
+									<input class="form-check-input" type="radio" name="Cinsiyet" value="Kadın" checked>
+									<label class="form-check-label">
+										Kadın
+									</label>
+									<input class="form-check-input" type="radio" name="Cinsiyet" value="Erkek">
+									<label class="form-check-label">
+										Erkek
+									</label>
+								</div>
+							</div>
+						</fieldset>
+						<div class="mb-3 row">
+							<label class="col-sm-4 col-form-label" style="font-size:12.25px; line-height: 2.4rem;">Adres</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" name="Adres" required>
+							</div>
+						</div>
+						<div class="mb-3 row">
+							<label class="col-sm-4 col-form-label" style="font-size:12.25px; line-height: 2.4rem;">Açıklama</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" name="Aciklama" required>
+							</div>
+						</div>
+
+
+					</form>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success" id="btnSubmit">Kaydet</button>
+				<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Kapat</button>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" id="DosyalarEkleModal">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Dosya Ekleme Penceresi</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal">
+				</button>
+			</div>
+			@*			Özür dilerim, acaba neden izin alıyorsunuz?
+			*@			<div class="modal-body">
+				<div class="basic-form">
+					<form action="#" id="PersonelEkleForm" method="post">
+						@Html.AntiForgeryToken()
+
+
+						<div class="table-responsive">
+							<table id="DevamsizlikTable" class="table display mb-4 dataTablesCard order-table card-table text-black application" style="min-width: 400px">
+								<thead>
+									<tr>
+
+
+										<th>
+											Belge Adı
+
+										</th>
+
+										<th>
+											Dosya Yükle
+
+										</th>
+										<th class="thh">
+											Ekle
+
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+
+										<td>
+
+											<input value="1.sınav" type="text" class="form-control" name="SinavinNotlari" placeholder="Not giriniz" required>
+
+										</td>
+
+										<td>
+
+											<input value="1.sınav" type="file" class="form-control" name="Sinavin" placeholder="Not giriniz" required>
+
+										</td>
+
+										<td class="thh">
+
+											<a class="btn btn-success shadow btn-lg"><i class="bi bi-check-circle"></i></a>
+
+										</td>
+
+
+									</tr>
+
+								</tbody>
+							</table>
+						</div>
+
+					</form>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success" id="btnSubmit">Kaydet</button>
+
+				<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Kapat</button>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+@section scripts{
+	<script src="~/Content/vendor/datatables/js/jquery.dataTables.min.js" asp-append-version="true"></script>
+	<script src="~/Content/vendor/jquery-nice-select/js/jquery.nice-select.min.js" asp-append-version="true"></script>
+	<script src="~/Content/vendor/select2/js/select2.full.min.js" asp-append-version="true"></script>
+
+	<script>
+		$(document).ready(function () {
+			$("#RolArama").select2({
+				dropdownParent: $('#PersonelEkleModal')
+			});
+			$("#subeArama").select2({
+				dropdownParent: $('#PersonelEkleModal')
+			});
+			var mycrumb = $("#myBreadcrumb");
+			$("#previousBreadcrumb").before(mycrumb);
+
+			var table = $('#demirbaslarTable').DataTable({
+				searching: true,
+				paging: true,
+				select: false,
+				info: false,
+				lengthChange: false,
+				language: {
+					paginate: {
+						next: '<i class="fa fa-angle-double-right" aria-hidden="true"></i>',
+						previous: '<i class="fa fa-angle-double-left" aria-hidden="true"></i>'
+					}
+				}
+			});
+		})
+
+		$(document).ready(function () {
+			$("#IzınTuru1").select2({
+				dropdownParent: $('#PersonelEkleModal')
+			});
+			$("#IzınTuru2").select2({
+				dropdownParent: $('#PersonelEkleModal')
+			});
+
+			$("#PersonelEkleForm").submit(function (e) {
+				e.preventDefault();
+				var fd = new FormData(this);
+				pondFiles = pond.getFiles();
+				for (var i = 0; i < pondFiles.length; i++) {
+					fd.append('filepond', pondFiles[i].file);
+				}
+				$.ajax({
+					url: '/Kutuphane/TestUpload',
+					type: 'POST',
+					data: fd,
+					dataType: 'JSON',
+					contentType: false,
+					cache: false,
+					processData: false,
+					success: function (data) {
+					},
+					error: function (data) {
+					}
+				}
+				);
+			});
+		})
+
+
+		// ابحث عن زر الموافقة
+		var approveButton = document.querySelector('.thh .btn-success');
+
+		// قم بإضافة حدث النقر على الزر
+		approveButton.addEventListener('click', function () {
+			// ابحث عن الصف الذي يحتوي على الزر المستهدف
+			var targetRow = approveButton.closest('tr');
+
+			// انشئ صفًا جديدًا
+			var newRow = document.createElement('tr');
+
+			// إنشاء العناصر الفرعية للصف
+			var td1 = document.createElement('td');
+			var inputText = document.createElement('input');
+			inputText.type = 'text';
+			inputText.className = 'form-control';
+			inputText.name = 'SinavinNotlari';
+			inputText.placeholder = 'Not giriniz';
+			inputText.required = true;
+			td1.appendChild(inputText);
+
+			// إنشاء العناصر الفرعية للصف
+			var td2 = document.createElement('td');
+			var inputFile = document.createElement('input');
+			inputFile.type = 'file';
+			inputFile.className = 'form-control';
+			inputFile.name = 'Sinavin';
+			inputFile.placeholder = 'Not giriniz';
+			inputFile.required = true;
+			td2.appendChild(inputFile);
+
+			var td3 = document.createElement('td');
+			td3.className = 'thh';
+			var deleteButton = document.createElement('a');
+			deleteButton.className = 'btn btn-danger shadow btn-lg';
+			var deleteIcon = document.createElement('i');
+			deleteIcon.className = 'bi bi-x-circle';
+			deleteButton.appendChild(deleteIcon);
+			td3.appendChild(deleteButton);
+
+			// أضف العناصر الفرعية إلى الصف الجديد
+			newRow.appendChild(td1);
+			newRow.appendChild(td2);
+			newRow.appendChild(td3);
+
+			// أضف الصف الجديد بعد الصف المستهدف
+			targetRow.parentNode.insertBefore(newRow, targetRow.nextSibling);
+
+
+
+
+			// أضف استماعًا لحدث النقر
+			deleteButton.addEventListener('click', function () {
+				// احصل على الصف الذي يحتوي على الزر المنقر
+				var row = this.closest('tr');
+
+				// قم بإزالة الصف من الجدول
+				row.parentNode.removeChild(row);
+			});
+
+
+		});
+
+</script>
+}
+

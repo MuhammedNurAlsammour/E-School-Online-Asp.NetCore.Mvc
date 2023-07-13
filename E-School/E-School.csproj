@@ -1,0 +1,82 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\Content\css\StyleSheet1.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Controllers\StyleSheet.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\assets\fonts\bootstrap-icons.woff2" />
+    <None Include="wwwroot\assets\fonts\fa-brands-400.svg" />
+    <None Include="wwwroot\assets\fonts\fa-brands-400.woff2" />
+    <None Include="wwwroot\assets\fonts\fa-regular-400.svg" />
+    <None Include="wwwroot\assets\fonts\fa-regular-400.woff2" />
+    <None Include="wwwroot\assets\fonts\fa-solid-900.svg" />
+    <None Include="wwwroot\assets\fonts\fa-solid-900.woff2" />
+    <None Include="wwwroot\assets\fonts\Nioicon.svg" />
+    <None Include="wwwroot\assets\fonts\Nunito-Bold.woff2" />
+    <None Include="wwwroot\assets\fonts\Nunito-Regular.woff2" />
+    <None Include="wwwroot\assets\fonts\Roboto-Bold.woff2" />
+    <None Include="wwwroot\assets\fonts\Roboto-Light.woff2" />
+    <None Include="wwwroot\assets\fonts\Roboto-Medium.woff2" />
+    <None Include="wwwroot\assets\fonts\Roboto-Regular.woff2" />
+    <None Include="wwwroot\assets\fonts\summernote.woff2" />
+    <None Include="wwwroot\assets\fonts\themify.svg" />
+    <None Include="wwwroot\assets\js\apps\calendar.js" />
+    <None Include="wwwroot\assets\js\apps\chats.js" />
+    <None Include="wwwroot\assets\js\apps\file-manager.js" />
+    <None Include="wwwroot\assets\js\apps\inbox.js" />
+    <None Include="wwwroot\assets\js\apps\kanban.js" />
+    <None Include="wwwroot\assets\js\apps\messages.js" />
+    <None Include="wwwroot\assets\js\bundle.js" />
+    <None Include="wwwroot\assets\js\charts\chart-crm.js" />
+    <None Include="wwwroot\assets\js\charts\chart-hotel.js" />
+    <None Include="wwwroot\assets\js\charts\chart-widgets.js" />
+    <None Include="wwwroot\assets\js\charts\gd-analytics.js" />
+    <None Include="wwwroot\assets\js\charts\gd-default.js" />
+    <None Include="wwwroot\assets\js\charts\gd-invest.js" />
+    <None Include="wwwroot\assets\js\editors.js" />
+    <None Include="wwwroot\assets\js\example-chart.js" />
+    <None Include="wwwroot\assets\js\example-dragula.js" />
+    <None Include="wwwroot\assets\js\example-listbox.js" />
+    <None Include="wwwroot\assets\js\example-map.js" />
+    <None Include="wwwroot\assets\js\example-sweetalert.js" />
+    <None Include="wwwroot\assets\js\example-toastr.js" />
+    <None Include="wwwroot\assets\js\example-tree.js" />
+    <None Include="wwwroot\assets\js\libs\datatable-btns.js" />
+    <None Include="wwwroot\assets\js\libs\dragula.js" />
+    <None Include="wwwroot\assets\js\libs\dual-listbox.js" />
+    <None Include="wwwroot\assets\js\libs\editors\quill.js" />
+    <None Include="wwwroot\assets\js\libs\editors\summernote.js" />
+    <None Include="wwwroot\assets\js\libs\editors\tinymce.js" />
+    <None Include="wwwroot\assets\js\libs\fullcalendar.js" />
+    <None Include="wwwroot\assets\js\libs\jkanban.js" />
+    <None Include="wwwroot\assets\js\libs\jqvmap.js" />
+    <None Include="wwwroot\assets\js\libs\jstree.js" />
+    <None Include="wwwroot\assets\js\libs\tagify.js" />
+    <None Include="wwwroot\assets\js\scripts.js" />
+    <None Include="wwwroot\Content\vendor\jquery-smartwizard\.github\FUNDING.yml" />
+    <None Include="wwwroot\Content\vendor\jquery-smartwizard\.github\ISSUE_TEMPLATE\bug_report.md" />
+    <None Include="wwwroot\Content\vendor\jquery-smartwizard\.github\ISSUE_TEMPLATE\feature_request.md" />
+    <None Include="wwwroot\Content\vendor\jquery-smartwizard\.github\pull_request_template.md" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="7.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor" Version="2.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.5" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.6" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+</Project>

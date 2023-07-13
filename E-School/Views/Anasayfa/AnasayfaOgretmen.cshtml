@@ -1,0 +1,248 @@
+﻿@{
+	ViewData["Title"] = "AnasayfaOgretmen";
+}
+@section head{
+	<link href="~/Content/vendor/jquery-nice-select/css/nice-select.css" rel="stylesheet">
+	<link href="~/Content/vendor/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+	<link href="~/Content/vendor/owl-carousel/owl.carousel.css" rel="stylesheet">
+
+
+
+	<style>
+		.col-form-label {
+			font-size: 20px;
+		}
+
+		.select2-selection__rendered {
+			line-height: 50px !important;
+		}
+
+		.select2-container .select2-selection--single {
+			height: 50px !important;
+		}
+
+		.select2-selection__arrow {
+			height: 50px !important;
+		}
+		th{
+			text-align: center;
+		}
+	</style>
+
+
+}
+
+<div class="row page-titles" id="myBreadcrumb">
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item active"><a asp-controller="Anasayfa" asp-action="AnasayfaOgretmen">Anasayfa Öğretmen</a></li>
+	</ol>
+</div>
+
+<div class="row">
+	<div class="col-xl-9 col-xxl-8">
+		<div class="row">
+
+			<div class="col-xl-12">
+				<div class="card">
+					<div class="card-body">
+						<div class="row">
+							<div class="col-xl-3 col-lg-3">
+								<div class="rae-chart">
+									<div>
+										<h4>Kazancım</h4>
+										<span class="fs-18">May 1 - May 31, 2023</span>
+									</div>
+									<div class="student-earning">
+										<h6 class="fw-light mb-1">Bu ay</h6>
+										<h2 class="mb-1 fw-bold">TL53.678</h2>
+										<span class="text-secondary fs-18">
+											<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+												<path d="M23.25 12C23.25 5.775 18.225 0.75 12 0.75C5.775 0.749999 0.75 5.775 0.75 12C0.749999 18.225 5.775 23.25 12 23.25C18.225 23.25 23.25 18.225 23.25 12ZM11.25 16.575L11.25 9.675L9.3 11.4C8.85 11.775 8.25 11.7 7.875 11.325C7.725 11.1 7.65 10.875 7.65 10.65C7.65 10.35 7.8 10.05 8.025 9.9L11.625 6.75C11.7 6.675 11.775 6.675 11.85 6.6C11.925 6.6 11.925 6.6 12 6.525C12.075 6.525 12.075 6.525 12.15 6.525L12.225 6.525C12.3 6.525 12.3 6.525 12.375 6.525L12.45 6.525C12.525 6.525 12.525 6.525 12.6 6.6C12.6 6.6 12.675 6.6 12.675 6.675L12.75 6.75C12.75 6.75 12.75 6.75 12.825 6.825L15.975 10.05C16.35 10.425 16.35 11.1 15.975 11.475C15.6 11.85 14.925 11.85 14.55 11.475L13.125 9.975L13.125 16.65C13.125 17.175 12.675 17.7 12.075 17.7C11.7 17.55 11.25 17.1 11.25 16.575Z" fill="var(--secondary)"></path>
+											</svg>
+											+15%
+										</span>
+									</div>
+								</div>
+							</div>
+							<div class="col-xl-9 custome-tooltip col-lg-9">
+								<div id="chartBar" class="chartBarf"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-12">
+				<div class="card">
+
+					<div class="card-body" style="padding:0px;">
+						<div class="table-responsive">
+							<table class="table table-bordered verticle-middle table-responsive-sm">
+								<thead>
+									<tr>
+										<th scope="col">Sınıf Adı</th>
+										<th scope="col">İlerleme Durumu</th>
+										<th scope="col">Bitiş Tarihi</th>
+										<th scope="col" >Giriş</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td style="text-align:center;">Textiles</td>
+										<td>
+											<div class="progress" style="background: rgba(76, 175, 80, .1)">
+												<div class="progress-bar bg-success" style="width: 70%;" role="progressbar">
+													<span class="sr-only">70% Complete</span>
+												</div>
+											</div>
+										</td>
+										<td style="text-align:center;">May 27,2018</td>
+										<td style="text-align:center;">
+											<span class="badge badge-success btn btn-xs">
+												<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
+													<path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z" />
+													<path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z" />
+												</svg>
+											</span>
+										</td>
+
+									</tr>
+
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	<div class="col-xl-3 col-xxl-4">
+		<div class="card">
+			<div class="card-body">
+				<div class="card-calendar style-1 active-cal border-bottom pb-4">
+					<input type='text' class="form-control d-none" id='datetimepicker' />
+				</div>
+				<div id="DZ_W_TimeLine11" class="widget-timeline">
+					<h4 class="mb-3 mt-4">Etkinlik Takvimi</h4>
+					<div class="d-flex justify-content-between side-border">
+						<h4 class="mb-0 fs-18 font-w500">30 Mayıs</h4>
+
+					</div>
+					<ul class="timeline-active style-4">
+						<li class="d-flex align-items-center">
+							<span class="time-1">08.00 AM</span>
+							<div class="panel">
+								<div class="line-color bg-primary"></div>
+								<a class="timeline-panel text-muted" href="#">
+									<span class="d-block">Mart Grubu 2023</span>
+									<h4 class="mb-0">Japonca N5</h4>
+								</a>
+							</div>
+						</li>
+						<li class="d-flex align-items-center">
+							<span class="time-1">08.00 AM</span>
+							<div class="panel">
+								<div class="line-color bg-secondary"></div>
+								<a class="timeline-panel text-muted" href="#">
+									<span class="d-block">Mart Grubu 2023</span>
+									<h4 class="mb-0">Japonca N4</h4>
+								</a>
+							</div>
+						</li>
+						<li class="d-flex align-items-center">
+							<span class="time-1">08.00 AM</span>
+							<div class="panel">
+								<div class="line-color bg-warning"></div>
+								<a class="timeline-panel text-muted" href="#">
+									<span class="d-block">Özel Ders</span>
+									<h4 class="mb-0">Seher Ateş</h4>
+								</a>
+							</div>
+						</li>
+					</ul>
+					<div class="d-flex justify-content-between side-border my-3">
+						<h4 class="mb-0 fs-18 font-w500">31 Mayıs</h4>
+
+					</div>
+					<ul class="timeline-active style-4">
+						<li class="d-flex align-items-center">
+							<span class="time-1">08.00 AM</span>
+							<div class="panel">
+								<div class="line-color bg-primary"></div>
+								<a class="timeline-panel text-muted" href="#">
+									<span class="d-block">Mart 2023 Grubu</span>
+									<h4 class="mb-0">Japonca N5</h4>
+								</a>
+							</div>
+						</li>
+						<li class="d-flex align-items-center">
+							<span class="time-1">08.00 AM</span>
+							<div class="panel">
+								<div class="line-color bg-secondary"></div>
+								<a class="timeline-panel text-muted" href="#">
+									<span class="d-block">Mart 2023 Grubu</span>
+									<h4 class="mb-0">Japonca N4</h4>
+								</a>
+							</div>
+						</li>
+						<li class="d-flex align-items-center">
+							<span class="time-1">08.00 AM</span>
+							<div class="panel">
+								<div class="line-color bg-warning"></div>
+								<a class="timeline-panel text-muted" href="#">
+									<span class="d-block">Özel Ders</span>
+									<h4 class="mb-0">Mehmet Şahin</h4>
+								</a>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+@section scripts{
+
+
+
+	<script>
+		$(document).ready(function () {
+			var mycrumb = $("#myBreadcrumb");
+			$("#previousBreadcrumb").before(mycrumb);
+
+			$(function () {
+				$('#datetimepicker').datetimepicker({
+					inline: true,
+				});
+			});
+
+			$(document).ready(function () {
+				$(".booking-calender .fa.fa-clock-o").removeClass(this);
+				$(".booking-calender .fa.fa-clock-o").addClass('fa-clock');
+			});
+		})
+	</script>
+
+
+	<!-- Required vendors -->
+	<script src="~/Content/vendor/chart.js/Chart.bundle.min.js"></script>
+	<script src="~/Content/vendor/jquery-nice-select/js/jquery.nice-select.min.js"></script>
+
+	<!-- Apex Chart -->
+	<script src="~/Content/vendor/apexchart/apexchart.js"></script>
+
+
+	<!-- Chart piety plugin files -->
+	<script src="~/Content/vendor/day-fullcalendar/main.min.js"></script>
+
+	<!-- Dashboard 1 -->
+    <script src="~/content/js/dashboard/chattr.js"></script>
+
+
+	<script src="~/Content/vendor/bootstrap-datetimepicker/js/moment.js"></script>
+	<script src="~/Content/vendor/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+
+}

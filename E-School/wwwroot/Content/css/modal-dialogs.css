@@ -1,0 +1,6 @@
+﻿@media (min-width: 576px) {
+    .modal-dialogs {
+        max-width: 700px;
+        margin: 1.75rem auto;
+    }
+}

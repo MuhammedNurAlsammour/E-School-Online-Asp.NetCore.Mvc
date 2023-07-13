@@ -1,0 +1,12 @@
+﻿@media (min-width: 576px) {
+    .col-sm-7 {
+        flex: 0 0 auto;
+        width: 56.33333%;
+    }
+}
+@media (min-width: 576px) {
+    .col-sm-5 {
+        flex: 0 0 auto;
+        width: 43%;
+    }
+}

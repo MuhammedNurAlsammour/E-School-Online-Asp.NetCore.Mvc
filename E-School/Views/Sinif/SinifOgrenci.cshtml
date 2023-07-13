@@ -1,0 +1,1561 @@
+﻿
+@{
+    ViewData["Title"] = "SinifOgrenci";
+}
+
+@section head{
+    <link href="~/Content/vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet" asp-append-version="true">
+    <link href="~/Content/vendor/jquery-nice-select/css/nice-select.css" rel="stylesheet" asp-append-version="true">
+    <link href="~/Content/css/filepond.css" rel="stylesheet" asp-append-version="true" />
+
+    <style>
+        .mtn {
+            margin: 0.5rem 0rem 0rem 0rem;
+        }
+
+        #cke_editor1 {
+            margin: 0rem 0rem 1rem 0rem;
+        }
+
+        .table tbody tr td {
+            vertical-align: inherit;
+            border-color: #DBDBDB;
+            white-space: nowrap;
+        }
+        .cal{
+            margin-left: 8px;
+            line-height: 17px;
+        }
+        .davbil{
+            font-size: 15px;
+            width: 100px;
+        }
+
+        .uploadFile {
+            width: 100%;
+            background-color: white;
+            color: grey;
+            font-size: 16px;
+            line-height: 23px;
+            overflow: hidden;
+            padding: 10px 10px 4px 10px;
+            position: relative;
+            resize: none;
+            [type="file"]
+
+        {
+            cursor: pointer !important;
+            display: block;
+            font-size: 999px;
+            filter: alpha(opacity=0);
+            min-height: 100%;
+            min-width: 100%;
+            opacity: 0;
+            position: absolute;
+            right: 0px;
+            text-align: right;
+            top: 0px;
+            z-index: 1;
+        }
+
+        }
+        .thh{
+            text-align:center;
+        }
+
+        .table tbody tr td {
+            vertical-align: middle;
+            border-color: #DBDBDB;
+            white-space: nowrap;
+        }
+    </style>
+    <link href="~/Content/css/filepond.css" rel="stylesheet" asp-append-version="true" />
+    <script src="~/Content/vendor/ckeditor/ckeditor.js" asp-append-version="true"></script>
+}
+
+
+<div class="row page-titles" id="myBreadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active"><a href="#">A Sınıfı</a></li>
+    </ol>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="profile card card-body px-3 pt-3 pb-0">
+            <div class="profile-head">
+                <div class="photo-content">
+                    <div class="cover-photo rounded">
+                    </div>
+                </div>
+                <div class="profile-info">
+                    <div class="profile-photo">
+                        <img src="/Content/images/profile/profile.png" class="img-fluid rounded-circle" alt="">
+                    </div>
+                    <div class="profile-details">
+                        <div class="profile-name px-3 pt-2">
+                            <h4 class="text-primary mb-0">Ali Armağan Kilisli</h4>
+                            <p>Sınıf Öğretmeni</p>
+                        </div>
+                        <div class="profile-email px-2 pt-2">
+                            <h4 class="text-muted mb-0">aakilisli@@gmail.com</h4>
+                            <p>Email</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-12 bt-order">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="widget-stat card bg-primary">
+                            <div class="card-body  p-4">
+                                <div class="media">
+                                    <span class="me-3">
+                                        <i class="la la-users"></i>
+                                    </span>
+                                    <div class="media-body text-white">
+
+                                        <a  style="color: #fff;">
+
+                                            <p class="mb-1">Öğrenci Sayısı</p>
+                                            <h3 class="text-white">123</h3>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+
+                        <div class="widget-stat card bg-secondary overflow-hidden">
+                            <div class="card-body p-4">
+                                <div class="media">
+                                    <span class="me-3">
+                                        <i class="la la-graduation-cap"></i>
+                                    </span>
+                                    <div class="media-body text-white">
+                                        <p class="mb-1">Yapılan Ders Sayısı</p>
+                                        <h3 class="text-white">28</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+
+                        <div class="widget-stat card bg-danger">
+                            <div class="card-body p-4">
+                                <div class="media">
+                                    <span class="me-3">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="27" height="27" fill="currentColor" class="bi bi-hourglass-split" viewBox="0 0 16 16">
+                                            <path d="M2.5 15a.5.5 0 1 1 0-1h1v-1a4.5 4.5 0 0 1 2.557-4.06c.29-.139.443-.377.443-.59v-.7c0-.213-.154-.451-.443-.59A4.5 4.5 0 0 1 3.5 3V2h-1a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1h-1v1a4.5 4.5 0 0 1-2.557 4.06c-.29.139-.443.377-.443.59v.7c0 .213.154.451.443.59A4.5 4.5 0 0 1 12.5 13v1h1a.5.5 0 0 1 0 1h-11zm2-13v1c0 .537.12 1.045.337 1.5h6.326c.216-.455.337-.963.337-1.5V2h-7zm3 6.35c0 .701-.478 1.236-1.011 1.492A3.5 3.5 0 0 0 4.5 13s.866-1.299 3-1.48V8.35zm1 0v3.17c2.134.181 3 1.48 3 1.48a3.5 3.5 0 0 0-1.989-3.158C8.978 9.586 8.5 9.052 8.5 8.351z" />
+                                        </svg>
+                                    </span>
+                                    <div class="media-body text-white">
+                                        <p class="mb-1">Kalan Süre (Hafta)</p>
+                                        <h3 class="text-white">10</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xl-4">
+        <div class="row" style="margin-bottom: 1rem;">
+            <div class="col-lg-12">
+
+                <div class="card-body" style="display: grid; padding:0px;">
+                    <button id="DuyurGorumu" onclick="DuyurGorumu()" type="button" class="btn  btn-secondary mtn">
+                        <span class="btn-icon-start text-secondary">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill-check" viewBox="0 0 16 16">
+                                <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm1.679-4.493-1.335 2.226a.75.75 0 0 1-1.174.144l-.774-.773a.5.5 0 0 1 .708-.708l.547.548 1.17-1.951a.5.5 0 1 1 .858.514ZM11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                                <path d="M2 13c0 1 1 1 1 1h5.256A4.493 4.493 0 0 1 8 12.5a4.49 4.49 0 0 1 1.544-3.393C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4Z" />
+                            </svg>
+                        </span>Sınıf Duyuruları
+                    </button>
+
+                    <button type="button" class="btn  btn-success mtn">
+                        <span class="btn-icon-start text-success">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-video3" viewBox="0 0 16 16">
+                                <path d="M14 9.5a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm-6 5.7c0 .8.8.8.8.8h6.4s.8 0 .8-.8-.8-3.2-4-3.2-4 2.4-4 3.2Z" />
+                                <path d="M2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h5.243c.122-.326.295-.668.526-1H2a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v7.81c.353.23.656.496.91.783.059-.187.09-.386.09-.593V4a2 2 0 0 0-2-2H2Z" />
+                            </svg>
+                        </span>Canlı Derse Giriş Yap
+                    </button>
+                    <a class="btn  btn-primary mtn" asp-controller="sinif" asp-action="KonuAnlatim" style="color:white;">
+                        <span class="btn-icon-start text-primary">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-collection-play-fill" viewBox="0 0 16 16">
+                                <path d="M2.5 3.5a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1h-11zm2-2a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1h-7zM0 13a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 16 13V6a1.5 1.5 0 0 0-1.5-1.5h-13A1.5 1.5 0 0 0 0 6v7zm6.258-6.437a.5.5 0 0 1 .507.013l4 2.5a.5.5 0 0 1 0 .848l-4 2.5A.5.5 0 0 1 6 12V7a.5.5 0 0 1 .258-.437z" />
+                            </svg>
+                        </span>Konu Anlatım Videoları
+                    </a>
+                    <button id="ÖdevEkleme" onclick="ÖdevEkleme()" type="button" class="btn  btn-info mtn">
+                        <span class="btn-icon-start text-info">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-journal-check" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M10.854 6.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 8.793l2.646-2.647a.5.5 0 0 1 .708 0z" />
+                                <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z" />
+                                <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z" />
+                            </svg>
+                        </span>Ödevler
+                    </button>
+
+                    <button id="Okuma" onclick="Okuma()" type="button" class="btn btn-info mtn">
+                        <span class="btn-icon-start text-info">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-book" viewBox="0 0 16 16">
+                                <path d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811V2.828zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492V2.687zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783z" />
+                            </svg>
+                        </span>Okuma Kitapları
+                    </button>
+
+                    <button id="Ders" onclick="Ders()" type="button" class="btn  btn-info mtn">
+                        <span class="btn-icon-start text-info">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-medical" viewBox="0 0 16 16">
+                                <path d="M7.5 5.5a.5.5 0 0 0-1 0v.634l-.549-.317a.5.5 0 1 0-.5.866L6 7l-.549.317a.5.5 0 1 0 .5.866l.549-.317V8.5a.5.5 0 1 0 1 0v-.634l.549.317a.5.5 0 1 0 .5-.866L8 7l.549-.317a.5.5 0 1 0-.5-.866l-.549.317V5.5zm-2 4.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5zm0 2a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5z" />
+                                <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z" />
+                            </svg>
+                        </span>Ders ve Kelime Notları
+                    </button>
+
+                    <a class="btn  btn-primary mtn" asp-controller="sinif" asp-action="Gecmisderskayitog" style="color:white;">
+                        <span class="btn-icon-start text-primary">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-video2" viewBox="0 0 16 16">
+                                <path d="M10 9.05a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
+                                <path d="M2 1a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2H2ZM1 3a1 1 0 0 1 1-1h2v2H1V3Zm4 10V2h9a1 1 0 0 1 1 1v9c0 .285-.12.543-.31.725C14.15 11.494 12.822 10 10 10c-3.037 0-4.345 1.73-4.798 3H5Zm-4-2h3v2H2a1 1 0 0 1-1-1v-1Zm3-1H1V8h3v2Zm0-3H1V5h3v2Z" />
+                            </svg>
+                        </span>Geçmiş Ders Kayıtları
+                    </a>
+
+
+
+
+
+
+
+
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-12 col-xxl-12 col-lg-12">
+                <div class="card">
+
+                    <div class="card-body">
+                        <div id="DZ_W_TimeLine11" class="widget-timeline">
+
+
+                            			
+                            <div class="card-header" style="
+    padding: 0px;
+">
+				                             
+                                <div class="col-sm-8">
+                                    <h4 class="mb-3 mt-4 ">Etkinlik Takvimi</h4>
+
+
+                                    
+                                </div>
+                                <div class="card-toolbar">
+                                    <a href="#saatEkleModal" data-bs-target="#saatEkleModal" data-bs-toggle="modal" class="btn btn-secondary font-weight-bolder btn-sm">
+                                        <span class="svg-icon svg-icon-md">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+                                            </svg>
+                                        </span>Ekle
+                                    </a>
+                                </div>
+                                          
+                                          </div>
+                            <div class="d-flex justify-content-between side-border">
+                                <h4 class="mb-0 fs-18 font-w500">30 Mayıs</h4>
+
+                            </div>
+                            <ul class="timeline-active style-4">
+                                <li class="d-flex align-items-center">
+                                    <span class="time-1">08.00 AM</span>
+                                    <div class="panel">
+                                        <div class="line-color bg-primary"></div>
+                                        <a class="timeline-panel text-muted" href="#">
+                                            <span class="d-block">Mart Grubu 2023</span>
+                                            <h4 class="mb-0">Japonca N5</h4>
+                                        </a>
+                                    </div>
+                                </li>
+                                <li class="d-flex align-items-center">
+                                    <span class="time-1">08.00 AM</span>
+                                    <div class="panel">
+                                        <div class="line-color bg-secondary"></div>
+                                        <a class="timeline-panel text-muted" href="#">
+                                            <span class="d-block">Mart Grubu 2023</span>
+                                            <h4 class="mb-0">Japonca N4</h4>
+                                        </a>
+                                    </div>
+                                </li>
+                                <li class="d-flex align-items-center">
+                                    <span class="time-1">08.00 AM</span>
+                                    <div class="panel">
+                                        <div class="line-color bg-warning"></div>
+                                        <a class="timeline-panel text-muted" href="#">
+                                            <span class="d-block">Özel Ders</span>
+                                            <h4 class="mb-0">Seher Ateş</h4>
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="d-flex justify-content-between side-border my-3">
+                                <h4 class="mb-0 fs-18 font-w500">31 Mayıs</h4>
+
+                            </div>
+                            <ul class="timeline-active style-4">
+                                <li class="d-flex align-items-center">
+                                    <span class="time-1">08.00 AM</span>
+                                    <div class="panel">
+                                        <div class="line-color bg-primary"></div>
+                                        <a class="timeline-panel text-muted" href="#">
+                                            <span class="d-block">Mart 2023 Grubu</span>
+                                            <h4 class="mb-0">Japonca N5</h4>
+                                        </a>
+                                    </div>
+                                </li>
+                                <li class="d-flex align-items-center">
+                                    <span class="time-1">08.00 AM</span>
+                                    <div class="panel">
+                                        <div class="line-color bg-secondary"></div>
+                                        <a class="timeline-panel text-muted" href="#">
+                                            <span class="d-block">Mart 2023 Grubu</span>
+                                            <h4 class="mb-0">Japonca N4</h4>
+                                        </a>
+                                    </div>
+                                </li>
+                                <li class="d-flex align-items-center">
+                                    <span class="time-1">08.00 AM</span>
+                                    <div class="panel">
+                                        <div class="line-color bg-warning"></div>
+                                        <a class="timeline-panel text-muted" href="#">
+                                            <span class="d-block">Özel Ders</span>
+                                            <h4 class="mb-0">Mehmet Şahin</h4>
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-xl-8" id="DevamsizlikField" hidden>
+
+        <div class="row" id="siniflarimField">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                            <h4>Devamsizli Bilgileri</h4>
+                    </div>
+                    <div class="card-body" style="    padding: 1rem 0rem 0rem 0rem;">
+                        <div class="table-responsive">
+                            <table id="DevamsizlikTable" class="table display mb-4 dataTablesCard order-table card-table text-black application" style="min-width: 400px">
+
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <span>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="27" height="27" fill="red" class="bi bi-calendar2-week" viewBox="0 0 16 16">
+                                                    <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM2 2a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H2z" />
+                                                    <path d="M2.5 4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5V4zM11 7.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-5 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z" />
+                                                </svg><label class="cal">26Maıs 2023Cuma</label>
+                                            </span>
+                                        </td>
+
+                                        <td class="text-end davbil" >
+                                            <span class="badge light badge-danger">Gelmediniz</span>
+                                        </td>
+    
+
+
+
+
+
+
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="27" height="27" fill="red" class="bi bi-calendar2-week" viewBox="0 0 16 16">
+                                                    <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM2 2a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H2z" />
+                                                    <path d="M2.5 4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5V4zM11 7.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-5 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z" />
+                                                </svg><label class="cal">26Maıs 2023Cuma</label>
+                                            </span>
+                                        </td>
+
+                                        <td class="text-end davbil">
+                                            <span class="badge light badge-warning">Geç Geldiniz</span>
+                                        </td>
+
+
+
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-8" id="SinifEklemeField" hidden>
+
+        <div class="row" id="siniflarimField">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+@*                        <div class="col-sm-4">
+*@                            <h4>Not Bilgileri</h4>
+@*                        </div>
+                        <div class="col-sm-8">
+                            <div class=" row">
+                                <label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2rem;">Tarih Seçiniz</label>
+                                <div class="col-sm-5">
+                                    <input type="date" class="form-control" name="SinifAdi" required>
+                                </div>
+                                <a href="#" onclick="Raporla()" class="btn light btn-primary font-weight-bolder col-sm-4">
+                                    <span class="svg-icon svg-icon-md">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                <rect x="0" y="0" width="24" height="24"></rect>
+                                                <circle fill="#000000" cx="9" cy="15" r="6"></circle>
+                                                <path d="M8.8012943,7.00241953 C9.83837775,5.20768121 11.7781543,4 14,4 C17.3137085,4 20,6.6862915 20,10 C20,12.2218457 18.7923188,14.1616223 16.9975805,15.1987057 C16.9991904,15.1326658 17,15.0664274 17,15 C17,10.581722 13.418278,7 9,7 C8.93357256,7 8.86733422,7.00080962 8.8012943,7.00241953 Z" fill="#000000" opacity="0.3"></path>
+                                            </g>
+                                        </svg>
+                                    </span>Göster
+                                </a>
+                            </div>
+
+                        </div>*@
+
+
+                    </div>
+                    <div class="card-body" style="    padding: 1rem 0rem 0rem 0rem;">
+                        <div class="table-responsive">
+                            <table id="siniflarTable" class="display" style="min-width: auto;">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Sınıvları Listesi</th>
+                                        <th scope="col">Ders Adı</th>
+                                        <th scope="col">Not</th>
+                                        <th scope="col">Seviye Puanı</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="text-align:center">Textiles</td>
+                                        <td>
+                                            Japonca N5
+                                        </td>
+                                        <td style="text-align:center;">95</td>
+                                        <td style="text-align:center;">
+                                            <p>iyi(80)
+                                        </td>
+
+
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-8" id="DuyurGormeField" hidden>
+        <div class="card">
+            <div class="card-body">
+                <div class="profile-tab">
+                    <div class="custom-tab-1">
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item">
+                                <a href="#my-posts" data-bs-toggle="tab" class="nav-link active show">Duyuru</a>
+                            </li>
+
+                        </ul>
+                        <div class="tab-content">
+                            <div id="my-posts" class="tab-pane fade active show">
+                                <div class="my-post-content pt-3">
+                                    <div class="post-input">
+
+
+                                        <div class="profile-uoloaded-post border-bottom-1 pb-5" >
+                                            <img src="images/profile/8.jpg" alt="" class="img-fluid w-100 rounded">
+                                            <p>
+                                                A wonderful serenity has take possession of my entire soul like these sweet morning of spare which enjoy whole heart.A wonderful serenity has take possession of my entire soul like these sweet morning
+                                                of spare which enjoy whole heart.
+                                            </p>
+                                            <div>
+
+                                                <p  style="text-align:end; width:auto; float:right;" >6/4/2024</p>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-xl-8" id="ÖdevlerField" hidden>
+
+        <div class="row" id="siniflarimField">
+            <div class="col-12">
+                <div class="card">
+
+                    <div class="card-body" style="    padding: 1rem 0rem 0rem 0rem;">
+                        <div class="table-responsive" >
+                            <table id="ogrenciodevTable" class="table display mb-4 " style="min-width: 200px">
+                                <thead>
+                                    <tr>
+
+                                        <th class="thh">Ödev</th>
+                                        <th class="thh">
+
+                                           Teslim Tarih
+                                        </th>
+
+
+                                        <th class="thh">
+                                            Dosya
+
+                                        </th>
+                                        <th class="thh">
+                                            Aksiyon
+                                        </th>
+
+                                        <th class="thh">
+                                            Ödev Durumu
+
+                                        </th>
+                                        
+                                        <th class="thh">
+                                            Yanıt Durumu
+
+                                        </th>
+
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="thh">a yaziniz</td>
+
+                                        <td class="thh">
+                                            26.1.2023
+
+                                        </td>
+
+                                        <td class="thh"><button type="button" class="btn btn-outline-primary btn-xs" fdprocessedid="vvzjlt">indir</button></td>
+
+
+                                        <td class="thh">
+                                            <label class="uploadFile">
+                                                <i class="bi bi-file-earmark-arrow-up"></i>
+                                                <span class="filename" style="font-size:12.25px;">Dosya Ekle</span>
+                                                <input type="file" class="inputfile form-control" name="file">
+                                            </label>
+                                        </td>
+
+                                        @*Mustafa Bey Online Sınıfım -> Ödevler / "Dosya" ile "Aksiyon" arasına "Ödev Durumu" eklenecek ve altında "Bekliyor , Gönderildi , Yapılmadı"*@
+                                        <td class="thh">
+                                            <span class="badge light badge-success ">Gönderildi</span>
+@*                                            <span class="badge light badge-success">Successful</span>
+                                            <span class="badge light badge-success">Successful</span>*@
+
+
+
+                                        </td>
+
+                                        <td class="thh">
+                                            <span class="badge light badge-success "><i class="bi bi-paperclip" style="color:black;"></i><a href="#">Yanit Geldi</a></span>
+                                            @*                                            <span class="badge light badge-success">Successful</span>
+                                            <span class="badge light badge-success">Successful</span>*@
+
+
+
+                                        </td>
+
+
+                                    </tr>
+
+                                    <tr>
+                                        <td class="thh">a yaziniz</td>
+
+                                        <td class="thh">
+                                            26.1.2023
+
+                                        </td>
+
+                                        <td class="thh"><button type="button" class="btn btn-outline-primary btn-xs" fdprocessedid="vvzjlt">indir</button></td>
+
+
+                                        <td class="thh">
+                                            <label class="uploadFile">
+                                                <i class="bi bi-file-earmark-arrow-up"></i>
+                                                <span class="filename" style="font-size:12.25px;">Dosya Ekle</span>
+                                                <input type="file" class="inputfile form-control" name="file">
+                                            </label>
+                                        </td>
+
+                                        @*Mustafa Bey Online Sınıfım -> Ödevler / "Dosya" ile "Aksiyon" arasına "Ödev Durumu" eklenecek ve altında "Bekliyor , Gönderildi , Yapılmadı"*@
+                                        <td class="thh">
+                                            <span class="badge light badge-success ">Gönderildi</span>
+                                            @*                                            <span class="badge light badge-success">Successful</span>
+                                            <span class="badge light badge-success">Successful</span>*@
+
+
+
+                                        </td>
+
+                                        <td class="thh">
+                                            <span class="badge light badge-danger ">Yanit Gelmedi</span>
+                                            @*                                            <span class="badge light badge-success">Successful</span>
+                                            <span class="badge light badge-success">Successful</span>*@
+
+
+
+                                        </td>
+
+
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-8" id="OkumaField" hidden>
+
+        <div class="row" id="siniflarimField">
+            <div class="col-12">
+                <div class="card">
+
+                    <div class="card-body" style="    padding: 1rem 0rem 0rem 0rem;">
+                        <div class="table-responsive">
+                            <table id="DevamsizlikTable" class="table display mb-4 dataTablesCard order-table card-table text-black application" style="min-width: 400px">
+                                <thead>
+                                    <tr>
+
+                                        <th class="thh">Kitap Adi</th>
+                                        <th class="thh">
+
+                                            Açiklama
+                                        </th>
+                                        <th class="thh">
+
+                                            tarih
+                                        </th>
+                                        <th class="thh">
+                                            Dosya
+
+                                        </th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="thh">a yaziniz</td>
+
+                                        <td class="thh">
+                                            dersete çok iyidiniz
+
+                                        </td>
+
+                                        <td class="thh">
+                                            26.1.2023
+
+                                        </td>
+                                        <td class="thh"><button type="button" class="btn btn-outline-primary btn-xs" fdprocessedid="vvzjlt">indir</button></td>
+
+
+
+
+
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-8" id="DerslerField" hidden>
+
+        <div class="row" id="siniflarimField">
+            <div class="col-12">
+                <div class="card">
+@*                    <div class="card-header">
+                        <div class="col-sm-4">
+                            <h4>Ders ve Kelime Notları</h4>
+                        </div>
+
+                    </div>*@
+                    <div class="card-body" style="    padding: 1rem 0rem 0rem 0rem;">
+                        <div class="table-responsive">
+                            <table id="DevamsizlikTable" class="table display mb-4 dataTablesCard order-table card-table text-black application" style="min-width: 400px">
+                                <thead>
+                                    <tr>
+
+                                        <th class="thh">Dosya Adı</th>
+                                        <th class="thh">
+
+                                            Açiklama
+                                        </th>
+
+                                        <th class="thh">
+
+                                            tarih
+                                        </th>
+
+                                        <th class="thh">
+                                            Dosya
+
+                                        </th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="thh">a yaziniz</td>
+
+                                        <td class="thh">
+                                            dersete çok iyidiniz
+
+                                        </td>
+
+                                        <td class="thh">
+                                            26.1.2023
+
+                                        </td>
+
+                                        <td class="thh"><button type="button" class="btn btn-outline-primary btn-xs" fdprocessedid="vvzjlt">indir</button></td>
+
+
+
+
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-8" id="odevviewField" hidden>
+
+        <div class="row" id="siniflarimField">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="col-sm-4">
+                            <h4>Ödevler Gösterme Listesi</h4>
+                        </div>
+
+
+
+                    </div>
+                    <div class="card-body" style="    padding: 1rem 0rem 0rem 0rem;">
+                        <div class="table-responsive">
+                            <table id="DevamsizlikTable" class="table display mb-4 dataTablesCard order-table card-table text-black application" style="min-width: 400px">
+                                <thead>
+                                    <tr>
+
+                                        <th>Öğrenci İsimi</th>
+                                        <th>
+
+                                            Ödev Dosyası
+                                        </th>
+
+                                        <th>
+
+                                            tarih
+                                        </th>
+
+                                        <th>
+                                            Ödev Yükleme
+
+                                        </th>
+                                        <th>
+                                            Durum
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>muhammed</td>
+
+                                        <td class="thh"><button type="button" class="btn btn-outline-primary btn-xs" fdprocessedid="vvzjlt">indir</button></td>
+
+
+                                        <td>
+                                            26.1.2023
+
+                                        </td>
+
+                                        <td>
+                                            <label class="uploadFile">
+                                                <i class="bi bi-file-earmark-arrow-up"></i>
+                                                <span class="filename" style="font-size:12.25px;">Dosya Ekle</span>
+                                                <input type="file" class="inputfile form-control" name="file">
+                                            </label>
+                                        </td>
+
+
+                                        <td>
+                                            <a class="btn btn-success shadow btn-xs sharp me-1"><i class="bi bi-check-circle"></i></a>
+
+
+
+
+
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                        <td>muhammed</td>
+
+                                        <td class="thh"><button type="button" class="btn btn-outline-primary btn-xs" fdprocessedid="vvzjlt">indir</button></td>
+
+
+                                        <td>
+                                            26.1.2023
+
+                                        </td>
+
+                                        <td>
+                                            <label class="uploadFile">
+                                                <i class="bi bi-file-earmark-arrow-up"></i>
+                                                <span class="filename" style="font-size:12.25px;">Dosya Ekle</span>
+                                                <input type="file" class="inputfile form-control" name="file">
+                                            </label>
+                                        </td>
+
+
+                                        <td>
+
+                                            <a class="btn btn-primary shadow btn-xs sharp me-1"><i class="bi bi-dash-circle"></i></a>
+
+
+
+
+
+                                        </td>
+
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" id="sinifEkleModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><span style="color:darkorange;">11A</span> Öğrenci Listesi</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal">
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="basic-form">
+                    <div class="table-responsive">
+                        <table id="siniflarTable" class="display" style="min-width: 730px;">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <div class="form-check custom-checkbox ms-2">
+                                            <input type="checkbox" class="form-check-input" id="checkAll" required="">
+                                            <label class="form-check-label" for="checkAll"></label>
+                                        </div>
+                                    </th>
+                                    <th>Patient ID</th>
+                                    <th>Patient Name</th>
+                                    <th>Disease</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="form-check custom-checkbox ms-2">
+                                            <input type="checkbox" class="form-check-input" id="customCheckBox2" required="">
+                                            <label class="form-check-label" for="customCheckBox2"></label>
+                                        </div>
+                                    </td>
+                                    <td>#P-00001</td>
+                                    <td>Tiger Nixon</td>
+
+                                    <td>Cold & Flu</td>
+                                    <td>
+                                        <span class="badge light badge-danger">
+                                            <i class="fa fa-circle text-danger me-1"></i>
+                                            New Patient
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="dropdown ms-auto text-end">
+                                            <div class="btn-link" data-bs-toggle="dropdown">
+                                                <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
+                                            </div>
+                                            <div class="dropdown-menu dropdown-menu-end">
+                                                <a class="dropdown-item" href="#">Accept Patient</a>
+                                                <a class="dropdown-item" href="#">Reject Order</a>
+                                                <a class="dropdown-item" href="#">View Details</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="form-check custom-checkbox ms-2">
+                                            <input type="checkbox" class="form-check-input" id="customCheckBox3" required="">
+                                            <label class="form-check-label" for="customCheckBox3"></label>
+                                        </div>
+                                    </td>
+                                    <td>#P-00002</td>
+                                    <td>Garrett Winters</td>
+
+                                    <td>Sleep Problem</td>
+                                    <td>
+                                        <span class="badge light badge-warning">
+                                            <i class="fa fa-circle text-warning me-1"></i>
+                                            In Treatment
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="dropdown ms-auto text-end">
+                                            <div class="btn-link" data-bs-toggle="dropdown">
+                                                <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
+                                            </div>
+                                            <div class="dropdown-menu dropdown-menu-end">
+                                                <a class="dropdown-item" href="#">Accept Patient</a>
+                                                <a class="dropdown-item" href="#">Reject Order</a>
+                                                <a class="dropdown-item" href="#">View Details</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="form-check custom-checkbox ms-2">
+                                            <input type="checkbox" class="form-check-input" id="customCheckBox4" required="">
+                                            <label class="form-check-label" for="customCheckBox4"></label>
+                                        </div>
+                                    </td>
+                                    <td>#P-00003</td>
+                                    <td>Ashton Cox</td>
+                                    <td>Cold & Flu</td>
+                                    <td>
+                                        <span class="badge light badge-success">
+                                            <i class="fa fa-circle text-success me-1"></i>
+                                            Recovered
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="dropdown ms-auto text-end">
+                                            <div class="btn-link" data-bs-toggle="dropdown">
+                                                <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
+                                            </div>
+                                            <div class="dropdown-menu dropdown-menu-end">
+                                                <a class="dropdown-item" href="#">Accept Patient</a>
+                                                <a class="dropdown-item" href="#">Reject Order</a>
+                                                <a class="dropdown-item" href="#">View Details</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="form-check custom-checkbox ms-2">
+                                            <input type="checkbox" class="form-check-input" id="customCheckBox5" required="">
+                                            <label class="form-check-label" for="customCheckBox5"></label>
+                                        </div>
+                                    </td>
+                                    <td>#P-00004</td>
+                                    <td>Ashton Cox</td>
+
+                                    <td>Cold & Flu</td>
+                                    <td>
+                                        <span class="badge light badge-warning">
+                                            <i class="fa fa-circle text-warning me-1"></i>
+                                            In Treatment
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="dropdown ms-auto text-end">
+                                            <div class="btn-link" data-bs-toggle="dropdown">
+                                                <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
+                                            </div>
+                                            <div class="dropdown-menu dropdown-menu-end">
+                                                <a class="dropdown-item" href="#">Accept Patient</a>
+                                                <a class="dropdown-item" href="#">Reject Order</a>
+                                                <a class="dropdown-item" href="#">View Details</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="form-check custom-checkbox ms-2">
+                                            <input type="checkbox" class="form-check-input" id="customCheckBox6" required="">
+                                            <label class="form-check-label" for="customCheckBox6"></label>
+                                        </div>
+                                    </td>
+                                    <td>#P-00005</td>
+                                    <td>Ashton Cox</td>
+
+                                    <td>Cold & Flu</td>
+                                    <td>
+                                        <span class="badge light badge-warning">
+                                            <i class="fa fa-circle text-warning me-1"></i>
+                                            In Treatment
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="dropdown ms-auto text-end">
+                                            <div class="btn-link" data-bs-toggle="dropdown">
+                                                <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
+                                            </div>
+                                            <div class="dropdown-menu dropdown-menu-end">
+                                                <a class="dropdown-item" href="#">Accept Patient</a>
+                                                <a class="dropdown-item" href="#">Reject Order</a>
+                                                <a class="dropdown-item" href="#">View Details</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="form-check custom-checkbox ms-2">
+                                            <input type="checkbox" class="form-check-input" id="customCheckBox7" required="">
+                                            <label class="form-check-label" for="customCheckBox7"></label>
+                                        </div>
+                                    </td>
+                                    <td>#P-00006</td>
+                                    <td>Ashton Cox</td>
+                                    <td>Sleep Problem</td>
+                                    <td>
+                                        <span class="badge light badge-warning">
+                                            <i class="fa fa-circle text-warning me-1"></i>
+                                            In Treatment
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="dropdown ms-auto text-end">
+                                            <div class="btn-link" data-bs-toggle="dropdown">
+                                                <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
+                                            </div>
+                                            <div class="dropdown-menu dropdown-menu-end">
+                                                <a class="dropdown-item" href="#">Accept Patient</a>
+                                                <a class="dropdown-item" href="#">Reject Order</a>
+                                                <a class="dropdown-item" href="#">View Details</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="form-check custom-checkbox ms-2">
+                                            <input type="checkbox" class="form-check-input" id="customCheckBox8" required="">
+                                            <label class="form-check-label" for="customCheckBox8"></label>
+                                        </div>
+                                    </td>
+                                    <td>#P-00007</td>
+                                    <td>Airi Satou</td>
+                                    <td>Cold & Flu</td>
+                                    <td>
+                                        <span class="badge light badge-danger">
+                                            <i class="fa fa-circle text-danger me-1"></i>
+                                            New Patient
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="dropdown ms-auto text-end">
+                                            <div class="btn-link" data-bs-toggle="dropdown">
+                                                <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
+                                            </div>
+                                            <div class="dropdown-menu dropdown-menu-end">
+                                                <a class="dropdown-item" href="#">Accept Patient</a>
+                                                <a class="dropdown-item" href="#">Reject Order</a>
+                                                <a class="dropdown-item" href="#">View Details</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="form-check custom-checkbox ms-2">
+                                            <input type="checkbox" class="form-check-input" id="customCheckBox9" required="">
+                                            <label class="form-check-label" for="customCheckBox9"></label>
+                                        </div>
+                                    </td>
+                                    <td>#P-00008</td>
+                                    <td>Airi Satou</td>
+                                    <td>Sleep Problem</td>
+                                    <td>
+                                        <span class="badge light badge-warning">
+                                            <i class="fa fa-circle text-warning me-1"></i>
+                                            In Treatment
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="dropdown ms-auto text-end">
+                                            <div class="btn-link" data-bs-toggle="dropdown">
+                                                <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
+                                            </div>
+                                            <div class="dropdown-menu dropdown-menu-end">
+                                                <a class="dropdown-item" href="#">Accept Patient</a>
+                                                <a class="dropdown-item" href="#">Reject Order</a>
+                                                <a class="dropdown-item" href="#">View Details</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="form-check custom-checkbox ms-2">
+                                            <input type="checkbox" class="form-check-input" id="customCheckBox10" required="">
+                                            <label class="form-check-label" for="customCheckBox10"></label>
+                                        </div>
+                                    </td>
+                                    <td>#P-00009</td>
+                                    <td>Airi Satou</td>
+                                    <td>Cold & Flu</td>
+                                    <td>
+                                        <span class="badge light badge-danger">
+                                            <i class="fa fa-circle text-danger me-1"></i>
+                                            New Patient
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="dropdown ms-auto text-end">
+                                            <div class="btn-link" data-bs-toggle="dropdown">
+                                                <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
+                                            </div>
+                                            <div class="dropdown-menu dropdown-menu-end">
+                                                <a class="dropdown-item" href="#">Accept Patient</a>
+                                                <a class="dropdown-item" href="#">Reject Order</a>
+                                                <a class="dropdown-item" href="#">View Details</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="form-check custom-checkbox ms-2">
+                                            <input type="checkbox" class="form-check-input" id="customCheckBox11" required="">
+                                            <label class="form-check-label" for="customCheckBox11"></label>
+                                        </div>
+                                    </td>
+                                    <td>#P-00010</td>
+                                    <td>Airi Satou</td>
+                                    <td>Sleep Problem</td>
+                                    <td>
+                                        <span class="badge light badge-danger">
+                                            <i class="fa fa-circle text-danger me-1"></i>
+                                            New Patient
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="dropdown ms-auto text-end">
+                                            <div class="btn-link" data-bs-toggle="dropdown">
+                                                <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
+                                            </div>
+                                            <div class="dropdown-menu dropdown-menu-end">
+                                                <a class="dropdown-item" href="#">Accept Patient</a>
+                                                <a class="dropdown-item" href="#">Reject Order</a>
+                                                <a class="dropdown-item" href="#">View Details</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="form-check custom-checkbox ms-2">
+                                            <input type="checkbox" class="form-check-input" id="customCheckBox12" required="">
+                                            <label class="form-check-label" for="customCheckBox12"></label>
+                                        </div>
+                                    </td>
+                                    <td>#P-00011</td>
+                                    <td>Airi Satou</td>
+                                    <td>Cold & Flu</td>
+                                    <td>
+                                        <span class="badge light badge-warning">
+                                            <i class="fa fa-circle text-warning me-1"></i>
+                                            In Treatment
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="dropdown ms-auto text-end">
+                                            <div class="btn-link" data-bs-toggle="dropdown">
+                                                <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
+                                            </div>
+                                            <div class="dropdown-menu dropdown-menu-end">
+                                                <a class="dropdown-item" href="#">Accept Patient</a>
+                                                <a class="dropdown-item" href="#">Reject Order</a>
+                                                <a class="dropdown-item" href="#">View Details</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="form-check custom-checkbox ms-2">
+                                            <input type="checkbox" class="form-check-input" id="customCheckBox13" required="">
+                                            <label class="form-check-label" for="customCheckBox13"></label>
+                                        </div>
+                                    </td>
+                                    <td>#P-00012</td>
+                                    <td>Sonya Frost</td>
+                                    <td>Sleep Problem</td>
+                                    <td>
+                                        <span class="badge light badge-danger">
+                                            <i class="fa fa-circle text-danger me-1"></i>
+                                            New Patient
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="dropdown ms-auto text-end">
+                                            <div class="btn-link" data-bs-toggle="dropdown">
+                                                <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
+                                            </div>
+                                            <div class="dropdown-menu dropdown-menu-end">
+                                                <a class="dropdown-item" href="#">Accept Patient</a>
+                                                <a class="dropdown-item" href="#">Reject Order</a>
+                                                <a class="dropdown-item" href="#">View Details</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="form-check custom-checkbox ms-2">
+                                            <input type="checkbox" class="form-check-input" id="customCheckBox14" required="">
+                                            <label class="form-check-label" for="customCheckBox14"></label>
+                                        </div>
+                                    </td>
+                                    <td>#P-00013</td>
+                                    <td>Sonya Frost</td>
+                                    <td>Cold & Flu</td>
+                                    <td>
+                                        <span class="badge light badge-danger">
+                                            <i class="fa fa-circle text-danger me-1"></i>
+                                            New Patient
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="dropdown ms-auto text-end">
+                                            <div class="btn-link" data-bs-toggle="dropdown">
+                                                <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
+                                            </div>
+                                            <div class="dropdown-menu dropdown-menu-end">
+                                                <a class="dropdown-item" href="#">Accept Patient</a>
+                                                <a class="dropdown-item" href="#">Reject Order</a>
+                                                <a class="dropdown-item" href="#">View Details</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="form-check custom-checkbox ms-2">
+                                            <input type="checkbox" class="form-check-input" id="customCheckBox15" required="">
+                                            <label class="form-check-label" for="customCheckBox15"></label>
+                                        </div>
+                                    </td>
+                                    <td>#P-00014</td>
+                                    <td>Sonya Frost</td>
+                                    <td>Sleep Problem</td>
+                                    <td>
+                                        <span class="badge light badge-warning">
+                                            <i class="fa fa-circle text-warning me-1"></i>
+                                            In Treatment
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="dropdown ms-auto text-end">
+                                            <div class="btn-link" data-bs-toggle="dropdown">
+                                                <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
+                                            </div>
+                                            <div class="dropdown-menu dropdown-menu-end">
+                                                <a class="dropdown-item" href="#">Accept Patient</a>
+                                                <a class="dropdown-item" href="#">Reject Order</a>
+                                                <a class="dropdown-item" href="#">View Details</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="form-check custom-checkbox ms-2">
+                                            <input type="checkbox" class="form-check-input" id="customCheckBox16" required="">
+                                            <label class="form-check-label" for="customCheckBox16"></label>
+                                        </div>
+                                    </td>
+                                    <td>#P-00015</td>
+                                    <td>Sonya Frost</td>
+                                    <td>Cold & Flu</td>
+                                    <td>
+                                        <span class="badge light badge-danger">
+                                            <i class="fa fa-circle text-danger me-1"></i>
+                                            New Patient
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="dropdown ms-auto text-end">
+                                            <div class="btn-link" data-bs-toggle="dropdown">
+                                                <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
+                                            </div>
+                                            <div class="dropdown-menu dropdown-menu-end">
+                                                <a class="dropdown-item" href="#">Accept Patient</a>
+                                                <a class="dropdown-item" href="#">Reject Order</a>
+                                                <a class="dropdown-item" href="#">View Details</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="form-check custom-checkbox ms-2">
+                                            <input type="checkbox" class="form-check-input" id="customCheckBox17" required="">
+                                            <label class="form-check-label" for="customCheckBox17"></label>
+                                        </div>
+                                    </td>
+                                    <td>#P-00016</td>
+                                    <td>Sonya Frost</td>
+                                    <td>Sleep Problem</td>
+                                    <td>
+                                        <span class="badge light badge-danger">
+                                            <i class="fa fa-circle text-danger me-1"></i>
+                                            New Patient
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="dropdown ms-auto text-end">
+                                            <div class="btn-link" data-bs-toggle="dropdown">
+                                                <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
+                                            </div>
+                                            <div class="dropdown-menu dropdown-menu-end">
+                                                <a class="dropdown-item" href="#">Accept Patient</a>
+                                                <a class="dropdown-item" href="#">Reject Order</a>
+                                                <a class="dropdown-item" href="#">View Details</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="form-check custom-checkbox ms-2">
+                                            <input type="checkbox" class="form-check-input" id="customCheckBox18" required="">
+                                            <label class="form-check-label" for="customCheckBox18"></label>
+                                        </div>
+                                    </td>
+                                    <td>#P-00017</td>
+                                    <td>Sonya Frost</td>
+                                    <td>Cold & Flu</td>
+                                    <td>
+                                        <span class="badge light badge-warning">
+                                            <i class="fa fa-circle text-warning me-1"></i>
+                                            In Treatment
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="dropdown ms-auto text-end">
+                                            <div class="btn-link" data-bs-toggle="dropdown">
+                                                <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
+                                            </div>
+                                            <div class="dropdown-menu dropdown-menu-end">
+                                                <a class="dropdown-item" href="#">Accept Patient</a>
+                                                <a class="dropdown-item" href="#">Reject Order</a>
+                                                <a class="dropdown-item" href="#">View Details</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" id="btnSubmit">Kaydet</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Kapat</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true" id="saatEkleModal">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Sınıf Ekleme Penceresi</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal">
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="basic-form">
+                        <form action="#" id="sinifEkleForm" method="post">
+                        @Html.AntiForgeryToken()
+
+
+
+
+                            <div class="mb-3 row">
+                                <label class="col-sm-5 col-form-label" style="font-size:12.25px; line-height: 2rem;">Tarih ve saat seçiniz</label>
+                                <div class="col-sm-7">
+                                    <input type="datetime-local" class="form-control" required>
+                                </div>
+                            </div>
+
+
+
+
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" id="btnSubmit">Kaydet</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Kapat</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+@section scripts{
+    <script src="~/Content/vendor/datatables/js/jquery.dataTables.min.js" asp-append-version="true"></script>
+    <script src="~/Content/vendor/jquery-nice-select/js/jquery.nice-select.min.js" asp-append-version="true"></script>
+    <script src="~/Content/js/filepond.js" asp-append-version="true"></script>
+    <script>
+        $(document).ready(function () {
+            var mycrumb = $("#myBreadcrumb");
+            $("#previousBreadcrumb").before(mycrumb);
+            var table = $('#siniflarTable').DataTable({
+                searching: true,
+                paging: true,
+                select: false,
+                info: false,
+                lengthChange: false,
+                language: {
+                    paginate: {
+                        next: '<i class="fa fa-angle-double-right" aria-hidden="true"></i>',
+                        previous: '<i class="fa fa-angle-double-left" aria-hidden="true"></i>'
+                    }
+                }
+            });
+
+
+        })
+
+        $(document).ready(function () {
+            DuyurGorumu();
+        });
+
+        //function Devamsizlik() {
+        //    $("#DevamsizlikField").removeAttr('hidden');
+        //    $("#SinifEklemeField").attr('hidden', true);
+        //}
+        function DuyurGorumu() {
+            $("#DuyurGormeField").removeAttr('hidden');
+            $("#SinifEklemeField").attr('hidden', true);
+            $("#OkumaField").attr('hidden', true);
+            $("#DerslerField").attr('hidden', true);
+            $("#odevviewField").attr('hidden', true);
+
+        }
+        function SinifEkleme() {
+            $("#SinifEklemeField").removeAttr('hidden');
+            $("#DuyurGormeField").attr('hidden', true);
+            $("#OkumaField").attr('hidden', true);
+            $("#DerslerField").attr('hidden', true);
+            $("#odevviewField").attr('hidden', true);
+
+        }
+
+        function ÖdevEkleme() {
+            $("#ÖdevlerField").removeAttr('hidden');
+
+            $("#DuyurGormeField").attr('hidden', true);
+            $("#SinifEklemeField").attr('hidden', true);
+            $("#OkumaField").attr('hidden', true);
+            $("#DerslerField").attr('hidden', true);
+            $("#odevviewField").attr('hidden', true);
+
+
+
+        }
+        function Okuma() {
+            $("#OkumaField").removeAttr('hidden');
+
+            $("#DuyurGormeField").attr('hidden', true);
+            $("#SinifEklemeField").attr('hidden', true);
+            $("#ÖdevlerField").attr('hidden', true);
+            $("#DerslerField").attr('hidden', true);
+            $("#odevviewField").attr('hidden', true);
+
+
+        }
+        function Ders() {
+            $("#DerslerField").removeAttr('hidden');
+            $("#DuyurGormeField").attr('hidden', true);
+            $("#SinifEklemeField").attr('hidden', true);
+            $("#ÖdevlerField").attr('hidden', true);
+            $("#OkumaField").attr('hidden', true);
+            $("#odevviewField").attr('hidden', true);
+
+
+
+
+        }
+    </script>
+
+    <script>
+        $("input[type=file]").change(function (e) {
+            $(this).parents(".uploadFile").find(".filename").text(e.target.files[0].name);
+        });
+        $("input[type=file]").change(function (e) {
+            $(this).parents(".uploadFile").find(".filename").text(e.target.files[0].name);
+        });
+    </script>
+}

@@ -1,0 +1,26 @@
+﻿@media (min-width: 576px) {
+    .col-sm-7 {
+        flex: 0 0 auto;
+        width: 56.33333%;
+    }
+}
+
+@media (min-width: 576px) {
+    .col-sm-5 {
+        flex: 0 0 auto;
+        width: 43%;
+        
+    }
+    .newre {
+        padding: 0px 0px 0px 5px;
+        margin: 0px 0px 0px 1px;
+    }
+    .mb-4 {
+        margin: 14px 0px !important;
+    }
+    .modal-body {
+        padding: 1.875rem 1.875rem 0rem 1.875rem;
+    }
+
+
+}

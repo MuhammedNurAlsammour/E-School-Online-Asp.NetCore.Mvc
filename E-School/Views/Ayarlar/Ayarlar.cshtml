@@ -1,0 +1,18 @@
+﻿@{
+    ViewData["Title"] = "Ayarlar";
+}
+
+<div class="row page-titles" id="myBreadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active"><a asp-controller="Ayarlar" asp-action="Ayarlar">Ayarlar</a></li>
+    </ol>
+</div>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            var mycrumb = $("#myBreadcrumb");
+            $("#previousBreadcrumb").before(mycrumb);
+        })
+    </script>
+}

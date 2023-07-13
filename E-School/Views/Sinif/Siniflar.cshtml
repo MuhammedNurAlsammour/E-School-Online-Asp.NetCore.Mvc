@@ -1,0 +1,471 @@
+﻿@{
+    ViewData["Title"] = "Sınıflar";
+}
+
+@section head{
+	<link href="~/Content/vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet" asp-append-version="true">
+    <link href="~/Content/vendor/jquery-nice-select/css/nice-select.css" rel="stylesheet" asp-append-version="true">
+	<link href="~/Content/vendor/select2/css/select2.min.css" rel="stylesheet" asp-append-version="true" />
+	<link href="~/Content/css/filepond.css" rel="stylesheet" asp-append-version="true" />
+
+
+
+
+	<style>
+		.col-form-label {
+			font-size: 20px;
+		}
+		.select2-selection__rendered {
+			line-height: 50px !important;
+		}
+
+		.select2-container .select2-selection--single {
+			height: 50px !important;
+		}
+
+		.select2-selection__arrow {
+			height: 50px !important;
+		}
+
+		th {
+			text-align: center;
+		}
+	</style>
+	<link href="~/content/css/stylesheet3.css" rel="stylesheet" asp-append-version="true" />
+	<link href="~/content/css/stylesheet2.css" rel="stylesheet" asp-append-version="true" />
+
+
+}
+
+<div class="row page-titles" id="myBreadcrumb">
+    <ol class="breadcrumb">
+		<li class="breadcrumb-item active"><a asp-controller="Sinif" asp-action="Siniflar">Sınıflar</a></li>
+    </ol>
+</div>
+
+<div class="row">
+	<div class="col-12">
+		<div class="card">
+			<div class="card-header">
+				<div class="col-sm-6">
+					<div style="display:flex;">
+						<div class="col-sm-5">
+							<select class="default-select wide">
+								<option value="All" selected="selected">Şube Seçiniz</option>
+								<option value="1">Mersin</option>
+								<option value="2">İzmir</option>
+								<option value="3">İstanbul</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="card-toolbar">
+					<a href="#sinifEkleModal" data-bs-target="#sinifEkleModal" data-bs-toggle="modal" class="btn btn-secondary font-weight-bolder">
+						<span class="svg-icon svg-icon-md">
+							<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+								<path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+							</svg>
+						</span>Yeni Ekle
+					</a>
+					<a asp-controller="Sinif" asp-action="SinifSablonlari" class="btn btn-warning font-weight-bolder">
+						<span class="svg-icon svg-icon-md">
+							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-fill" viewBox="0 0 16 16">
+								<path fill-rule="evenodd" d="M15.528 2.973a.75.75 0 0 1 .472.696v8.662a.75.75 0 0 1-.472.696l-7.25 2.9a.75.75 0 0 1-.557 0l-7.25-2.9A.75.75 0 0 1 0 12.331V3.669a.75.75 0 0 1 .471-.696L7.443.184l.004-.001.274-.11a.75.75 0 0 1 .558 0l.274.11.004.001 6.971 2.789Zm-1.374.527L8 5.962 1.846 3.5 1 3.839v.4l6.5 2.6v7.922l.5.2.5-.2V6.84l6.5-2.6v-.4l-.846-.339Z" />
+							</svg>
+						</span>Şablonlar
+					</a>
+					<a href="#" class="btn btn-dark font-weight-bolder">
+						<span class="svg-icon svg-icon-md">
+							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer-fill" viewBox="0 0 16 16">
+								<path d="M5 1a2 2 0 0 0-2 2v1h10V3a2 2 0 0 0-2-2H5zm6 8H5a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1z" />
+								<path d="M0 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-1v-2a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2H2a2 2 0 0 1-2-2V7zm2.5 1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z" />
+							</svg>
+						</span>Yazdır
+					</a>
+				</div>
+			</div>
+			<div class="card-body">
+				<div class="table-responsive">
+					<table id="siniflarTable" class="display" style="min-width: auto;">
+						<thead>
+							<tr>
+								<th scope="col">Sınıf Adı</th>
+								<th scope="col">Eğitim Adı</th>
+
+								<th scope="col">İlerleme Durumu</th>
+								<th scope="col">Bitiş Tarihi</th>
+								<th scope="col">Durum</th>
+
+								<th scope="col">Aksiyon</th>
+
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td style="text-align:center;">C#</td>
+								<td style="text-align:center;">Java</td>
+
+								<td>
+									<div class="progress" style="background: rgba(76, 175, 80, .1)">
+										<div class="progress-bar bg-success" style="width: 70%;" role="progressbar">
+											<span class="sr-only">70% Complete</span>
+										</div>
+									</div>
+								</td>
+								<td style="text-align:center;">6/6/2023</td>
+								<td style="text-align:center;">
+								<span class="badge light badge-danger " style="width:100px;">Tamamlandı</span>
+								</td>
+								<td style="text-align:center;">
+									<span class="badge badge-success btn btn-xs">
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
+											<path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z" />
+											<path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z" />
+										</svg>
+									</span>
+									<span class=" btn btn-xs btn-warning" href="#DUZEkleModal" data-bs-target="#DUZEkleModal" data-bs-toggle="modal">
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+											<path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+											<path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+										</svg>
+									</span>
+									<span class=" btn btn-xs btn-danger" >
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+											<path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" />
+										</svg>
+									</span>
+								</td>
+
+							</tr>
+							<tr>
+								<td style="text-align:center;">C#</td>
+								<td style="text-align:center;">Java</td>
+
+								<td>
+									<div class="progress" style="background: rgba(76, 175, 80, .1)">
+										<div class="progress-bar bg-success" style="width: 70%;" role="progressbar">
+											<span class="sr-only">70% Complete</span>
+										</div>
+									</div>
+								</td>
+								<td style="text-align:center;">6/6/2023</td>
+								<td style="text-align:center;">
+									<span class="badge light badge-success " style="width:100px;">Devam Etmekte</span>
+								</td>
+								<td style="text-align:center;">
+									<span class="badge badge-success btn btn-xs">
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
+											<path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z" />
+											<path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z" />
+										</svg>
+									</span>
+									<span class=" btn btn-xs btn-warning" href="#DUZEkleModal" data-bs-target="#DUZEkleModal" data-bs-toggle="modal">
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+											<path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+											<path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+										</svg>
+									</span>
+									<span class=" btn btn-xs btn-danger">
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+											<path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" />
+										</svg>
+									</span>
+								</td>
+
+							</tr>
+
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true" id="sinifEkleModal">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Sınıf Ekleme Penceresi</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal">
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="basic-form">
+					<form action="#" id="sinifEkleForm" method="post">
+						@Html.AntiForgeryToken()
+						
+						
+						<div class="mb-3 row">
+							<label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2rem;">Şubesi</label>
+							<div class="col-sm-9">
+								<select id="subeArama" name="SubeID" required>
+									<option>İzmir</option>
+									<option>Mersin</option>
+								</select>
+							</div>
+						</div>
+						
+						<div class="mb-3 row">
+							<label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2rem;">Sınıf Adı</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" name="SinifAdi" required>
+							</div>
+						</div>
+					
+						<div class="mb-3 row">
+							<label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2.3rem;">Öğretmen</label>
+							<div class="col-sm-9">
+								<select id="ogretmenArama" name="OgretmenID" required>
+									<option>Selçuk Keskin</option>
+									<option>Ali Armağan Kilisli</option>
+								</select>
+							</div>
+						</div>
+
+
+
+						<div class="mb-3 row">
+							<label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2.3rem;">Şablon Seçiniz</label>
+							<div class="col-sm-9">
+								<select id="egArama" name="egID" required>
+									<option>Şablon Seçiniz</option>
+									<option>1</option>
+									<option>2</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="mb-3 row">
+							<label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2rem;">Kurs Süresi</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" name="KursSuresi" required>
+
+							</div>
+						</div>
+						<div class="mb-3 row">
+							<label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2rem;">Günü ve Saati</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" name="Gunu" required>
+
+							</div>
+						</div>
+						<div class="mb-3 row" >
+							<label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2rem;">Başlangıç Tarihi</label>
+							<div class="col-sm-9">
+								<input type="date" class="form-control" name="BaslangicTarihi" required>
+							</div>
+						</div>
+
+						<div class="row" id="birt" style="display:flex;width:100%;margin: 0px 0px 14px 0px;justify-content: space-between;">
+
+							<div class="row" style="display: flex;width: 50%;float: left;padding: 0px;">
+								<label class="col-sm-7 col-form-label" style="float: left;line-height: 2rem; font-size:12.25px;">Başlama Saati</label>
+								<div class="col-sm-5 newre" style="float: right; justify-content:flex-end;">
+									<input type="time" class="form-control" name="BaslangicTarihi" required>
+								</div>
+							</div>
+
+							<div class="row" style="display: flex; width: 50%; float: right;">
+								<label class="col-sm-7 col-form-label" style=" line-height: 2rem; font-size:12.25px;">Bitiş Saati</label>
+								<div class="col-sm-5" style="float: right;padding: 0px;">
+									<input type="time" class="form-control" name="BaslangicTarihi" required>
+								</div>
+							</div>
+
+						</div>
+
+						<div class="mb-3 row">
+							<label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2rem;">Bitiş Tarihi</label>
+							<div class="col-sm-9">
+								<input type="date" class="form-control" name="BaslangicTarihi" required>
+							</div>
+						</div>
+
+					</form>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success" id="btnSubmit">Kaydet</button>
+				<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Kapat</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true" id="DUZEkleModal">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Sınıf Ekleme Penceresi</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal">
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="basic-form">
+					<form action="#" id="sinifEkleForm" method="post">
+						@Html.AntiForgeryToken()
+
+
+						<div class="mb-3 row">
+							<label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2rem;">Şubesi</label>
+							<div class="col-sm-9">
+								<select id="DuzsubeArama" name="SubeID" required>
+									<option>İzmir</option>
+									<option>Mersin</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="mb-3 row">
+							<label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2rem;">Sınıf Adı</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" name="SinifAdi" required>
+							</div>
+						</div>
+
+
+
+						<div class="mb-3 row">
+							<label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2.3rem;">Öğretmen</label>
+							<div class="col-sm-9">
+								<select id="DuzogretmenArama" name="OgretmenID" required>
+									<option>Selçuk Keskin</option>
+									<option>Ali Armağan Kilisli</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="mb-3 row">
+							<label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2.3rem;">Şablon Seçiniz</label>
+							<div class="col-sm-9">
+								<select id="SabegArama" name="egID" required>
+									<option>Şablon Seçiniz</option>
+									<option>1</option>
+									<option>2</option>
+								</select>
+							</div>
+						</div>
+
+
+						<div class="mb-3 row">
+							<label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2rem;">Kurs Süresi</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" name="KursSuresi" required>
+
+							</div>
+						</div>
+						<div class="mb-3 row">
+							<label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2rem;">Günü ve Saati</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" name="Gunu" required>
+
+							</div>
+						</div>
+
+						<div class="mb-3 row">
+							<label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2rem;">Başlangıç Tarihi</label>
+							<div class="col-sm-9">
+								<input type="date" class="form-control" name="BaslangicTarihi" required>
+							</div>
+						</div>
+
+						<div class="row" id="birt" style="display:flex;width:100%;margin: 0px 0px 14px 0px;justify-content: space-between;">
+
+							<div class="row" style="display: flex;width: 50%;float: left;padding: 0px;">
+								<label class="col-sm-7 col-form-label" style="float: left;line-height: 2rem; font-size:12.25px;">Başlama Saati</label>
+								<div class="col-sm-5 newre" style="float: right; justify-content:flex-end;">
+									<input type="time" class="form-control" name="BaslangicTarihi" required>
+								</div>
+							</div>
+
+							<div class="row" style="display: flex; width: 50%; float: right;">
+								<label class="col-sm-7 col-form-label" style=" line-height: 2rem; font-size:12.25px;">Bitiş Saati</label>
+								<div class="col-sm-5" style="float: right;padding: 0px;">
+									<input type="time" class="form-control" name="BaslangicTarihi" required>
+								</div>
+							</div>
+
+						</div>
+
+						<div class="mb-3 row">
+							<label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2rem;">Bitiş Tarihi</label>
+							<div class="col-sm-9">
+								<input type="date" class="form-control" name="BaslangicTarihi" required>
+							</div>
+						</div>
+
+					</form>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success" id="btnSubmit">Kaydet</button>
+				<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Kapat</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+@section scripts{	
+	<script src="~/Content/vendor/datatables/js/jquery.dataTables.min.js" asp-append-version="true"></script>
+    <script src="~/Content/vendor/jquery-nice-select/js/jquery.nice-select.min.js" asp-append-version="true"></script>
+	<script src="~/Content/vendor/select2/js/select2.full.min.js" asp-append-version="true"></script>
+	<script src="~/Content/js/filepond.js" asp-append-version="true"></script>
+
+    <script>
+		$(document).ready(function () {
+			$("#subeArama").select2({
+				dropdownParent: $('#sinifEkleModal')
+			});
+			$("#ogretmenArama").select2({
+				dropdownParent: $('#sinifEkleModal')
+			});
+			$("#egArama").select2({
+				dropdownParent: $('#sinifEkleModal')
+			});
+			$("#DurulamaArama").select2({
+				dropdownParent: $('#sinifEkleModal')
+			});
+			$("#egadiArama").select2({
+				dropdownParent: $('#sinifEkleModal')
+			});
+
+
+
+			$("#DuzsubeArama").select2({
+				dropdownParent: $('#DUZEkleModal')
+			});
+			$("#DuzogretmenArama").select2({
+				dropdownParent: $('#DUZEkleModal')
+			});
+			$("#DuzegArama").select2({
+				dropdownParent: $('#DUZEkleModal')
+			});
+			$("#DuzDurulamaArama").select2({
+				dropdownParent: $('#DUZEkleModal')
+			});
+			$("#DuzegadiArama").select2({
+				dropdownParent: $('#DUZEkleModal')
+			});
+			$("#SabegArama").select2({
+				dropdownParent: $('#DUZEkleModal')
+			});
+            var mycrumb = $("#myBreadcrumb");
+            $("#previousBreadcrumb").before(mycrumb);
+			var table = $('#siniflarTable').DataTable({
+				searching: true,
+				paging: true,
+				select: false,
+				info: false,
+				lengthChange: false,
+				language: {
+					paginate: {
+						next: '<i class="fa fa-angle-double-right" aria-hidden="true"></i>',
+						previous: '<i class="fa fa-angle-double-left" aria-hidden="true"></i>'
+					}
+				}
+			});
+
+        })
+    </script>
+
+}

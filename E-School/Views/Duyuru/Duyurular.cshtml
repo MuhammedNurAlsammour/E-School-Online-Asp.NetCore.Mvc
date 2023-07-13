@@ -1,0 +1,416 @@
+﻿@{
+    ViewData["Title"] = "Duyurular";
+}
+
+@section head{
+    <link href="~/Content/vendor/jquery-nice-select/css/nice-select.css" rel="stylesheet" asp-append-version="true">
+    <link href="~/Content/vendor/select2/css/select2.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/Content/css/filepond.css" rel="stylesheet" asp-append-version="true" />
+    <script src="~/Content/vendor/ckeditor/ckeditor.js" asp-append-version="true"></script>
+    <style>
+        .col-form-label {
+            font-size: 20px;
+        }
+
+        .select2-selection__rendered {
+            line-height: 50px !important;
+        }
+
+        .select2-container .select2-selection--single {
+            height: 50px !important;
+        }
+
+        .select2-selection__arrow {
+            height: 50px !important;
+        }
+
+        .filepond--item-panel {
+            background-color: #4fa93f;
+        }
+    </style>
+}
+
+<div class="row page-titles" id="myBreadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active"><a asp-controller="Duyuru" asp-action="Duyurular">Duyurular</a></li>
+    </ol>
+</div>
+<div class="card">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="col-sm-6">
+                        <div style="display:flex;">
+                            <label class="col-sm-4 col-form-label" style="font-size:1.125rem;  line-height: 2.4rem; font-weight: 600;">Şube Seçiniz</label>
+                            <div class="col-sm-5">
+                                <select class="default-select wide">
+                                    <option value="All" selected="selected">Tümünü Göster</option>
+                                    <option value="1">Mersin</option>
+                                    <option value="2">İzmir</option>
+                                    <option value="3">İstanbul</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-toolbar">
+                        <a href="#duyuruEkleModal" data-bs-target="#duyuruEkleModal" data-bs-toggle="modal" class="btn btn-secondary font-weight-bolder">
+                            <span class="svg-icon svg-icon-md">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+                                </svg>
+                            </span>Duyuru Ekle
+                        </a>
+                        <a asp-controller="Duyuru" asp-action="Sablonlar" class="btn btn-warning font-weight-bolder">
+                            <span class="svg-icon svg-icon-md">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-fill" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M15.528 2.973a.75.75 0 0 1 .472.696v8.662a.75.75 0 0 1-.472.696l-7.25 2.9a.75.75 0 0 1-.557 0l-7.25-2.9A.75.75 0 0 1 0 12.331V3.669a.75.75 0 0 1 .471-.696L7.443.184l.004-.001.274-.11a.75.75 0 0 1 .558 0l.274.11.004.001 6.971 2.789Zm-1.374.527L8 5.962 1.846 3.5 1 3.839v.4l6.5 2.6v7.922l.5.2.5-.2V6.84l6.5-2.6v-.4l-.846-.339Z" />
+                                </svg>
+                            </span>Şablonlar
+                        </a>
+                    </div>
+                </div>
+
+                <div class="card-body pt-0">
+                    @*Yukarıdaki tabpane lere basınca ilgili şubenin duyurusu dinamik olarak aşağıya gelcek. TEK SEFERDE TÜM DATAYI ÇEKME partialviewresult ile sorgula $("#testid").load(); yöntemi ile doldur.*@
+                    <div id="DZ_W_TimeLine11" class="widget-timeline style-3 ">
+                        <h3 class="mt-3">Today</h3>
+                        <ul class="timeline-active">
+                            <li class="d-flex align-items-baseline">
+                                <h4 class="font-w400 time">10:10 AM</h4>
+                                <div class="panel">
+                                    <div class="row" >
+                                        <div class="col-lg-12" style="display: contents;">
+                                            <div class="col-lg-10">
+                                               <a class="timeline-panel text-muted d-flex align-items-center " href="#">
+                                                   <div class="badge badge-xl badge-primary">KH</div>
+                                                   <h4 class="mb-0"><strong>Karen Hope </strong> attach 2 files to <strong class="text-warning"> Graphic Design</strong>Courses</h4>
+
+                                               </a>
+                                            </div>
+                                        
+                                              <div class="col-lg-2">
+                                                <a href="#DuzduyuruEkleModal" data-bs-target="#DuzduyuruEkleModal" data-bs-toggle="modal" class="btn btn-warning shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+                                                  <a href="#" class="btn btn-danger shadow btn-xs sharp"><i class="fa fa-trash"></i></a>
+                                              </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="modulel flex-wrap">
+                                        <div class="d-flex me-4 sub-module">
+                                            <span class="file">
+                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M19.4928 23.625C20.1153 23.625 20.6178 23.1225 20.6178 22.5V6.95247C20.6178 6.80251 20.5353 6.53247 20.5353 6.52501C20.4753 6.38251 20.3928 6.26248 20.2878 6.15747L14.8353 0.705C14.7303 0.599992 14.6103 0.5175 14.4678 0.457485C14.4603 0.457485 14.1828 0.374992 14.0403 0.374992H4.50781C3.8853 0.374992 3.38281 0.877477 3.38281 1.49999V22.5C3.38281 23.1225 3.8853 23.625 4.50781 23.625H19.4928V23.625ZM5.63281 2.625H12.9153V6.95247C12.9153 7.57499 13.4178 8.07747 14.0403 8.07747H18.3678V21.375H5.63281V2.625Z" fill="#374557" />
+                                                </svg>
+                                            </span>
+                                            <div class="ms-3">
+                                                <h4 class="m-0 fs-14 font-w600">
+                                                    Module1_GraphicDesign.doc                                           
+                                                </h4>
+                                                <span>1,5 Mb</span>
+
+                                            </div>
+
+
+                                        </div>
+
+                                        <div class="d-flex me-md-2 me-0  sub-module">
+                                            <span class="file">
+                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M19.4928 23.625C20.1153 23.625 20.6178 23.1225 20.6178 22.5V6.95247C20.6178 6.80251 20.5353 6.53247 20.5353 6.52501C20.4753 6.38251 20.3928 6.26248 20.2878 6.15747L14.8353 0.705C14.7303 0.599992 14.6103 0.5175 14.4678 0.457485C14.4603 0.457485 14.1828 0.374992 14.0403 0.374992H4.50781C3.8853 0.374992 3.38281 0.877477 3.38281 1.49999V22.5C3.38281 23.1225 3.8853 23.625 4.50781 23.625H19.4928V23.625ZM5.63281 2.625H12.9153V6.95247C12.9153 7.57499 13.4178 8.07747 14.0403 8.07747H18.3678V21.375H5.63281V2.625Z" fill="#374557" />
+                                                </svg>
+                                            </span>
+                                            <div class="ms-3">
+                                                <h4 class="m-0 fs-14 font-w600">Module2_GraphicDesign.doc
+                                                    
+                                                </h4>
+                                                <span>1,5 Mb</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="d-flex align-items-baseline">
+                                <h4 class="font-w400 time">10:10 AM</h4>
+                                <div class="panel">
+                                    <a class="timeline-panel text-muted d-flex align-items-center" href="#">
+                                        <div class="badge badge-xl badge-warning">KH</div>
+                                        <h4 class="mb-0"><strong>Jordan Nico </strong> has invited you to <strong class="text-warning"> Graphic Design</strong> Group Chat</h4>
+                                    </a>
+                                </div>
+                            </li>
+                            <li class="d-flex align-items-baseline">
+                                <h4 class="font-w400 time">10:10 AM</h4>
+                                <div class="panel">
+                                    <a class="timeline-panel text-muted d-flex align-items-center" href="#">
+                                        <div class="badge badge-xl badge-secondary">KH</div>
+                                        <h4 class="mb-0"><strong>Johnny Ahmad </strong> accepted your invitation to <strong class="text-secondary">Fullstack Developer </strong> Courses</h4>
+                                    </a>
+                                </div>
+                            </li>
+                            <li class="d-flex align-items-baseline">
+                                <h4 class="font-w400 time">10:10 AM</h4>
+                                <div class="panel">
+                                    <a class="timeline-panel text-muted d-flex align-items-center" href="#">
+                                        <div class="badge badge-xl badge-secondary">KH</div>
+                                        <h4 class="mb-0"><strong>Johnny Ahmad </strong> accepted your invitation to <strong class="text-secondary">Fullstack Developer </strong> Courses</h4>
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                        <h3 class="mt-3">Yesterday</h3>
+                        <ul class="timeline-active">
+                            <li class="d-flex align-items-baseline">
+                                <h4 class="font-w400 time">10:10 AM</h4>
+                                <div class="panel">
+                                    <a class="timeline-panel text-muted d-flex align-items-center" href="#">
+                                        <div class="badge badge-xl badge-primary">KH</div>
+                                        <h4 class="mb-0"><strong>Karen Hope </strong> attach 2 files to <strong class="text-warning"> Graphic Design</strong>Courses</h4>
+                                    </a>
+                                </div>
+                            </li>
+                            <li class="d-flex align-items-baseline">
+                                <h4 class="font-w400 time">10:10 AM</h4>
+                                <div class="panel">
+                                    <a class="timeline-panel text-muted d-flex align-items-center" href="#">
+                                        <div class="badge badge-xl badge-info">KH</div>
+                                        <h4 class="mb-0"><strong>Jordan Nico </strong> has invited you to <strong class="text-warning"> Graphic Design</strong> Group Chat</h4>
+                                    </a>
+                                </div>
+                            </li>
+                            <li class="d-flex align-items-baseline">
+                                <h4 class="font-w400 time">10:10 AM</h4>
+                                <div class="panel">
+                                    <a class="timeline-panel text-muted d-flex align-items-center" href="#">
+                                        <div class="badge badge-xl badge-secondary">KH</div>
+                                        <h4 class="mb-0"><strong>Johnny Ahmad </strong> accepted your invitation to <strong class="text-secondary">Fullstack Developer </strong> Courses</h4>
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" id="duyuruEkleModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Duyuru Yayınlama Penceresi</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal">
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="basic-form">
+                    <form action="#" id="duyuruEkleForm" method="post" style="padding-bottom:20px;">
+                        @Html.AntiForgeryToken()
+                        <div class="mb-3 row">
+                            <label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2.4rem;">Şube</label>
+                            <div class="col-sm-9">
+                                <select class="form-control select2" id="subeArama" name="SubeID" required>
+                                    <option>Tüm Şubeler</option>
+                                    <option>İzmir Şubesi</option>
+                                    <option>Mersin Şubesi</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2rem;">Duyuru Başlığı</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name="DuyuruBaslik" required>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-3 col-form-label" style="font-size:12.25px;">Duyuru İçeriği</label>
+                            <div class="col-sm-9">
+                                <textarea name="editor1"></textarea>
+                                <script>
+                                    CKEDITOR.replace('editor1', {
+                                        customConfig: '/Content/vendor/ckeditor/config.js'
+                                    });
+                                </script>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2rem;">Dosya Yükleme Alanı</label>
+                            <div class="col-sm-9">
+                                <input type="file" class="my-pond" name="filepond" data-max-file-size="3MB" data-max-files="10" multiple />
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-4 col-form-label" style="font-size:12.25px; line-height: 2.4rem;">Şablon olarak eklensin mi?</label>
+                            <div class="col-sm-8">
+                                <select class="form-control select2" id="SabArama" name="SabID" required>
+                                    <option>Evet</option>
+                                    <option>Hayır</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-4 col-form-label" style="font-size:12.25px; line-height: 2.4rem;">Otomatik Duyuru</label>
+                            <div class="col-sm-8">
+                                <select class="form-control select2" id="OtoArama" name="OtoID" required>
+                                    <option>Seçiniz</option>
+                                    <option>Evet</option>
+                                    <option>Hayır</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3 row" style="display:none;" id="biro">
+                            <label class="col-sm-4 col-form-label" style="font-size:12.25px; line-height: 2rem;">Duyuru Zamanı</label>
+                            <div class="col-sm-8">
+                                <input type="datetime-local" class="form-control" name="tarih" required>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Kapat</button>
+                <button type="button" class="btn btn-success" id="btnSubmit">Yayınla</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" id="DuzduyuruEkleModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Duyuru Yayınlama Penceresi</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal">
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="basic-form">
+                    <form action="#" id="duyuruEkleForm" method="post" style="padding-bottom:20px;">
+                        @Html.AntiForgeryToken()
+                        <div class="mb-3 row">
+                            <label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2.4rem;">Şube</label>
+                            <div class="col-sm-9">
+                                <select class="form-control select2" id="subeArama" name="SubeID" required>
+                                    <option>Tüm Şubeler</option>
+                                    <option>İzmir Şubesi</option>
+                                    <option>Mersin Şubesi</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2rem;">Duyuru Başlığı</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name="DuyuruBaslik" required>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-3 col-form-label" style="font-size:12.25px;">Duyuru İçeriği</label>
+                            <div class="col-sm-9">
+                                <textarea name="editor2"></textarea>
+                                <script>
+                                    CKEDITOR.replace('editor2', {
+                                        customConfig: '/Content/vendor/ckeditor/config.js'
+                                    });
+                                </script>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2rem;">Dosya Yükleme Alanı</label>
+                            <div class="col-sm-9">
+                                <input type="file" class="my-pond" name="filepond" data-max-file-size="3MB" data-max-files="10" multiple />
+                            </div>
+                        </div>
+
+
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Kapat</button>
+                <button type="button" class="btn btn-success" id="btnSubmit">Yayınla</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script src="~/Content/vendor/jquery-nice-select/js/jquery.nice-select.min.js" asp-append-version="true"></script>
+    <script src="~/Content/vendor/select2/js/select2.full.min.js" asp-append-version="true"></script>
+    <script src="~/Content/js/filepond.js" asp-append-version="true"></script>
+    <script>
+        $(document).ready(function () {
+            $("#subeArama").select2({
+                dropdownParent: $('#duyuruEkleModal')
+            });
+            //Initialize Select2 Elements
+            $('.select2').select2()
+
+            //Initialize Select2 Elements
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            })
+            var mycrumb = $("#myBreadcrumb");
+            $("#previousBreadcrumb").before(mycrumb);
+            //FilePond upload işlemleri
+            pond = FilePond.create(
+                document.querySelector('input[type="file"]'), {
+                allowMultiple: true,
+                instantUpload: false,
+                allowProcess: false
+            });
+
+
+        })
+    </script>
+    <script>
+        $(document).ready(function () {
+            $("#subeArama").select2({
+                dropdownParent: $('#duyuruEkleModal')
+            });
+            //Initialize Select2 Elements
+            $('.select2').select2()
+
+            //Initialize Select2 Elements
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            })
+            var mycrumb = $("#myBreadcrumb");
+            $("#previousBreadcrumb").before(mycrumb);
+            //FilePond upload işlemleri
+            pond = FilePond.create(
+                document.querySelector('input[type="file"]'), {
+                allowMultiple: true,
+                instantUpload: false,
+                allowProcess: false
+            });
+
+
+        })
+    </script>
+
+    <script>
+        var selectElement = document.getElementById("OtoArama");
+
+        selectElement.onchange = function () {
+            var selectedOption = this.options[this.selectedIndex].text;
+
+            if (selectedOption == "Evet") {
+                document.getElementById("biro").style.display = "flex";
+
+            }
+
+            else {
+                /* Öğretmen و Diğer  الأختيار */
+                document.getElementById("biro").style.display = "none";
+
+            }
+        };
+
+
+
+    </script>
+
+}

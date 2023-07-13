@@ -1,0 +1,508 @@
+﻿@{
+    ViewData["Title"] = "Canlı Dersler";
+}
+
+@section head{
+		<link href="~/Content/vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet" asp-append-version="true">
+		<link href="~/Content/vendor/jquery-nice-select/css/nice-select.css" rel="stylesheet" asp-append-version="true">
+		<link href="~/Content/vendor/select2/css/select2.min.css" rel="stylesheet" asp-append-version="true" />
+
+
+
+		<style>
+			.col-form-label {
+				font-size: 20px;
+			}
+			.select2-selection__rendered {
+				line-height: 50px !important;
+			}
+
+			.select2-container .select2-selection--single {
+				height: 50px !important;
+			}
+
+			.select2-selection__arrow {
+				height: 50px !important;
+			}
+			.thh{
+				text-align:center;
+			}
+		</style>
+		<link href="~/content/css/stylesheet3.css" rel="stylesheet" asp-append-version="true" />
+		<link href="~/content/css/stylesheet2.css" rel="stylesheet" asp-append-version="true" />
+
+
+}
+
+<div class="row page-titles" id="myBreadcrumb">
+    <ol class="breadcrumb">
+		<li class="breadcrumb-item active"><a asp-controller="CanliDers" asp-action="CanliDersler">Canlı Ders Linkleri</a></li>
+    </ol>
+</div>
+
+
+<div class="row">
+	<div class="col-12">
+		<div class="card">
+			<div class="card-header">
+				<div class="col-sm-6">
+					<div style="display:flex;">
+						<div class="col-sm-5">
+							<select class="default-select wide">
+								<option value="All" selected="selected">Şube Seçiniz</option>
+								<option value="1">Mersin</option>
+								<option value="2">İzmir</option>
+								<option value="3">İstanbul</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="card-toolbar">
+					<a href="#DersEkleModal" data-bs-target="#DersEkleModal" data-bs-toggle="modal" class="btn btn-secondary font-weight-bolder">
+						<span class="svg-icon svg-icon-md">
+							<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+								<path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+							</svg>
+						</span>Yeni Ekle
+					</a>
+					<a href="#" class="btn btn-dark font-weight-bolder">
+						<span class="svg-icon svg-icon-md">
+							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer-fill" viewBox="0 0 16 16">
+								<path d="M5 1a2 2 0 0 0-2 2v1h10V3a2 2 0 0 0-2-2H5zm6 8H5a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1z" />
+								<path d="M0 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-1v-2a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2H2a2 2 0 0 1-2-2V7zm2.5 1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z" />
+							</svg>
+						</span>Yazdır
+					</a>
+				</div>
+			</div>
+			<div class="card-body">
+				<div class="table-responsive">
+					<table id="DerslarTable" class="display" style="min-width: auto;">
+						<thead>
+							<tr>
+
+								<th class="thh">Öğretmen</th>
+								<th class="thh">Sınıf Adı</th>
+								<th class="thh">Bağlantı Türü</th>
+
+								<th class="thh">Bağlantı Adresi</th>
+
+								<th class="thh">Kalan Süre</th>
+								<th class="thh">Son Tarih</th>
+
+								<th style="width:10rem" class="thh">Aksiyon</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+
+								<td class="thh">Tiger Nixon</td>
+								
+								<td class="thh">Cold & Flu</td>
+								<td class="thh">zoom</td>
+
+								<td class="thh">Google</td>
+
+								<td class="thh">
+									<p id="counter" style="color:black;"></p>
+
+								</td>
+
+								<td class="thh">6/6/2025</td>
+
+
+								<td class="thh">
+
+									<a href="#DuzDersEkleModal" data-bs-target="#DuzDersEkleModal" data-bs-toggle="modal" class="btn btn-warning shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+									<a class="btn btn-primary shadow btn-xs sharp me-1"><i class="fa fa-trash"></i></a>
+
+
+								</td>
+							</tr>
+							<tr>
+
+								<td class="thh">Garrett Winters</td>
+								
+								<td class="thh">Sleep Problem</td>
+								<td class="thh">zoom</td>
+
+								<td class="thh">Google</td>
+
+								<td class="thh">
+									<p id="counter1" style="color:black;"></p>
+
+								</td>
+
+								<td class="thh">6/6/2024</td>
+
+
+								<td class="thh">
+
+
+									<a href="#DuzDersEkleModal" data-bs-target="#DuzDersEkleModal" data-bs-toggle="modal" class="btn btn-warning shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+									<a class="btn btn-primary shadow btn-xs sharp me-1"><i class="fa fa-trash"></i></a>
+
+
+								</td>
+							</tr>
+							<tr>
+
+								<td class="thh">Ashton Cox</td>
+								<td class="thh">Cold & Flu</td>
+								<td class="thh">zoom</td>
+
+								<td class="thh">Google</td>
+
+								<td class="thh">
+									<p id="counter2" style="color:black;"></p>
+
+								</td>
+
+								<td class="thh">6/6/2026</td>
+
+
+								<td class="thh">
+
+
+									<a href="#DuzDersEkleModal" data-bs-target="#DuzDersEkleModal" data-bs-toggle="modal" class="btn btn-warning shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+									<a class="btn btn-primary shadow btn-xs sharp me-1"><i class="fa fa-trash"></i></a>
+
+
+@*									<div class="dropdown ms-auto text-end">
+										<div class="btn-link" data-bs-toggle="dropdown">
+											<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
+										</div>
+										<div class="dropdown-menu dropdown-menu-end">
+											<a class="dropdown-item" href="#">Accept Patient</a>
+											<a class="dropdown-item" href="#">Reject Order</a>
+											<a class="dropdown-item" href="#">View Details</a>
+										</div>
+									</div>*@
+								</td>
+							</tr>
+							
+							
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true" id="DersEkleModal">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Ders Ekleme Penceresi</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal">
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="basic-form">
+					<form action="#" id="sinifEkleForm" method="post">
+						@Html.AntiForgeryToken()
+												
+						<div class="mb-3 row">
+							<label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2.3rem;">Bağlantı Türü</label>
+							<div class="col-sm-9">
+								<select id="subeArama" name="subeAramaid" required>
+									<option>Google Meet</option>
+									<option>Zoom</option>
+								</select>
+							</div>
+						</div>
+
+						
+						<div class="mb-3 row">
+							<label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2rem;">Bağlantı Adresi</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" name="SinifAdi" required>
+							</div>
+						</div>
+					
+						<div class="mb-3 row">
+							<label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2.3rem;">Sınıf Seçiniz</label>
+							<div class="col-sm-9">
+								<select id="ogretmenArama" name="OgretmenID" required>
+									<option>mayıs Gurubu</option>
+									<option>Ocak Gurubu</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="mb-3 row">
+							<label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2rem;">Son Tarih</label>
+							<div class="col-sm-9">
+								<input type="date" class="form-control" name="SinifAdi" required>
+							</div>
+						</div>
+
+					</form>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success" id="btnSubmit">Kaydet</button>
+				<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Kapat</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true" id="DuzDersEkleModal">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Düzeltme Penceresi</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal">
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="basic-form">
+					<form action="#" id="sinifEkleForm" method="post">
+						@Html.AntiForgeryToken()
+
+						<div class="mb-3 row">
+							<label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2.3rem;">Bağlantı Türü</label>
+							<div class="col-sm-9">
+								<select id="DuzsubeArama" name="subeAramaid" required>
+									<option>Google Meet</option>
+									<option>Zoom</option>
+								</select>
+							</div>
+						</div>
+
+
+						<div class="mb-3 row">
+							<label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2rem;">Bağlantı Adresi</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" name="SinifAdi" required>
+							</div>
+						</div>
+
+						<div class="mb-3 row">
+							<label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2.3rem;">Sınıf Seçiniz</label>
+							<div class="col-sm-9">
+								<select id="DuzogretmenArama" name="OgretmenID" required>
+									<option>mayıs Gurubu</option>
+									<option>Ocak Gurubu</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="mb-3 row">
+							<label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2rem;">Son Tarih</label>
+							<div class="col-sm-9">
+								<input type="date" class="form-control" name="SinifAdi" required>
+							</div>
+						</div>
+
+					</form>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success" id="btnSubmit">Kaydet</button>
+				<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Kapat</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+@section scripts{
+	<script src="~/Content/vendor/datatables/js/jquery.dataTables.min.js" asp-append-version="true"></script>
+    <script src="~/Content/vendor/jquery-nice-select/js/jquery.nice-select.min.js" asp-append-version="true"></script>
+	<script src="~/Content/vendor/select2/js/select2.full.min.js" asp-append-version="true"></script>
+
+	<script src="dist/yscountdown.min.js"></script>
+
+    <script>
+		$(document).ready(function () {
+			$("#ogretmenArama").select2({
+				dropdownParent: $('#DersEkleModal')
+			});
+			$("#egArama").select2({
+				dropdownParent: $('#DersEkleModal')
+			});
+			$("#DurulamaArama").select2({
+				dropdownParent: $('#DersEkleModal')
+			});
+						
+			$("#subeArama").select2({
+				dropdownParent: $('#DersEkleModal')
+			});
+
+
+
+			$("#DuzogretmenArama").select2({
+				dropdownParent: $('#DuzDersEkleModal')
+			});
+			$("#DuzegArama").select2({
+				dropdownParent: $('#DuzDersEkleModal')
+			});
+			$("#DuzDurulamaArama").select2({
+				dropdownParent: $('#DuzDersEkleModal')
+			});
+
+			$("#DuzsubeArama").select2({
+				dropdownParent: $('#DuzDersEkleModal')
+			});
+            var mycrumb = $("#myBreadcrumb");
+            $("#previousBreadcrumb").before(mycrumb);
+			var table = $('#DerslarTable').DataTable({
+				searching: true,
+				paging: true,
+				select: false,
+				info: false,
+				lengthChange: false,
+				language: {
+					paginate: {
+						next: '<i class="fa fa-angle-double-right" aria-hidden="true"></i>',
+						previous: '<i class="fa fa-angle-double-left" aria-hidden="true"></i>'
+					}
+				}
+			});
+        })
+    </script>
+	<script>
+		var endDate = new Date("2023/6/23");
+		var counterElement = document.querySelector("#counter");
+
+		function ysCountDown(endDate, callback) {
+			var interval = setInterval(function () {
+				var currentDate = new Date();
+				var remainingTime = endDate - currentDate;
+
+				if (remainingTime <= 0) {
+					clearInterval(interval);
+					callback(true, true); // المرحلة منتهية
+				} else {
+					var totalSeconds = Math.floor(remainingTime / 1000);
+					var totalMinutes = Math.floor(totalSeconds / 60);
+					var totalDays = Math.floor(totalMinutes / 1440); // يوم كامل = 24 ساعة × 60 دقيقة
+
+					var remaining = {
+						totalDays: totalDays,
+						totalMinutes: totalMinutes % 60,
+						totalSeconds: totalSeconds % 60
+					};
+
+					callback(remaining, false);
+				}
+			}, 1000);
+		}
+
+		ysCountDown(endDate, function (remaining, expired) {
+			var message = "";
+
+			if (expired) {
+				message = "منتهية الصلاحية";
+			} else {
+				var totalHours = Math.floor(remaining.totalMinutes / 60);
+				var remainingMinutes = remaining.totalMinutes % 60;
+
+				message = remaining.totalDays + " GÜN ";
+				message += remainingMinutes + "D";
+				message += remaining.totalSeconds + "S";
+			}
+
+			counterElement.textContent = message;
+		});
+
+
+	</script>
+	<script>
+		var endDate = new Date("2023/6/23");
+		var counter1Element = document.querySelector("#counter1");
+
+		function ysCountDown(endDate, callback) {
+			var interval = setInterval(function () {
+				var currentDate = new Date();
+				var remainingTime = endDate - currentDate;
+
+				if (remainingTime <= 0) {
+					clearInterval(interval);
+					callback(true, true); // المرحلة منتهية
+				} else {
+					var totalSeconds = Math.floor(remainingTime / 1000);
+					var totalMinutes = Math.floor(totalSeconds / 60);
+					var totalDays = Math.floor(totalMinutes / 1440); // يوم كامل = 24 ساعة × 60 دقيقة
+
+					var remaining = {
+						totalDays: totalDays,
+						totalMinutes: totalMinutes % 60,
+						totalSeconds: totalSeconds % 60
+					};
+
+					callback(remaining, false);
+				}
+			}, 1000);
+		}
+
+		ysCountDown(endDate, function (remaining, expired) {
+			var message = "";
+
+			if (expired) {
+				message = "منتهية الصلاحية";
+			} else {
+				var totalHours = Math.floor(remaining.totalMinutes / 60);
+				var remainingMinutes = remaining.totalMinutes % 60;
+
+				message = remaining.totalDays + " GÜN ";
+				message += remainingMinutes + "D";
+				message += remaining.totalSeconds + "S";
+			}
+
+			counter1Element.textContent = message;
+		});
+
+
+	</script>
+
+	<script>
+		var endDate = new Date("2023/6/23");
+		var counter2Element = document.querySelector("#counter2");
+
+		function ysCountDown(endDate, callback) {
+			var interval = setInterval(function () {
+				var currentDate = new Date();
+				var remainingTime = endDate - currentDate;
+
+				if (remainingTime <= 0) {
+					clearInterval(interval);
+					callback(true, true); // المرحلة منتهية
+				} else {
+					var totalSeconds = Math.floor(remainingTime / 1000);
+					var totalMinutes = Math.floor(totalSeconds / 60);
+					var totalDays = Math.floor(totalMinutes / 1440); // يوم كامل = 24 ساعة × 60 دقيقة
+
+					var remaining = {
+						totalDays: totalDays,
+						totalMinutes: totalMinutes % 60,
+						totalSeconds: totalSeconds % 60
+					};
+
+					callback(remaining, false);
+				}
+			}, 1000);
+		}
+
+		ysCountDown(endDate, function (remaining, expired) {
+			var message = "";
+
+			if (expired) {
+				message = "منتهية الصلاحية";
+			} else {
+				var totalHours = Math.floor(remaining.totalMinutes / 60);
+				var remainingMinutes = remaining.totalMinutes % 60;
+
+				message = remaining.totalDays + " GÜN ";
+				message += remainingMinutes + "D";
+				message += remaining.totalSeconds + "S";
+			}
+
+			counter2Element.textContent = message;
+		});
+
+
+	</script>
+}

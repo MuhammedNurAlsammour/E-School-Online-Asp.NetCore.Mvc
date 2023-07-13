@@ -1,0 +1,57 @@
+﻿@import url('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css');
+
+body {
+    background: #f1f1f1;
+}
+
+.container {
+    width: 400px;
+    padding: 50px 20px;
+    background: #fff;
+}
+
+h1 {
+    margin-bottom: 40px;
+    ;
+}
+
+.file-upload {
+    position: relative;
+    overflow: hidden;
+    border-radius: 3px !important;
+    background: #ff0000;
+    text-transform: uppercase;
+    font-size: 13px;
+    border: none !important;
+    box-shadow: none !important;
+    color: #fff !important;
+    text-shadow: none;
+    padding: 5px 10px !important;
+    font-family: Arial, sans-serif;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+    .file-upload input.upload {
+        position: absolute;
+        top: 0;
+        right: 0;
+        margin: 0;
+        padding: 0;
+        font-size: 20px;
+        cursor: pointer;
+        opacity: 0;
+        filter: alpha(opacity=0);
+    }
+
+#fileuploadurl {
+    display: inline-block;
+    border: none;
+    vertical-align: middle;
+    background: none;
+    box-shadow: none;
+    font-size: 11px;
+    padding-left: 0;
+    width: 220px;
+    padding-right: 0;
+}

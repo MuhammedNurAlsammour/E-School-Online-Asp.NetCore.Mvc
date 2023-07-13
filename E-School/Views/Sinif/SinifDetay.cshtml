@@ -1,0 +1,3622 @@
+﻿@{
+    ViewData["Title"] = "A Sınıfı";
+}
+
+@section head{
+    <link href="~/Content/vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet" asp-append-version="true">
+    <link href="~/Content/vendor/jquery-nice-select/css/nice-select.css" rel="stylesheet" asp-append-version="true">
+
+    <link href="~/Content/vendor/select2/css/select2.min.css" rel="stylesheet" asp-append-version="true" />
+
+@*    <link href="~/Content/css/filepond.css" rel="stylesheet" asp-append-version="true" />
+
+*@
+    <style>
+            .mtn{
+            margin: 0.5rem 0rem 0rem 0rem;
+             }
+            #cke_editor1{
+            margin: 0rem 0rem 1rem 0rem;
+            }
+
+        .form-check-label {
+            margin-left: 0.3125rem;
+        }
+
+        .uploadFile {
+            width: 100%;
+            background-color: white;
+            
+            color: grey;
+            font-size: 16px;
+            line-height: 23px;
+            overflow: hidden;
+            padding: 10px 10px 4px 10px;
+            position: relative;
+            resize: none;
+            [type="file"]
+
+        {
+            cursor: pointer !important;
+            display: block;
+            font-size: 999px;
+            filter: alpha(opacity=0);
+            min-height: 100%;
+            min-width: 100%;
+            opacity: 0;
+            position: absolute;
+            right: 0px;
+            text-align: right;
+            top: 0px;
+            z-index: 1;
+        }
+
+        }
+
+        .thh {
+            text-align: center;
+        }
+
+        .movable-row {
+            transition: transform 0.3s ease;
+        }
+
+            .movable-row:hover {
+                transform: translateX(10px);
+            }
+
+    </style>
+    <script src="~/Content/vendor/ckeditor/ckeditor.js" asp-append-version="true"></script>
+@*        <link id="skin-default" rel="stylesheet" href="~/assets/css/theme.css?ver=3.1.3">
+*@
+}
+
+
+<div class="row page-titles" id="myBreadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active"><a href="#">A Sınıfı</a></li>
+    </ol>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="profile card card-body px-3 pt-3 pb-0">
+            <div class="profile-head">
+                <div class="photo-content">
+                    <div class="cover-photo rounded" >
+
+                    </div>
+                </div>
+                <div class="profile-info">
+                    <div class="profile-photo">
+                        <img src="/Content/images/profile/profile.png" class="img-fluid rounded-circle" alt="">
+                    </div>
+                    <div class="profile-details">
+                        <div class="profile-name px-3 pt-2">
+                            <h4 class="text-primary mb-0">Ali Armağan Kilisli</h4>
+                            <p>Sınıf Öğretmeni</p>
+                        </div>
+                        <div class="profile-email px-2 pt-2">
+                            <h4 class="text-muted mb-0">aakilisli@@gmail.com</h4>
+                            <p>Email</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-12 bt-order">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="widget-stat card bg-primary">
+                            <div class="card-body  p-4">
+                                <div class="media">
+                                    <span class="me-3">
+                                        <i class="la la-users"></i>
+                                    </span>
+                                    <div class="media-body text-white">
+
+                                        <a href="#sinifEkleModal" data-bs-target="#sinifEkleModal" data-bs-toggle="modal" style="color: #fff;">
+
+                                        <p class="mb-1">Öğrenci Sayısı</p>
+                                        <h3 class="text-white">123</h3>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+
+                        <div class="widget-stat card bg-secondary overflow-hidden">
+                            <div class="card-body p-4">
+                                <div class="media">
+                                    <span class="me-3">
+                                        <i class="la la-graduation-cap"></i>
+                                    </span>
+                                    <div class="media-body text-white">
+                                        <p class="mb-1">Yapılan Ders Sayısı</p>
+                                        <h3 class="text-white">28</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+
+                        <div class="widget-stat card bg-danger">
+                            <div class="card-body p-4">
+                                <div class="media">
+                                    <span class="me-3">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="27" height="27" fill="currentColor" class="bi bi-hourglass-split" viewBox="0 0 16 16">
+                                            <path d="M2.5 15a.5.5 0 1 1 0-1h1v-1a4.5 4.5 0 0 1 2.557-4.06c.29-.139.443-.377.443-.59v-.7c0-.213-.154-.451-.443-.59A4.5 4.5 0 0 1 3.5 3V2h-1a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1h-1v1a4.5 4.5 0 0 1-2.557 4.06c-.29.139-.443.377-.443.59v.7c0 .213.154.451.443.59A4.5 4.5 0 0 1 12.5 13v1h1a.5.5 0 0 1 0 1h-11zm2-13v1c0 .537.12 1.045.337 1.5h6.326c.216-.455.337-.963.337-1.5V2h-7zm3 6.35c0 .701-.478 1.236-1.011 1.492A3.5 3.5 0 0 0 4.5 13s.866-1.299 3-1.48V8.35zm1 0v3.17c2.134.181 3 1.48 3 1.48a3.5 3.5 0 0 0-1.989-3.158C8.978 9.586 8.5 9.052 8.5 8.351z" />
+                                        </svg>
+                                    </span>
+                                    <div class="media-body text-white">
+                                        <p class="mb-1">Kalan Süre (Hafta)</p>
+                                        <h3 class="text-white">10</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xl-4">
+        <div class="row" style="margin-bottom: 1rem;">
+        <div class="col-lg-12">
+
+                <div class="card-body" style="display: grid; padding:0px;">
+                    <button id="DuyurEkleme" onclick="DuyurEkleme()" type="button" class="btn  btn-secondary mtn">
+                        <span class="btn-icon-start text-secondary">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill-check" viewBox="0 0 16 16">
+                                <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm1.679-4.493-1.335 2.226a.75.75 0 0 1-1.174.144l-.774-.773a.5.5 0 0 1 .708-.708l.547.548 1.17-1.951a.5.5 0 1 1 .858.514ZM11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                                <path d="M2 13c0 1 1 1 1 1h5.256A4.493 4.493 0 0 1 8 12.5a4.49 4.49 0 0 1 1.544-3.393C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4Z" />
+                            </svg>
+                        </span>Sınıf Duyuru Ekleme
+                    </button>
+                    <button type="button" class="btn  btn-success mtn">
+                        <span class="btn-icon-start text-success">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-video3" viewBox="0 0 16 16">
+                                <path d="M14 9.5a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm-6 5.7c0 .8.8.8.8.8h6.4s.8 0 .8-.8-.8-3.2-4-3.2-4 2.4-4 3.2Z" />
+                                <path d="M2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h5.243c.122-.326.295-.668.526-1H2a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v7.81c.353.23.656.496.91.783.059-.187.09-.386.09-.593V4a2 2 0 0 0-2-2H2Z" />
+                            </svg>
+                        </span>Canlı Derse Giriş Yap
+                    </button>
+                    <a class="btn  btn-primary mtn" asp-controller="sinif" asp-action="KonuAnlatimDuzelt" style="color:white;">
+                        <span class="btn-icon-start text-primary">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-collection-play-fill" viewBox="0 0 16 16">
+                                <path d="M2.5 3.5a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1h-11zm2-2a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1h-7zM0 13a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 16 13V6a1.5 1.5 0 0 0-1.5-1.5h-13A1.5 1.5 0 0 0 0 6v7zm6.258-6.437a.5.5 0 0 1 .507.013l4 2.5a.5.5 0 0 1 0 .848l-4 2.5A.5.5 0 0 1 6 12V7a.5.5 0 0 1 .258-.437z" />
+                            </svg>
+                        </span>Konu Anlatım Videoları
+                    </a>
+
+                    <button id="SinifEkleme" onclick="SinifEkleme()" type="button" class="btn  btn-secondary mtn">
+                        <span class="btn-icon-start text-secondary">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                            </svg>
+                        </span>Sınav Notları
+                    </button>
+
+                    <button id="Devamsizlik" onclick="Devamsizlik()" type="button" class="btn  btn-secondary mtn">
+                        <span class="btn-icon-start text-secondary">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill-check" viewBox="0 0 16 16">
+                                <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm1.679-4.493-1.335 2.226a.75.75 0 0 1-1.174.144l-.774-.773a.5.5 0 0 1 .708-.708l.547.548 1.17-1.951a.5.5 0 1 1 .858.514ZM11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                                <path d="M2 13c0 1 1 1 1 1h5.256A4.493 4.493 0 0 1 8 12.5a4.49 4.49 0 0 1 1.544-3.393C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4Z" />
+                            </svg>
+                        </span>Devamsızlık Listesi
+                    </button>
+
+                    <button id="ÖdevEkleme" onclick="ÖdevEkleme()" type="button" class="btn  btn-info mtn">
+                        <span class="btn-icon-start text-info">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-journal-check" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M10.854 6.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 8.793l2.646-2.647a.5.5 0 0 1 .708 0z" />
+                                <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z" />
+                                <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z" />
+                            </svg>
+                        </span>Ödevler
+                    </button>
+
+                    <button id="Okuma" onclick="Okuma()" type="button" class="btn btn-info mtn">
+                        <span class="btn-icon-start text-info">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-book" viewBox="0 0 16 16">
+                                <path d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811V2.828zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492V2.687zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783z" />
+                            </svg>
+                        </span>Okuma Kitapları
+                    </button>
+
+                    <button id="Ders" onclick="Ders()" type="button" class="btn  btn-info mtn">
+                        <span class="btn-icon-start text-info">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-medical" viewBox="0 0 16 16">
+                                <path d="M7.5 5.5a.5.5 0 0 0-1 0v.634l-.549-.317a.5.5 0 1 0-.5.866L6 7l-.549.317a.5.5 0 1 0 .5.866l.549-.317V8.5a.5.5 0 1 0 1 0v-.634l.549.317a.5.5 0 1 0 .5-.866L8 7l.549-.317a.5.5 0 1 0-.5-.866l-.549.317V5.5zm-2 4.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5zm0 2a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5z" />
+                                <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z" />
+                            </svg>
+                        </span>Ders ve Kelime Notları
+                    </button>
+
+                    <a class="btn  btn-primary mtn" asp-controller="sinif" asp-action="Gecmisderskayit" style="color:white;">
+                        <span class="btn-icon-start text-primary">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-video2" viewBox="0 0 16 16">
+                                <path d="M10 9.05a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
+                                <path d="M2 1a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2H2ZM1 3a1 1 0 0 1 1-1h2v2H1V3Zm4 10V2h9a1 1 0 0 1 1 1v9c0 .285-.12.543-.31.725C14.15 11.494 12.822 10 10 10c-3.037 0-4.345 1.73-4.798 3H5Zm-4-2h3v2H2a1 1 0 0 1-1-1v-1Zm3-1H1V8h3v2Zm0-3H1V5h3v2Z" />
+                            </svg>
+                        </span>Geçmiş Ders Kayıtları
+                    </a>
+
+
+                    <button id="sunum" onclick="sunum()" type="button" class="btn  btn-warning mtn">
+                        <span class="btn-icon-start text-warning">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-easel" viewBox="0 0 16 16">
+                                <path d="M8.5 6a.5.5 0 1 0-1 0h-2A1.5 1.5 0 0 0 4 7.5v2A1.5 1.5 0 0 0 5.5 11h.473l-.447 1.342a.5.5 0 1 0 .948.316L7.027 11H7.5v1a.5.5 0 0 0 1 0v-1h.473l.553 1.658a.5.5 0 1 0 .948-.316L10.027 11h.473A1.5 1.5 0 0 0 12 9.5v-2A1.5 1.5 0 0 0 10.5 6h-2zM5 7.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-5a.5.5 0 0 1-.5-.5v-2z" />
+                                <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z" />
+                            </svg>
+                        </span>Ders Sunumları
+                    </button>
+
+
+                                        
+                    <button id="sozulu" onclick="sozulu()" type="button" class="btn  btn-warning mtn">
+                        <span class="btn-icon-start text-warning">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-heart" viewBox="0 0 16 16">
+                                <path d="M9 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-9 8c0 1 1 1 1 1h10s1 0 1-1-1-4-6-4-6 3-6 4Zm13.5-8.09c1.387-1.425 4.855 1.07 0 4.277-4.854-3.207-1.387-5.702 0-4.276Z" />
+                            </svg>
+                        </span>Öğrenci Değerlendirme
+                    </button>
+
+
+                 
+                </div>
+        </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-12 col-xxl-12 col-lg-12">
+                <div class="card">
+
+                    <div class="card-body">
+                        <div id="DZ_W_TimeLine11" class="widget-timeline">
+
+
+                            			
+                            <div class="card-header" style="
+    padding: 0px;
+">
+				                             
+                                <div class="col-sm-8">
+                                    <h4 class="mb-3 mt-4 ">Etkinlik Takvimi</h4>
+
+
+                                    
+                                </div>
+                                <div class="card-toolbar">
+                                    <a href="#saatEkleModal" data-bs-target="#saatEkleModal" data-bs-toggle="modal" class="btn btn-secondary font-weight-bolder btn-sm">
+                                        <span class="svg-icon svg-icon-md">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+                                            </svg>
+                                        </span>Ekle
+                                    </a>
+                                </div>
+                                          
+                                          </div>
+                            <div class="d-flex justify-content-between side-border">
+                                <h4 class="mb-0 fs-18 font-w500">30 Mayıs</h4>
+
+                            </div>
+                            <ul class="timeline-active style-4">
+                                <li class="d-flex align-items-center">
+                                    <span class="time-1">08.00 AM</span>
+                                    <div class="panel">
+                                        <div class="line-color bg-primary"></div>
+                                        <a class="timeline-panel text-muted" href="#">
+                                            <span class="d-block">Mart Grubu 2023</span>
+                                            <h4 class="mb-0">Japonca N5</h4>
+                                        </a>
+                                    </div>
+                                </li>
+                                <li class="d-flex align-items-center">
+                                    <span class="time-1">08.00 AM</span>
+                                    <div class="panel">
+                                        <div class="line-color bg-secondary"></div>
+                                        <a class="timeline-panel text-muted" href="#">
+                                            <span class="d-block">Mart Grubu 2023</span>
+                                            <h4 class="mb-0">Japonca N4</h4>
+                                        </a>
+                                    </div>
+                                </li>
+                                <li class="d-flex align-items-center">
+                                    <span class="time-1">08.00 AM</span>
+                                    <div class="panel">
+                                        <div class="line-color bg-warning"></div>
+                                        <a class="timeline-panel text-muted" href="#">
+                                            <span class="d-block">Özel Ders</span>
+                                            <h4 class="mb-0">Seher Ateş</h4>
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="d-flex justify-content-between side-border my-3">
+                                <h4 class="mb-0 fs-18 font-w500">31 Mayıs</h4>
+
+                            </div>
+                            <ul class="timeline-active style-4">
+                                <li class="d-flex align-items-center">
+                                    <span class="time-1">08.00 AM</span>
+                                    <div class="panel">
+                                        <div class="line-color bg-primary"></div>
+                                        <a class="timeline-panel text-muted" href="#">
+                                            <span class="d-block">Mart 2023 Grubu</span>
+                                            <h4 class="mb-0">Japonca N5</h4>
+                                        </a>
+                                    </div>
+                                </li>
+                                <li class="d-flex align-items-center">
+                                    <span class="time-1">08.00 AM</span>
+                                    <div class="panel">
+                                        <div class="line-color bg-secondary"></div>
+                                        <a class="timeline-panel text-muted" href="#">
+                                            <span class="d-block">Mart 2023 Grubu</span>
+                                            <h4 class="mb-0">Japonca N4</h4>
+                                        </a>
+                                    </div>
+                                </li>
+                                <li class="d-flex align-items-center">
+                                    <span class="time-1">08.00 AM</span>
+                                    <div class="panel">
+                                        <div class="line-color bg-warning"></div>
+                                        <a class="timeline-panel text-muted" href="#">
+                                            <span class="d-block">Özel Ders</span>
+                                            <h4 class="mb-0">Mehmet Şahin</h4>
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-8"  id="DuyurEklemeField" hidden>
+        <div class="card">
+            <div class="card-body">
+                <div class="profile-tab">
+                    <div class="custom-tab-1">
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item">
+                                <a href="#my-posts" data-bs-toggle="tab" class="nav-link active show">Sınıf Duyuru Ekleme</a>
+                            </li>
+@*                            <li class="nav-item">
+                                <a href="#about-me" data-bs-toggle="tab" class="nav-link">About Me</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#profile-settings" data-bs-toggle="tab" class="nav-link">Setting</a>
+                            </li>*@
+                        </ul>
+                        <div class="tab-content">
+                            <div id="my-posts" class="tab-pane fade active show">
+                                <div class="my-post-content pt-3">
+                                    <div class="post-input">
+                                        
+                                        <textarea name="editor1" style="margin:1rem;"></textarea>
+                                        <script>
+                                            CKEDITOR.replace('editor1', {
+                                                customConfig: '/Content/vendor/ckeditor/config.js'
+                                            });
+                                        </script>
+@*                                            <a  class="btn btn-primary light me-1 px-3" data-bs-toggle="modal" data-bs-target="#cameraModal" style="float: right; margin: 0rem 1rem;">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-upload" viewBox="0 0 16 16">
+                                                <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                                                <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z" />
+                                            </svg>
+                                        </a>*@
+                                        <button href="javascript:void(0);" type="button" class="btn  btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#cameraModal" style="float: right; margin: 0rem 1rem;">
+                                            <span class="btn-icon-start text-primary">
+                                                <i class="fa fa-upload color-primary"></i>
+                                            </span>Upload
+                                        </button>
+                                        <div class="modal fade" id="cameraModal">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">Upload images</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal">
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="input-group custom_file_input mb-3">
+                                                            <form method="post" action="/Classes/UplaodFileOnDrive">
+                                                                <span class="input-group-text">Upload</span>
+                                                                <div class="form-file">
+                                                                    <input type="file" class="form-file-input form-control" name="file">
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button href="javascript:void(0);" type="button" class="btn  btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#postModal" style="float: right;">
+                                            <span class="btn-icon-start text-primary">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send" viewBox="0 0 16 16">
+                                                    <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z" />
+                                                </svg>
+                                            </span>Paylaş
+                                        </button>
+                                        <div class="modal fade" id="postModal">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">Sınıf Duyuru Paylaş</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal">
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <textarea name="textarea" id="textarea2" cols="30" rows="5" class="form-control bg-transparent" placeholder="Please type what you want...."></textarea>
+                                                        <a class="btn btn-primary " href="javascript:void(0)">Paylaş</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="profile-uoloaded-post border-bottom-1 pb-5" style="margin-top:6rem;">
+                                            <img src="images/profile/8.jpg" alt="" class="img-fluid w-100 rounded">
+                                            <p>
+                                                A wonderful serenity has take possession of my entire soul like these sweet morning of spare which enjoy whole heart.A wonderful serenity has take possession of my entire soul like these sweet morning
+                                                of spare which enjoy whole heart.
+                                            </p>
+                                            <a href="javascript:void(0);" class="btn btn-primary light me-1 px-3">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                                                </svg>
+                                            </a>
+                                            <a href="javascript:void(0);" class="btn btn-primary light me-1 px-3">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z" />
+                                                    <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z" />
+                                                </svg>
+                                            </a>
+                                        </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="replyModal">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Post Reply</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form>
+                                        <textarea class="form-control" rows="4">Message</textarea>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">btn-close</button>
+                                    <button type="button" class="btn btn-primary">Reply</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <div class="col-xl-8" id="DevamsizlikField" hidden>
+
+            <div class="row" id="siniflarimField">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+
+                            <div class="col-md-9">
+                                <div class="row">
+                                    <label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2rem;">Tarih Seçiniz</label>
+                                    <div class="col-sm-5">
+                                        <input type="date" class="form-control" name="SinifAdi" required>
+                                    </div>
+                                    
+                                </div>
+                                
+                            </div>
+                            				
+                            <div class="card-toolbar">
+                            <a href="#" onclick="Raporla()" class="btn light btn-primary font-weight-bolder col-sm-12">
+                                <span class="svg-icon svg-icon-md">
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                            <rect x="0" y="0" width="24" height="24"></rect>
+                                            <circle fill="#000000" cx="9" cy="15" r="6"></circle>
+                                            <path d="M8.8012943,7.00241953 C9.83837775,5.20768121 11.7781543,4 14,4 C17.3137085,4 20,6.6862915 20,10 C20,12.2218457 18.7923188,14.1616223 16.9975805,15.1987057 C16.9991904,15.1326658 17,15.0664274 17,15 C17,10.581722 13.418278,7 9,7 C8.93357256,7 8.86733422,7.00080962 8.8012943,7.00241953 Z" fill="#000000" opacity="0.3"></path>
+                                        </g>
+                                    </svg>
+                                </span>Göster
+                            </a>
+
+                        </div>
+
+                        </div>
+                        <div class="card-body" style="    padding: 1rem 0rem 0rem 0rem;">
+                            <div class="table-responsive">
+                            <table id="DevamsizlikTable" class="table display mb-4 dataTablesCard order-table card-table text-black application" style="min-width: 400px">
+                                    <thead>
+                                        <tr>
+
+                                        <th>Ad Soyad</th>
+                                        <th>
+
+                                                    Geldi
+                                        </th>
+                                        <th>
+                                                Gelmedi
+
+                                        </th>
+                                        <th>
+                                                Geç Geldi
+                                        </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Airi Satou</td>
+
+                                        <td>
+                                            <div class="form-check custom-checkbox ms-2">
+                                                <input type="checkbox" class="form-check-input" id="customCheckBox11" required="">
+                                                <label class="form-check-label" for="customCheckBox11"><span class="badge light badge-success">Geldi</span></label>
+
+
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="form-check custom-checkbox ms-2">
+                                                <input type="checkbox" class="form-check-input" id="customCheckBox13" required="">
+                                                <label class="form-check-label" for="customCheckBox13"><span class="badge light badge-danger">Gelmedi</span></label>
+
+                                            </div>
+                                        </td>
+
+
+                                        <td>
+                                            <div class="form-check custom-checkbox ms-2">
+                                                <input type="checkbox" class="form-check-input" id="customCheckBox12" required="">
+                                                <label class="form-check-label" for="customCheckBox12"><span class="badge light badge-warning">Geç Geldi</span></label>
+                                            </div>
+                                        </td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>Cold & Flu</td>
+                                        <td>
+                                            <div class="form-check custom-checkbox ms-2">
+                                                <input type="checkbox" class="form-check-input" id="customCheckBox11" required="">
+                                                <label class="form-check-label" for="customCheckBox11"><span class="badge light badge-success">Geldi</span></label>
+                                                
+
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="form-check custom-checkbox ms-2">
+                                                <input type="checkbox" class="form-check-input" id="customCheckBox13" required="">
+                                                <label class="form-check-label" for="customCheckBox13"><span class="badge light badge-danger">Gelmedi</span></label>
+                                                
+                                            </div>
+                                        </td>
+
+
+                                        <td>
+                                            <div class="form-check custom-checkbox ms-2">
+                                                <input type="checkbox" class="form-check-input" id="customCheckBox12" required="">
+                                                <label class="form-check-label" for="customCheckBox12"><span class="badge light badge-warning">Geç Geldi</span></label>
+                                            </div>
+                                        </td>
+          
+                                        </tr>
+                                        <tr>
+                                            <td>Dr. Garrett</td>
+
+                                            <td>
+                                                <div class="form-check custom-checkbox ms-2">
+                                                    <input type="checkbox" class="form-check-input" id="customCheckBox11" required="">
+                                                    <label class="form-check-label" for="customCheckBox11"><span class="badge light badge-success">Geldi</span></label>
+
+
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                <div class="form-check custom-checkbox ms-2">
+                                                    <input type="checkbox" class="form-check-input" id="customCheckBox13" required="">
+                                                    <label class="form-check-label" for="customCheckBox13"><span class="badge light badge-danger">Gelmedi</span></label>
+
+                                                </div>
+                                            </td>
+
+
+                                            <td>
+                                                <div class="form-check custom-checkbox ms-2">
+                                                    <input type="checkbox" class="form-check-input" id="customCheckBox12" required="">
+                                                    <label class="form-check-label" for="customCheckBox12"><span class="badge light badge-warning">Geç Geldi</span></label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card-footer text-end">
+                            <button type="button" class="btn btn-success" id="btnSubmit ">Kaydet</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+    <div class="col-xl-8" id="SinifEklemeField" hidden>
+
+        <div class="row" id="siniflarimField">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="col-sm-5">
+                                        <select class="default-select wide">
+                                            <option value="All" selected="selected">Sınav Seçiniz</option>
+                                            <option value="1">1.sınav</option>
+                                            <option value="2">2.sınav</option>
+                                            <option value="3">3.sınav</option>
+                                        </select>
+
+                        </div>
+                                                
+                        <div class="col-sm-6" style="display:flex;">
+                                                    
+                            <a href="#duzenleModal" data-bs-target="#duzenleModal" data-bs-toggle="modal" class="btn light btn-warning font-weight-bolder col-sm-6">
+                                <span class="svg-icon svg-icon-md">
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                            <rect x="0" y="0" width="24" height="24"></rect>
+                                            <circle fill="#000000" cx="9" cy="15" r="6"></circle>
+                                            <path d="M8.8012943,7.00241953 C9.83837775,5.20768121 11.7781543,4 14,4 C17.3137085,4 20,6.6862915 20,10 C20,12.2218457 18.7923188,14.1616223 16.9975805,15.1987057 C16.9991904,15.1326658 17,15.0664274 17,15 C17,10.581722 13.418278,7 9,7 C8.93357256,7 8.86733422,7.00080962 8.8012943,7.00241953 Z" fill="#000000" opacity="0.3"></path>
+                                        </g>
+                                    </svg>
+                                </span>Düzelt
+                            </a>
+                            <a href="#" onclick="Raporla()" class="btn light btn-primary font-weight-bolder col-sm-6"  style="margin-left:1rem;">
+                                <span class="svg-icon svg-icon-md">
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                            <rect x="0" y="0" width="24" height="24"></rect>
+                                            <circle fill="#000000" cx="9" cy="15" r="6"></circle>
+                                            <path d="M8.8012943,7.00241953 C9.83837775,5.20768121 11.7781543,4 14,4 C17.3137085,4 20,6.6862915 20,10 C20,12.2218457 18.7923188,14.1616223 16.9975805,15.1987057 C16.9991904,15.1326658 17,15.0664274 17,15 C17,10.581722 13.418278,7 9,7 C8.93357256,7 8.86733422,7.00080962 8.8012943,7.00241953 Z" fill="#000000" opacity="0.3"></path>
+                                        </g>
+                                    </svg>
+                                </span>Göster
+                            </a>                                
+                        </div>
+
+
+                    </div>
+                    <div class="card-body" style="    padding: 1rem 0rem 0rem 0rem;">                                        
+                        <form action="#" id="sinifEkleForm" method="post">
+                            @Html.AntiForgeryToken()
+                       
+                            <div class="table-responsive">
+                            <table id="DevamsizlikTable" class="table display mb-4 dataTablesCard order-table card-table text-black application" style="min-width: 400px">
+                                <thead>
+                                    <tr>
+
+                                        <th>Öğrenci</th>
+
+                                        <th style="width:100px">
+                                                Sınav Notları
+
+                                        </th>
+
+                                                                                <th>
+                                            Açıklama
+                                        </th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Airi Satou</td>
+                                               
+                                            <td>
+
+                                                        <input type="text" class="form-control" name="SinavinNotlari" placeholder="Not giriniz" required>
+
+                                            </td>
+
+
+                                            <td>
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <input type="text" class="form-control" name="SinavinBolum" placeholder="Açıklama giriniz" required>
+                                                    </div>
+                                                </div>
+                                            </td>
+
+
+
+
+
+                                    </tr>
+                                    <tr>
+                                        <td>Cold & Flu</td>
+                                            <td>
+
+                                                        <input type="text" class="form-control" name="SinavinNotlari" placeholder="Not giriniz" required>
+
+                                            </td>
+
+
+                                            <td>
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <input type="text" class="form-control" name="SinavinBolum" placeholder="Açıklama giriniz" required>
+                                                    </div>
+                                                </div>
+                                            </td>
+
+
+
+                                    </tr>
+                                    <tr>
+                                        <td>Dr. Garrett</td>
+                                            <td>
+
+                                                <input type="text" class="form-control" name="SinavinNotlari" placeholder="Not giriniz" required>
+
+                                            </td>
+
+
+                                            <td>
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <input type="text" class="form-control" name="SinavinBolum" placeholder="Açıklama giriniz" required>
+                                                    </div>
+                                                </div>
+                                            </td>
+
+
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    
+                                                
+                        </form>
+
+                    </div>
+                    <div class="card-footer text-end">
+                        <button type="button" class="btn btn-success" id="btnSubmit ">Kaydet</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-8" id="ÖdevlerField" hidden>
+
+        <div class="row" id="siniflarimField">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="col-sm-3 text-center">
+                            <h4>Ödevler Listesi</h4>
+                        </div>
+
+                        <div class="col-sm-4 text-center" >
+                            <h6 class="text-left">
+                                Ödev Bitirenler
+                                <span class="pull-end">65%</span>
+                            </h6>
+                            <div class="progress text-center">
+                                <div class="progress-bar bg-success progress-animated" style="width: 65%; height:6px;" role="progressbar">
+                                    <span class="sr-only">60% Complete</span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                                                  
+                        <div class="col-sm-4 text-end">
+                        @*  <a class="btn btn-warning shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+
+
+                            <a href="javascript:void(0);" class="btn btn-primary light me-1 px-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                                </svg>
+                            </a>*@
+                            <button href="#OdevPaylasModal" data-bs-target="#OdevPaylasModal" data-bs-toggle="modal" type="button" class="btn btn-outline-primary btn-xs">
+                                <span class="btn-icon-start text-primary">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send" viewBox="0 0 16 16">
+                                        <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z" />
+                                    </svg>
+                                </span>Yeni Paylaş
+                            </button>
+
+                        </div>
+                    </div>
+                    <div class="card-body" style="    padding: 1rem 0rem 0rem 0rem;">
+                        <div class="table-responsive">
+                            <table id="DevamsizlikTable" class="table display mb-4 dataTablesCard order-table card-table text-black application" style="min-width: 400px">
+                                <thead>
+                                    <tr>
+
+
+										<th class="thh">Ödev Başliği</th>
+										<th class="thh">
+
+											tarih
+										</th>
+										<th class="thh">
+
+											Kalan Süre
+										</th>
+
+
+										<th class="thh">
+											Dosya
+
+										</th>
+										<th class="thh">
+                                            Aksiyon
+										</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="thh">a yaziniz</td>
+
+										<td class="thh">
+											26.1.2023
+
+										</td>
+                                        <td class="thh">
+                                            26.1.2023
+
+                                        </td>
+                                        <td class="thh"><button type="button" class="btn btn-outline-primary btn-xs" fdprocessedid="vvzjlt">indir</button></td>
+
+
+                                        <td class="thh">
+                                            <a id="odevview" onclick="odevview()" class="btn btn-info shadow btn-xs sharp me-1"><i class="fa fa-eye"></i></a>
+
+                                            <a href="#DuzOdevPaylasModal" data-bs-target="#DuzOdevPaylasModal" data-bs-toggle="modal" class="btn btn-warning shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+                                            <a class="btn btn-primary shadow btn-xs sharp me-1"><i class="fa fa-trash"></i></a>
+
+
+
+                                        </td>
+
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-8" id="OkumaField" hidden>
+
+        <div class="row" id="siniflarimField">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="col-sm-4">
+                            <h4>Okuma Kitaplari</h4>
+                        </div>
+
+                        <button href="#KitapPaylasModal" data-bs-target="#KitapPaylasModal" data-bs-toggle="modal" type="button" class="btn btn-outline-primary btn-xs" style="float: right;">
+							<span class="btn-icon-start text-primary">
+								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send" viewBox="0 0 16 16">
+									<path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z" />
+								</svg>
+							</span>Yeni Paylaş
+						</button>
+
+                    </div>
+                    <div class="card-body" style="    padding: 1rem 0rem 0rem 0rem;">
+                        <div class="table-responsive">
+                            <table id="DevamsizlikTable" class="table display mb-4 dataTablesCard order-table card-table text-black application" style="min-width: 400px">
+                                <thead>
+                                    <tr>
+
+                                        <th class="thh">Kitap Adi</th>
+
+                                        <th class="thh">
+
+                                            tarih
+                                        </th>
+                                        <th class="thh">
+                                            Dosya
+
+                                        </th>
+                                        <th class="thh">
+                                            Aksiyon
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="thh">a yaziniz</td>
+
+
+
+                                        <td class="thh">
+                                            26.1.2023
+
+                                        </td>
+
+                                                    
+                                        <td class="thh"><button type="button" class="btn btn-outline-primary btn-xs" fdprocessedid="vvzjlt">indir</button></td>
+
+
+
+                                        <td class="thh">
+                                            <a class="btn btn-warning shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+                                            <a class="btn btn-primary shadow btn-xs sharp me-1"><i class="fa fa-trash"></i></a>
+
+
+                                        </td>
+
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-8" id="DerslerField" hidden>
+
+        <div class="row" id="siniflarimField">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="col-sm-4">
+                            <h4>Ders ve Kelime Notları</h4>
+                        </div>
+
+                        <button href="#DersPaylasModal" data-bs-target="#DersPaylasModal" data-bs-toggle="modal" type="button" class="btn btn-outline-primary btn-xs" style="float: right;">
+							<span class="btn-icon-start text-primary">
+								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send" viewBox="0 0 16 16">
+									<path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z" />
+								</svg>
+                            </span>Yeni Paylaş
+						</button>
+
+                    </div>
+                    <div class="card-body" style="    padding: 1rem 0rem 0rem 0rem;">
+                        <div class="table-responsive">
+                            <table id="DevamsizlikTable" class="table display mb-4 dataTablesCard order-table card-table text-black application" style="min-width: 400px">
+                                <thead>
+                                    <tr>
+
+                                        <th class="thh">Ders Adi</th>
+
+
+                                        <th class="thh">
+
+                                            tarih
+                                        </th>
+
+                                        <th class="thh">
+                                            Dosya
+
+                                        </th>
+                                        <th class="thh">
+                                            Aksiyon
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="thh">a yaziniz</td>
+
+
+                                        <td class="thh">
+                                            26.1.2023
+
+                                        </td>
+                                        <td class="thh"><button type="button" class="btn btn-outline-primary btn-xs" fdprocessedid="vvzjlt">indir</button></td>
+
+
+
+                                        <td class="thh">
+                                            <a class="btn btn-warning shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+                                            <a class="btn btn-primary shadow btn-xs sharp me-1"><i class="fa fa-trash"></i></a>
+
+
+                                        </td>
+
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-8" id="odevviewField" hidden>
+
+        <div class="row" id="siniflarimField">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="col-sm-4">
+                            <h4>Ödevler Gösterme Listesi</h4>
+                        </div>
+
+
+
+                    </div>
+                    <div class="card-body" style="    padding: 1rem 0rem 0rem 0rem;">
+                        <div class="table-responsive">
+                            <table id="DevamsizlikTable" class="table display mb-4 dataTablesCard order-table card-table text-black application" style="min-width: 400px">
+                                <thead>
+                                    <tr>
+
+                                        <th>Öğrenci İsimi</th>
+                                        <th>
+
+                                             Ödev Dosyası 
+                                        </th>
+
+                                        <th>
+
+                                            tarih
+                                        </th>
+
+                                        <th>
+                                            Ödev Yükleme
+
+                                        </th>
+                                        <th>
+                                            Durum
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>muhammed</td>
+
+                                        <td><button type="button" class="btn btn-outline-primary btn-xs" fdprocessedid="vvzjlt">indir</button></td>
+
+
+                                        <td>
+                                            26.1.2023
+
+                                        </td>
+
+                                        <td >
+                                            <label class="uploadFile">
+                                                <i class="bi bi-file-earmark-arrow-up"></i>
+                                                <span class="filename" style="font-size:12.25px;">Dosya Ekle</span>
+                                                <input type="file" class="inputfile form-control" name="file">
+                                            </label>
+                                        </td>
+
+
+                                        <td>
+                                            <a class="btn btn-success shadow btn-xs sharp me-1"><i class="bi bi-check-circle"></i></a>
+
+
+
+
+
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                        <td>muhammed</td>
+
+                                        <td ><button type="button" class="btn btn-outline-primary btn-xs" fdprocessedid="vvzjlt">indir</button></td>
+
+
+                                        <td>
+                                            26.1.2023
+
+                                        </td>
+
+                                        <td>
+                                            <label class="uploadFile">
+                                                <i class="bi bi-file-earmark-arrow-up"></i>
+                                                <span class="filename" style="font-size:12.25px;">Dosya Ekle</span>
+                                                <input type="file" class="inputfile form-control" name="file">
+                                            </label>
+                                        </td>
+
+
+                                        <td>
+
+                                            <a class="btn btn-primary shadow btn-xs sharp me-1"><i class="bi bi-dash-circle"></i></a>
+
+
+
+
+
+                                        </td>
+
+                                    </tr>
+
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" id="duzenleModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Açıklama ve Ekleme Penceresi</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal">
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="basic-form">
+                        <form action="#" id="duzeltForm" method="post" style="padding-bottom:20px;">
+                            @Html.AntiForgeryToken()
+                            <div class="table-responsive">
+                                <table id="DevamsizlikTable" class="table display mb-4 dataTablesCard order-table card-table text-black application" style="min-width: 400px">
+                                    <thead>
+                                        <tr>
+
+
+                                            <th>
+                                                Sınav Seçiniz
+
+                                            </th>
+
+                                            
+                                            <th class="thh">
+                                                Ekle
+
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                           
+                                            <td>
+
+                                                <input value="1.sınav" type="text" class="form-control" name="SinavinNotlari" placeholder="Not giriniz" required>
+
+                                            </td>
+
+
+
+                                            <td class="thh">
+
+                                                <a class="btn btn-success shadow btn-lg"><i class="bi bi-check-circle"></i></a>
+
+                                            </td>
+
+
+                                        </tr>
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" id="btnSubmit">Kaydet</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Kapat</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-8" id="sunumField" hidden>
+                        
+                    
+        <div class="row">
+            <!-- Column starts -->
+            <div class="col-xl-12">
+                <div class="card">
+                    @* <div class="card-header d-block">
+                    <h4 class="card-title">Default Accordion</h4>
+                    <p class="m-0 subtitle">Default accordion. Add <code>accordion</code> class in root </p>
+                    </div>*@ <div class="card-body">
+                        <!-- Default accordion -->
+@*                        <div id="basicLeft">
+*@                        <div class="accordion accordion-primary" id="accordion-one">
+                            <div class="accordion-item">
+                                <div class="accordion-header  rounded-lg" id="headingOne" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-controls="collapseOne" aria-expanded="true" role="button">
+                                    <span class="accordion-header-icon"></span>
+                                    <span class="accordion-header-text">Birinci sunum</span>
+                                    <span class="accordion-header-indicator"></span>
+                                </div>
+                                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-bs-parent="#accordion-one">
+                                    <div class="basic-form">
+                                        <div class="table-responsive">
+                                            <table class="table display mb-4 dataTablesCard order-table card-table text-black application" id="example5">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="thh">Dosya Adı</th>
+                                                        <th class="thh">Dosya Türü</th>
+                                                        <th class="thh">Aksiyon</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="thh">MEHMET CAN</td>
+                                                        <td class="thh">
+                                                            <span class="badge light badge-primary " style="width:90px;">PDF</span>
+                                                        </td>
+                                                        <td class="thh">
+                                                            <a id="odevview" onclick="odevview()" class="btn btn-info shadow btn-xs sharp me-1">
+                                                                <i class="fa fa-eye"></i>
+                                                            </a>
+                                                            <a class="btn btn-warning shadow btn-xs sharp me-1">
+                                                                <i class="fas fa-pencil-alt"></i>
+                                                            </a>
+                                                            <a class="btn btn-primary shadow btn-xs sharp me-1">
+                                                                <i class="fa fa-trash"></i>
+                                                            </a>
+                                                            <a class="btn btn-primary shadow btn-xs sharp move-up">
+                                                                <i class="fa fa-arrow-up"></i>
+                                                            </a>
+                                                            <a class="btn btn-primary shadow btn-xs sharp move-down">
+                                                                <i class="fa fa-arrow-down"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="thh">MİKO OSKU</td>
+                                                        <td class="thh">
+                                                            <span class="badge light badge-warning " style="width:90px;">PPT</span>
+                                                        </td>
+                                                        <td class="thh">
+                                                            <a id="odevview" onclick="odevview()" class="btn btn-info shadow btn-xs sharp me-1">
+                                                                <i class="fa fa-eye"></i>
+                                                            </a>
+                                                            <a class="btn btn-warning shadow btn-xs sharp me-1">
+                                                                <i class="fas fa-pencil-alt"></i>
+                                                            </a>
+                                                            <a class="btn btn-primary shadow btn-xs sharp me-1">
+                                                                <i class="fa fa-trash"></i>
+                                                            </a>
+                                                            <a class="btn btn-primary shadow btn-xs sharp move-up">
+                                                                <i class="fa fa-arrow-up"></i>
+                                                            </a>
+                                                            <a class="btn btn-primary shadow btn-xs sharp move-down">
+                                                                <i class="fa fa-arrow-down"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="thh">MİKO OSKU</td>
+                                                        <td class="thh">
+                                                            <span class="badge light badge-info" style="width:90px;">DOC</span>
+                                                        </td>
+                                                        <td class="thh">
+                                                            <a id="odevview" onclick="odevview()" class="btn btn-info shadow btn-xs sharp me-1">
+                                                                <i class="fa fa-eye"></i>
+                                                            </a>
+                                                            <a class="btn btn-warning shadow btn-xs sharp me-1">
+                                                                <i class="fas fa-pencil-alt"></i>
+                                                            </a>
+                                                            <a class="btn btn-primary shadow btn-xs sharp me-1">
+                                                                <i class="fa fa-trash"></i>
+                                                            </a>
+                                                            <a class="btn btn-primary shadow btn-xs sharp move-up">
+                                                                <i class="fa fa-arrow-up"></i>
+                                                            </a>
+                                                            <a class="btn btn-primary shadow btn-xs sharp move-down">
+                                                                <i class="fa fa-arrow-down"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+  
+
+                                            </table>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-xl-12 text-end" style="    margin-left: -2rem;">
+                                                    <button type="button" class="btn btn-success " id="btnSubmit">Kaydet</button>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <div class="accordion-header collapsed rounded-lg" id="headingTwo" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-controls="collapseTwo" role="button" aria-expanded="true">
+                                    <span class="accordion-header-text">İkinci Sunum</span>
+                                    <span class="accordion-header-indicator"></span>
+                                </div>
+                                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-bs-parent="#accordion-one">
+                                    <div class="basic-form">
+                                        <div class="table-responsive">
+                                            <table class="table display mb-4 dataTablesCard order-table card-table text-black application" id="example5">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="thh">Ad Soyad</th>
+                                                        <th class="thh">Durum</th>
+                                                        <th class="thh">Aksiyon</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="thh">MEHMET CAN</td>
+                                                        <td class="thh">
+                                                            <span class="badge light badge-primary " style="width:90px;">PDF</span>
+                                                        </td>
+                                                        <td class="thh">
+                                                            <a id="odevview" onclick="odevview()" class="btn btn-info shadow btn-xs sharp me-1">
+                                                                <i class="fa fa-eye"></i>
+                                                            </a>
+                                                            <a class="btn btn-warning shadow btn-xs sharp me-1">
+                                                                <i class="fas fa-pencil-alt"></i>
+                                                            </a>
+                                                            <a class="btn btn-primary shadow btn-xs sharp me-1">
+                                                                <i class="fa fa-trash"></i>
+                                                            </a>
+                                                                                                                        <a class="btn btn-primary shadow btn-xs sharp move-up">
+                                                                <i class="fa fa-arrow-up"></i>
+                                                            </a>
+                                                            <a class="btn btn-primary shadow btn-xs sharp move-down">
+                                                                <i class="fa fa-arrow-down"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="thh">MİKO OSKU</td>
+                                                        <td class="thh">
+                                                            <span class="badge light badge-Warning " style="width:90px;">PPT</span>
+                                                        </td>
+                                                        <td class="thh">
+                                                            <a id="odevview" onclick="odevview()" class="btn btn-info shadow btn-xs sharp me-1">
+                                                                <i class="fa fa-eye"></i>
+                                                            </a>
+                                                            <a class="btn btn-warning shadow btn-xs sharp me-1">
+                                                                <i class="fas fa-pencil-alt"></i>
+                                                            </a>
+                                                            <a class="btn btn-primary shadow btn-xs sharp me-1">
+                                                                <i class="fa fa-trash"></i>
+                                                            </a>
+                                                            <a class="btn btn-primary shadow btn-xs sharp move-up">
+                                                                <i class="fa fa-arrow-up"></i>
+                                                            </a>
+                                                            <a class="btn btn-primary shadow btn-xs sharp move-down">
+                                                                <i class="fa fa-arrow-down"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="thh">MİKO OSKU</td>
+                                                        <td class="thh">
+                                                            <span class="badge light badge-info" style="width:90px;"> DOC </span>
+                                                        </td>
+                                                        <td class="thh">
+                                                            <a id="odevview" onclick="odevview()" class="btn btn-info shadow btn-xs sharp me-1">
+                                                                <i class="fa fa-eye"></i>
+                                                            </a>
+                                                            <a class="btn btn-warning shadow btn-xs sharp me-1">
+                                                                <i class="fas fa-pencil-alt"></i>
+                                                            </a>
+                                                            <a class="btn btn-primary shadow btn-xs sharp me-1">
+                                                                <i class="fa fa-trash"></i>
+                                                            </a>
+                                                                                                                        <a class="btn btn-primary shadow btn-xs sharp move-up">
+                                                                <i class="fa fa-arrow-up"></i>
+                                                            </a>
+                                                            <a class="btn btn-primary shadow btn-xs sharp move-down">
+                                                                <i class="fa fa-arrow-down"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        
+                                            <div class="row">
+                                                <div class="col-xl-12 text-end" style="    margin-left: -2rem;">
+                                                    <button type="button" class="btn btn-success " id="btnSubmit">Kaydet</button>
+
+                                                </div>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <div class="accordion-header collapsed rounded-lg" id="headingThree" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-controls="collapseThree" role="button" aria-expanded="true">
+                                    <span class="accordion-header-text">Üçüncü Sunum</span>
+                                    <span class="accordion-header-indicator"></span>
+                                </div>
+                                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-bs-parent="#accordion-one">
+                                    <div class="basic-form">
+                                        <div class="table-responsive">
+                                            <table class="table display mb-4 dataTablesCard order-table card-table text-black application" id="example5">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="thh">Ad Soyad</th>
+                                                        <th class="thh">Durum</th>
+                                                        <th class="thh">Aksiyon</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="thh">MEHMET CAN</td>
+                                                        <td class="thh">
+                                                            <span class="badge light badge-primary " style="width:90px;">PDF</span>
+                                                        </td>
+                                                        <td class="thh">
+                                                            <a id="odevview" onclick="odevview()" class="btn btn-info shadow btn-xs sharp me-1">
+                                                                <i class="fa fa-eye"></i>
+                                                            </a>
+                                                            <a class="btn btn-warning shadow btn-xs sharp me-1">
+                                                                <i class="fas fa-pencil-alt"></i>
+                                                            </a>
+                                                            <a class="btn btn-primary shadow btn-xs sharp me-1">
+                                                                <i class="fa fa-trash"></i>
+                                                            </a>
+                                                                                                                        <a class="btn btn-primary shadow btn-xs sharp move-up">
+                                                                <i class="fa fa-arrow-up"></i>
+                                                            </a>
+                                                            <a class="btn btn-primary shadow btn-xs sharp move-down">
+                                                                <i class="fa fa-arrow-down"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="thh">MİKO OSKU</td>
+                                                        <td class="thh">
+                                                            <span class="badge light badge-Warning " style="width:90px;">PPT</span>
+                                                        </td>
+                                                        <td class="thh">
+                                                            <a id="odevview" onclick="odevview()" class="btn btn-info shadow btn-xs sharp me-1">
+                                                                <i class="fa fa-eye"></i>
+                                                            </a>
+                                                            <a class="btn btn-warning shadow btn-xs sharp me-1">
+                                                                <i class="fas fa-pencil-alt"></i>
+                                                            </a>
+                                                            <a class="btn btn-primary shadow btn-xs sharp me-1">
+                                                                <i class="fa fa-trash"></i>
+                                                            </a>
+                                                                                                                        <a class="btn btn-primary shadow btn-xs sharp move-up">
+                                                                <i class="fa fa-arrow-up"></i>
+                                                            </a>
+                                                            <a class="btn btn-primary shadow btn-xs sharp move-down">
+                                                                <i class="fa fa-arrow-down"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="thh">MİKO OSKU</td>
+                                                        <td class="thh">
+                                                            <span class="badge light badge-info" style="width:90px;"> DOC </span>
+                                                        </td>
+                                                        <td class="thh">
+                                                            <a id="odevview" onclick="odevview()" class="btn btn-info shadow btn-xs sharp me-1">
+                                                                <i class="fa fa-eye"></i>
+                                                            </a>
+                                                            <a class="btn btn-warning shadow btn-xs sharp me-1">
+                                                                <i class="fas fa-pencil-alt"></i>
+                                                            </a>
+                                                            <a class="btn btn-primary shadow btn-xs sharp me-1">
+                                                                <i class="fa fa-trash"></i>
+                                                            </a>
+                                                            <a class="btn btn-primary shadow btn-xs sharp move-up">
+                                                                <i class="fa fa-arrow-up"></i>
+                                                            </a>
+                                                            <a class="btn btn-primary shadow btn-xs sharp move-down">
+                                                                <i class="fa fa-arrow-down"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        
+                                            <div class="row">
+                                                <div class="col-xl-12 text-end" style="    margin-left: -2rem;">
+                                                    <button type="button" class="btn btn-success " id="btnSubmit">Kaydet</button>
+
+                                                </div>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <div class="accordion-header collapsed rounded-lg" id="headingfor" data-bs-toggle="collapse" data-bs-target="#collapsefor" aria-controls="collapsefor" role="button" aria-expanded="true">
+                                    <span class="accordion-header-text">Dörtüncü Sunum</span>
+                                    <span class="accordion-header-indicator"></span>
+                                </div>
+                                <div id="collapsefor" class="collapse" aria-labelledby="headingfor" data-bs-parent="#accordion-one">
+                                    <div class="basic-form">
+                                        <div class="table-responsive">
+                                            <table class="table display mb-4 dataTablesCard order-table card-table text-black application" id="example5">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="thh">Ad Soyad</th>
+                                                        <th class="thh">Durum</th>
+                                                        <th class="thh">Aksiyon</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="thh">MEHMET CAN</td>
+                                                        <td class="thh">
+                                                            <span class="badge light badge-primary " style="width:90px;">PDF</span>
+                                                        </td>
+                                                        <td class="thh">
+                                                            <a id="odevview" onclick="odevview()" class="btn btn-info shadow btn-xs sharp me-1">
+                                                                <i class="fa fa-eye"></i>
+                                                            </a>
+                                                            <a class="btn btn-warning shadow btn-xs sharp me-1">
+                                                                <i class="fas fa-pencil-alt"></i>
+                                                            </a>
+                                                            <a class="btn btn-primary shadow btn-xs sharp me-1">
+                                                                <i class="fa fa-trash"></i>
+                                                            </a>
+                                                                                                                        <a class="btn btn-primary shadow btn-xs sharp move-up">
+                                                                <i class="fa fa-arrow-up"></i>
+                                                            </a>
+                                                            <a class="btn btn-primary shadow btn-xs sharp move-down">
+                                                                <i class="fa fa-arrow-down"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="thh">MİKO OSKU</td>
+                                                        <td class="thh">
+                                                            <span class="badge light badge-Warning " style="width:90px;">PPT</span>
+                                                        </td>
+                                                        <td class="thh">
+                                                            <a id="odevview" onclick="odevview()" class="btn btn-info shadow btn-xs sharp me-1">
+                                                                <i class="fa fa-eye"></i>
+                                                            </a>
+                                                            <a class="btn btn-warning shadow btn-xs sharp me-1">
+                                                                <i class="fas fa-pencil-alt"></i>
+                                                            </a>
+                                                            <a class="btn btn-primary shadow btn-xs sharp me-1">
+                                                                <i class="fa fa-trash"></i>
+                                                            </a>
+                                                                                                                        <a class="btn btn-primary shadow btn-xs sharp move-up">
+                                                                <i class="fa fa-arrow-up"></i>
+                                                            </a>
+                                                            <a class="btn btn-primary shadow btn-xs sharp move-down">
+                                                                <i class="fa fa-arrow-down"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="thh">MİKO OSKU</td>
+                                                        <td class="thh">
+                                                            <span class="badge light badge-info" style="width:90px;"> DOC </span>
+                                                        </td>
+                                                        <td class="thh">
+                                                            <a id="odevview" onclick="odevview()" class="btn btn-info shadow btn-xs sharp me-1">
+                                                                <i class="fa fa-eye"></i>
+                                                            </a>
+                                                            <a class="btn btn-warning shadow btn-xs sharp me-1">
+                                                                <i class="fas fa-pencil-alt"></i>
+                                                            </a>
+                                                            <a class="btn btn-primary shadow btn-xs sharp me-1">
+                                                                <i class="fa fa-trash"></i>
+                                                            </a>
+                                                            <a class="btn btn-primary shadow btn-xs sharp move-up">
+                                                                <i class="fa fa-arrow-up"></i>
+                                                            </a>
+                                                            <a class="btn btn-primary shadow btn-xs sharp move-down">
+                                                                <i class="fa fa-arrow-down"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-xl-12 text-end" style="    margin-left: -2rem;">
+                                                <button type="button" class="btn btn-success " id="btnSubmit">Kaydet</button>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+
+
+                        
+                        @*                        
+    </div>
+
+
+*@                </div>
+            </div>
+            <!-- Column ends -->
+        </div>
+    </div>
+
+
+
+</div>
+    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" id="sinifEkleModal">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"> Öğrenci Listesi</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal">
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="basic-form">
+                    <div class="table-responsive">
+                        <table class="table display mb-4 dataTablesCard order-table card-table text-black application" id="example5">
+                            <thead>
+                                <tr>
+
+                                    <th class="thh">Ad Soyad</th>
+
+                                    <th class="thh">Durum</th>
+                                    <th class="thh">Aksiyon</th>
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+
+
+                                <tr>
+
+                                    <td class="thh">MEHMET CAN</td>
+                                    <td class="thh">
+                                        <span class="badge light badge-success " style="width:90px;">Aktif</span>
+
+
+
+
+                                    </td>
+
+                                    <td class="thh">
+                                        <a id="odevview" onclick="odevview()" class="btn btn-info shadow btn-xs sharp me-1"><i class="fa fa-eye"></i></a>
+
+                                        <a class="btn btn-warning shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+                                        <a class="btn btn-primary shadow btn-xs sharp me-1"><i class="fa fa-trash"></i></a>
+
+
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td class="thh">MİKO OSKU</td>
+                                    <td class="thh">
+                                        <span class="badge light badge-danger " style="width:90px;">İptal</span>
+
+
+
+                                    </td>
+
+                                    <td class="thh">
+                                        <a id="odevview" onclick="odevview()" class="btn btn-info shadow btn-xs sharp me-1"><i class="fa fa-eye"></i></a>
+
+                                        <a class="btn btn-warning shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+                                        <a class="btn btn-primary shadow btn-xs sharp me-1"><i class="fa fa-trash"></i></a>
+
+
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td class="thh">MİKO OSKU</td>
+                                    <td class="thh">
+                                        <span class="badge light badge-warning" style="width:90px;">
+                                                Donduruldu
+                                        </span>
+                                    </td>
+
+                                    <td class="thh">
+                                        <a id="odevview" onclick="odevview()" class="btn btn-info shadow btn-xs sharp me-1"><i class="fa fa-eye"></i></a>
+
+                                        <a class="btn btn-warning shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+                                        <a class="btn btn-primary shadow btn-xs sharp me-1"><i class="fa fa-trash"></i></a>
+
+
+
+                                    </td>
+
+                                </tr>
+
+
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="modal-footer" style="display:block;">
+                <div class="row">
+
+                    <div style="float:left;" class="col-md-6">
+                        <button href="#YeniKayitModal" data-bs-target="#YeniKayitModal" data-bs-toggle="modal" type="button" class="btn btn-info" id="btnSubmit">Yeni Kayit</button>
+                    </div>
+                    <div style="float:right;" class="col-md-6">
+                        <button type="button" class="btn btn-success" id="btnSubmit">Kaydet</button>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Kapat</button>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <div class="col-xl-8" id="SozluEklemeField" hidden>
+
+        <div class="row" id="siniflarimField">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="col-sm-5">
+                            <select class="default-select wide">
+                                <option value="All" selected="selected">Öğrenci Seçiniz</option>
+                                <option value="1">Muhammed</option>
+                                <option value="2">miko</option>
+                                <option value="3">Ahmet</option>
+                            </select>
+
+                        </div>
+
+                        <div class="col-sm-6" style="display:flex;">
+
+
+                            <a href="#" onclick="Raporla()" class="btn light btn-primary font-weight-bolder col-sm-6">
+                                <span class="svg-icon svg-icon-md">
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                            <rect x="0" y="0" width="24" height="24"></rect>
+                                            <circle fill="#000000" cx="9" cy="15" r="6"></circle>
+                                            <path d="M8.8012943,7.00241953 C9.83837775,5.20768121 11.7781543,4 14,4 C17.3137085,4 20,6.6862915 20,10 C20,12.2218457 18.7923188,14.1616223 16.9975805,15.1987057 C16.9991904,15.1326658 17,15.0664274 17,15 C17,10.581722 13.418278,7 9,7 C8.93357256,7 8.86733422,7.00080962 8.8012943,7.00241953 Z" fill="#000000" opacity="0.3"></path>
+                                        </g>
+                                    </svg>
+                                </span>Göster
+                            </a>
+                            <a href="#SozluEklemeModal" data-bs-target="#SozluEklemeModal" data-bs-toggle="modal" class="btn light btn-success font-weight-bolder col-sm-6" style="margin-left:1rem;">
+                                <span class="svg-icon svg-icon-md">
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                            <rect x="0" y="0" width="24" height="24"></rect>
+                                            <circle fill="#000000" cx="9" cy="15" r="6"></circle>
+                                            <path d="M8.8012943,7.00241953 C9.83837775,5.20768121 11.7781543,4 14,4 C17.3137085,4 20,6.6862915 20,10 C20,12.2218457 18.7923188,14.1616223 16.9975805,15.1987057 C16.9991904,15.1326658 17,15.0664274 17,15 C17,10.581722 13.418278,7 9,7 C8.93357256,7 8.86733422,7.00080962 8.8012943,7.00241953 Z" fill="#000000" opacity="0.3"></path>
+                                        </g>
+                                    </svg>
+                                </span>Yeni Ekle
+                            </a>
+                        </div>
+
+
+                    </div>
+                    <div class="card-body" style="    padding: 1rem 0rem 0rem 0rem;">
+                        <form action="#" id="sinifEkleForm" method="post">
+                            @Html.AntiForgeryToken()
+
+                            <div class="table-responsive">
+                                <table id="DevamsizlikTable" class="table display mb-4 dataTablesCard order-table card-table text-black application" style="min-width: 400px">
+                                    <thead>
+                                        <tr>
+
+                                            <th class="thh">Ad Soyad</th>
+                                            <th class="thh">Tarih</th>
+
+                                            <th class="thh">
+                                                Değerlendirme
+
+                                            </th>
+
+
+                                            <th class="thh">
+                                                Aksiyon
+                                            </th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="thh">Dr. Garrett</td>
+                                            <td class="thh">
+                                                6/6/2024
+
+                                            </td>
+
+
+                                            <td class="thh"><button href="#AciklamaEkleModal" data-bs-target="#AciklamaEkleModal" data-bs-toggle="modal" type="button" class="btn btn-outline-primary btn-xs" fdprocessedid="vvzjlt">Oku</button></td>
+
+
+                                            <td class="thh">
+                                                <a id="odevview" onclick="odevview()" class="btn btn-info shadow btn-xs sharp me-1">
+                                                    <i class="fa fa-eye"></i>
+                                                </a>
+                                                <a class="btn btn-warning shadow btn-xs sharp me-1">
+                                                    <i class="fas fa-pencil-alt"></i>
+                                                </a>
+                                                <a class="btn btn-primary shadow btn-xs sharp me-1">
+                                                    <i class="fa fa-trash"></i>
+                                                </a>
+                                            </td>
+
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+
+                        </form>
+
+                    </div>
+                    <div class="card-footer text-end">
+                        <button type="button" class="btn btn-success" id="btnSubmit ">Kaydet</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" id="SozluEklemeModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Ekleme Penceresi</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal">
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="basic-form">
+                        <form action="#" id="duzeltForm" method="post" style="padding-bottom:20px;">
+                            @Html.AntiForgeryToken()
+
+                            <textarea name="editor3" style="margin:1rem;"></textarea>
+
+                            <script>
+
+                                CKEDITOR.replace('editor3', {
+
+                                    customConfig: '/Content/vendor/ckeditor/config.js'
+
+                                });
+
+                            </script>
+
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" id="btnSubmit">Kaydet</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Kapat</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade bd-example-modal-lg" id="AciklamaEkleModal" tabindex="-1" aria-hidden="true" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Değerlendirme Penceresi</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal">
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Kapat</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<div class="modal fade bd-example-modal-md" tabindex="-1" role="dialog" aria-hidden="true" id="YeniKayitModal">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Öğrenci Ekleme Penceresi</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal">
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="basic-form">
+                    <form action="#" id="ogrenciEkleForm" method="post">
+                        @Html.AntiForgeryToken()
+                        <div class="mb-3 row">
+                            <label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2.4rem;">Adı</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name="Adi" required>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2.4rem;">Soyadı</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name="Soyadi" required>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2.4rem;">Email Adresi</label>
+                            <div class="col-sm-9">
+                                <input type="email" class="form-control" name="Email" required>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2.4rem;">Telefon</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name="Telefon" maxlength="10" onkeypress="validate(event)" required>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2.4rem;">Doğum Tarihi</label>
+                            <div class="col-sm-9">
+                                <input type="date" class="form-control" name="DogumTarihi" required>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2.4rem;">TC Kimlik</label>
+                            <div class="col-sm-9">
+                                <input type="text" maxlength="11" onkeypress="validate(event)" class="form-control" name="IdentityNumber" required>
+                            </div>
+                        </div>
+                        <fieldset class="mb-3">
+                            <div class="row">
+                                <label class="col-form-label col-sm-3 pt-0" style="font-size:12.25px; line-height: 2.4rem;">Kurumsal/Bireysel</label>
+                                <div class="col-sm-9">
+                                    <input class="form-check-input" type="radio" name="KurumsalBireysel" value="Kurumsal">
+                                    <label class="form-check-label">
+                                        Kurumsal
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="KurumsalBireysel" value="Bireysel" checked>
+                                    <label class="form-check-label">
+                                        Bireysel
+                                    </label>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset class="mb-3">
+                            <div class="row">
+                                <label class="col-form-label col-sm-3 pt-0" style="font-size:12.25px; line-height: 2.4rem;">Cinsiyet</label>
+                                <div class="col-sm-9">
+                                    <input class="form-check-input" type="radio" name="Cinsiyet" value="Kadın" checked>
+                                    <label class="form-check-label">
+                                        Kadın
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="Cinsiyet" value="Erkek">
+                                    <label class="form-check-label">
+                                        Erkek
+                                    </label>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <div class="mb-3 row">
+                            <label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2.4rem;">Adres</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name="Adres" required>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2.4rem;">Açıklama</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name="Aciklama" required>
+                            </div>
+                        </div>
+                        <fieldset class="mb-3">
+                            <div class="row">
+                                <label class="col-form-label col-sm-3 pt-0" style="font-size:12.25px; line-height: 2.4rem;">Veli Durumu</label>
+                                <div class="col-sm-9">
+                                    <input class="form-check-input" type="radio" name="VeliVarMi" value="Var">
+                                    <label class="form-check-label">
+                                        Var
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="VeliVarMi" value="Yok" checked>
+                                    <label class="form-check-label">
+                                        Yok
+                                    </label>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <div id="veliDurumu" hidden>
+                            <div class="mb-3 row">
+                                <label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2.4rem;">Veli Adı</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" name="VeliAdi">
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2.4rem;">Veli Soyadı</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" name="VeliSoyadi">
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2.4rem;">Veli Email Adresi</label>
+                                <div class="col-sm-9">
+                                    <input type="email" class="form-control" name="VeliEmail">
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2.4rem;">Veli Telefon</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" name="VeliTelefon" maxlength="10" onkeypress="validate(event)">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Kapat</button>
+                <button type="button" class="btn btn-success" id="btnSubmit">Yeni Kayıt Yap</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true" id="OdevPaylasModal">
+    <div class="modal-dialog modal-m ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><span style="color:darkorange;">Ödev</span> Paylaşma Pencersi </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal">
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="basic-form">
+                    <form action="#" id="subeEkleForm" method="post">
+                        @Html.AntiForgeryToken()
+                        <div class="mb-3 row">
+                            <label class="col-sm-4 col-form-label" style="font-size:12.25px; line-height: 2rem;">Ödev Başlığı</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="odevid" required>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-4 col-form-label" style="font-size:12.25px; line-height: 2rem;">Teslim Tarihi</label>
+                            <div class="col-sm-8">
+                                <input type="date" class="form-control" name="teslimodev" required>
+                            </div>
+                        </div>
+                                                <div class="mb-3 row">
+                            <label class="col-sm-4 col-form-label" style="font-size:12.25px; line-height: 2rem;">Dosya Ekle</label>
+                            <div class="col-sm-8">
+                                <input type="file" class="form-control" name="fileodev" required>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" id="btnSubmit">Kaydet</button>
+
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Kapat</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true" id="DuzOdevPaylasModal">
+    <div class="modal-dialog modal-m ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Ödev Düzenleme Pencersi</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal">
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="basic-form">
+                    <form action="#" id="subeEkleForm" method="post">
+                        @Html.AntiForgeryToken()
+                        <div class="mb-3 row">
+                            <label class="col-sm-4 col-form-label" style="font-size:12.25px; line-height: 2rem;">Ödev Başlığı</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="odevid" required>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-4 col-form-label" style="font-size:12.25px; line-height: 2rem;">Teslim Tarihi</label>
+                            <div class="col-sm-8">
+                                <input type="date" class="form-control" name="teslimodev" required>
+                            </div>
+                        </div>
+                                                <div class="mb-3 row">
+                            <label class="col-sm-4 col-form-label" style="font-size:12.25px; line-height: 2rem;">Dosya Ekle</label>
+                            <div class="col-sm-8">
+                                <input type="file" class="form-control" name="fileodev" required>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" id="btnSubmit">Kaydet</button>
+
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Kapat</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" id="KitapPaylasModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><span style="color:darkorange;">Kitap</span> Paylaşma Pencersi</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal">
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="basic-form">
+                    <div class="table-responsive">
+                       <table id="siniflarTable" class="display" style="min-width: 730px;">
+						<thead>
+							<tr>
+								<th>
+									<div class="form-check custom-checkbox ms-2">
+										<input type="checkbox" class="form-check-input" id="checkAll" required="">
+										<label class="form-check-label" for="checkAll"></label>
+									</div>
+								</th>
+								<th>Patient ID</th>
+								<th>Patient Name</th>
+								<th>Disease</th>
+								<th>Status</th>
+								<th>Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>
+									<div class="form-check custom-checkbox ms-2">
+										<input type="checkbox" class="form-check-input" id="customCheckBox2" required="">
+										<label class="form-check-label" for="customCheckBox2"></label>
+									</div>
+								</td>
+								<td>#P-00001</td>
+								<td>Tiger Nixon</td>
+								
+								<td>Cold & Flu</td>
+								<td>
+									<span class="badge light badge-danger">
+										<i class="fa fa-circle text-danger me-1"></i>
+										New Patient
+									</span>
+								</td>
+								<td>
+									<div class="dropdown ms-auto text-end">
+										<div class="btn-link" data-bs-toggle="dropdown">
+											<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
+										</div>
+										<div class="dropdown-menu dropdown-menu-end">
+											<a class="dropdown-item" href="#">Accept Patient</a>
+											<a class="dropdown-item" href="#">Reject Order</a>
+											<a class="dropdown-item" href="#">View Details</a>
+										</div>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="form-check custom-checkbox ms-2">
+										<input type="checkbox" class="form-check-input" id="customCheckBox3" required="">
+										<label class="form-check-label" for="customCheckBox3"></label>
+									</div>
+								</td>
+								<td>#P-00002</td>
+								<td>Garrett Winters</td>
+								
+								<td>Sleep Problem</td>
+								<td>
+									<span class="badge light badge-warning">
+										<i class="fa fa-circle text-warning me-1"></i>
+										In Treatment
+									</span>
+								</td>
+								<td>
+									<div class="dropdown ms-auto text-end">
+										<div class="btn-link" data-bs-toggle="dropdown">
+											<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
+										</div>
+										<div class="dropdown-menu dropdown-menu-end">
+											<a class="dropdown-item" href="#">Accept Patient</a>
+											<a class="dropdown-item" href="#">Reject Order</a>
+											<a class="dropdown-item" href="#">View Details</a>
+										</div>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="form-check custom-checkbox ms-2">
+										<input type="checkbox" class="form-check-input" id="customCheckBox4" required="">
+										<label class="form-check-label" for="customCheckBox4"></label>
+									</div>
+								</td>
+								<td>#P-00003</td>
+								<td>Ashton Cox</td>
+								<td>Cold & Flu</td>
+								<td>
+									<span class="badge light badge-success">
+										<i class="fa fa-circle text-success me-1"></i>
+										Recovered
+									</span>
+								</td>
+								<td>
+									<div class="dropdown ms-auto text-end">
+										<div class="btn-link" data-bs-toggle="dropdown">
+											<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
+										</div>
+										<div class="dropdown-menu dropdown-menu-end">
+											<a class="dropdown-item" href="#">Accept Patient</a>
+											<a class="dropdown-item" href="#">Reject Order</a>
+											<a class="dropdown-item" href="#">View Details</a>
+										</div>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="form-check custom-checkbox ms-2">
+										<input type="checkbox" class="form-check-input" id="customCheckBox5" required="">
+										<label class="form-check-label" for="customCheckBox5"></label>
+									</div>
+								</td>
+								<td>#P-00004</td>
+								<td>Ashton Cox</td>
+								
+								<td>Cold & Flu</td>
+								<td>
+									<span class="badge light badge-warning">
+										<i class="fa fa-circle text-warning me-1"></i>
+										In Treatment
+									</span>
+								</td>
+								<td>
+									<div class="dropdown ms-auto text-end">
+										<div class="btn-link" data-bs-toggle="dropdown">
+											<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
+										</div>
+										<div class="dropdown-menu dropdown-menu-end">
+											<a class="dropdown-item" href="#">Accept Patient</a>
+											<a class="dropdown-item" href="#">Reject Order</a>
+											<a class="dropdown-item" href="#">View Details</a>
+										</div>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="form-check custom-checkbox ms-2">
+										<input type="checkbox" class="form-check-input" id="customCheckBox6" required="">
+										<label class="form-check-label" for="customCheckBox6"></label>
+									</div>
+								</td>
+								<td>#P-00005</td>
+								<td>Ashton Cox</td>
+								
+								<td>Cold & Flu</td>
+								<td>
+									<span class="badge light badge-warning">
+										<i class="fa fa-circle text-warning me-1"></i>
+										In Treatment
+									</span>
+								</td>
+								<td>
+									<div class="dropdown ms-auto text-end">
+										<div class="btn-link" data-bs-toggle="dropdown">
+											<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
+										</div>
+										<div class="dropdown-menu dropdown-menu-end">
+											<a class="dropdown-item" href="#">Accept Patient</a>
+											<a class="dropdown-item" href="#">Reject Order</a>
+											<a class="dropdown-item" href="#">View Details</a>
+										</div>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="form-check custom-checkbox ms-2">
+										<input type="checkbox" class="form-check-input" id="customCheckBox7" required="">
+										<label class="form-check-label" for="customCheckBox7"></label>
+									</div>
+								</td>
+								<td>#P-00006</td>
+								<td>Ashton Cox</td>
+								<td>Sleep Problem</td>
+								<td>
+									<span class="badge light badge-warning">
+										<i class="fa fa-circle text-warning me-1"></i>
+										In Treatment
+									</span>
+								</td>
+								<td>
+									<div class="dropdown ms-auto text-end">
+										<div class="btn-link" data-bs-toggle="dropdown">
+											<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
+										</div>
+										<div class="dropdown-menu dropdown-menu-end">
+											<a class="dropdown-item" href="#">Accept Patient</a>
+											<a class="dropdown-item" href="#">Reject Order</a>
+											<a class="dropdown-item" href="#">View Details</a>
+										</div>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="form-check custom-checkbox ms-2">
+										<input type="checkbox" class="form-check-input" id="customCheckBox8" required="">
+										<label class="form-check-label" for="customCheckBox8"></label>
+									</div>
+								</td>
+								<td>#P-00007</td>
+								<td>Airi Satou</td>
+								<td>Cold & Flu</td>
+								<td>
+									<span class="badge light badge-danger">
+										<i class="fa fa-circle text-danger me-1"></i>
+										New Patient
+									</span>
+								</td>
+								<td>
+									<div class="dropdown ms-auto text-end">
+										<div class="btn-link" data-bs-toggle="dropdown">
+											<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
+										</div>
+										<div class="dropdown-menu dropdown-menu-end">
+											<a class="dropdown-item" href="#">Accept Patient</a>
+											<a class="dropdown-item" href="#">Reject Order</a>
+											<a class="dropdown-item" href="#">View Details</a>
+										</div>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="form-check custom-checkbox ms-2">
+										<input type="checkbox" class="form-check-input" id="customCheckBox9" required="">
+										<label class="form-check-label" for="customCheckBox9"></label>
+									</div>
+								</td>
+								<td>#P-00008</td>
+								<td>Airi Satou</td>
+								<td>Sleep Problem</td>
+								<td>
+									<span class="badge light badge-warning">
+										<i class="fa fa-circle text-warning me-1"></i>
+										In Treatment
+									</span>
+								</td>
+								<td>
+									<div class="dropdown ms-auto text-end">
+										<div class="btn-link" data-bs-toggle="dropdown">
+											<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
+										</div>
+										<div class="dropdown-menu dropdown-menu-end">
+											<a class="dropdown-item" href="#">Accept Patient</a>
+											<a class="dropdown-item" href="#">Reject Order</a>
+											<a class="dropdown-item" href="#">View Details</a>
+										</div>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="form-check custom-checkbox ms-2">
+										<input type="checkbox" class="form-check-input" id="customCheckBox10" required="">
+										<label class="form-check-label" for="customCheckBox10"></label>
+									</div>
+								</td>
+								<td>#P-00009</td>
+								<td>Airi Satou</td>
+								<td>Cold & Flu</td>
+								<td>
+									<span class="badge light badge-danger">
+										<i class="fa fa-circle text-danger me-1"></i>
+										New Patient
+									</span>
+								</td>
+								<td>
+									<div class="dropdown ms-auto text-end">
+										<div class="btn-link" data-bs-toggle="dropdown">
+											<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
+										</div>
+										<div class="dropdown-menu dropdown-menu-end">
+											<a class="dropdown-item" href="#">Accept Patient</a>
+											<a class="dropdown-item" href="#">Reject Order</a>
+											<a class="dropdown-item" href="#">View Details</a>
+										</div>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="form-check custom-checkbox ms-2">
+										<input type="checkbox" class="form-check-input" id="customCheckBox11" required="">
+										<label class="form-check-label" for="customCheckBox11"></label>
+									</div>
+								</td>
+								<td>#P-00010</td>
+								<td>Airi Satou</td>
+								<td>Sleep Problem</td>
+								<td>
+									<span class="badge light badge-danger">
+										<i class="fa fa-circle text-danger me-1"></i>
+										New Patient
+									</span>
+								</td>
+								<td>
+									<div class="dropdown ms-auto text-end">
+										<div class="btn-link" data-bs-toggle="dropdown">
+											<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
+										</div>
+										<div class="dropdown-menu dropdown-menu-end">
+											<a class="dropdown-item" href="#">Accept Patient</a>
+											<a class="dropdown-item" href="#">Reject Order</a>
+											<a class="dropdown-item" href="#">View Details</a>
+										</div>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="form-check custom-checkbox ms-2">
+										<input type="checkbox" class="form-check-input" id="customCheckBox12" required="">
+										<label class="form-check-label" for="customCheckBox12"></label>
+									</div>
+								</td>
+								<td>#P-00011</td>
+								<td>Airi Satou</td>
+								<td>Cold & Flu</td>
+								<td>
+									<span class="badge light badge-warning">
+										<i class="fa fa-circle text-warning me-1"></i>
+										In Treatment
+									</span>
+								</td>
+								<td>
+									<div class="dropdown ms-auto text-end">
+										<div class="btn-link" data-bs-toggle="dropdown">
+											<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
+										</div>
+										<div class="dropdown-menu dropdown-menu-end">
+											<a class="dropdown-item" href="#">Accept Patient</a>
+											<a class="dropdown-item" href="#">Reject Order</a>
+											<a class="dropdown-item" href="#">View Details</a>
+										</div>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="form-check custom-checkbox ms-2">
+										<input type="checkbox" class="form-check-input" id="customCheckBox13" required="">
+										<label class="form-check-label" for="customCheckBox13"></label>
+									</div>
+								</td>
+								<td>#P-00012</td>
+								<td>Sonya Frost</td>
+								<td>Sleep Problem</td>
+								<td>
+									<span class="badge light badge-danger">
+										<i class="fa fa-circle text-danger me-1"></i>
+										New Patient
+									</span>
+								</td>
+								<td>
+									<div class="dropdown ms-auto text-end">
+										<div class="btn-link" data-bs-toggle="dropdown">
+											<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
+										</div>
+										<div class="dropdown-menu dropdown-menu-end">
+											<a class="dropdown-item" href="#">Accept Patient</a>
+											<a class="dropdown-item" href="#">Reject Order</a>
+											<a class="dropdown-item" href="#">View Details</a>
+										</div>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="form-check custom-checkbox ms-2">
+										<input type="checkbox" class="form-check-input" id="customCheckBox14" required="">
+										<label class="form-check-label" for="customCheckBox14"></label>
+									</div>
+								</td>
+								<td>#P-00013</td>
+								<td>Sonya Frost</td>
+								<td>Cold & Flu</td>
+								<td>
+									<span class="badge light badge-danger">
+										<i class="fa fa-circle text-danger me-1"></i>
+										New Patient
+									</span>
+								</td>
+								<td>
+									<div class="dropdown ms-auto text-end">
+										<div class="btn-link" data-bs-toggle="dropdown">
+											<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
+										</div>
+										<div class="dropdown-menu dropdown-menu-end">
+											<a class="dropdown-item" href="#">Accept Patient</a>
+											<a class="dropdown-item" href="#">Reject Order</a>
+											<a class="dropdown-item" href="#">View Details</a>
+										</div>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="form-check custom-checkbox ms-2">
+										<input type="checkbox" class="form-check-input" id="customCheckBox15" required="">
+										<label class="form-check-label" for="customCheckBox15"></label>
+									</div>
+								</td>
+								<td>#P-00014</td>
+								<td>Sonya Frost</td>
+								<td>Sleep Problem</td>
+								<td>
+									<span class="badge light badge-warning">
+										<i class="fa fa-circle text-warning me-1"></i>
+										In Treatment
+									</span>
+								</td>
+								<td>
+									<div class="dropdown ms-auto text-end">
+										<div class="btn-link" data-bs-toggle="dropdown">
+											<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
+										</div>
+										<div class="dropdown-menu dropdown-menu-end">
+											<a class="dropdown-item" href="#">Accept Patient</a>
+											<a class="dropdown-item" href="#">Reject Order</a>
+											<a class="dropdown-item" href="#">View Details</a>
+										</div>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="form-check custom-checkbox ms-2">
+										<input type="checkbox" class="form-check-input" id="customCheckBox16" required="">
+										<label class="form-check-label" for="customCheckBox16"></label>
+									</div>
+								</td>
+								<td>#P-00015</td>
+								<td>Sonya Frost</td>
+								<td>Cold & Flu</td>
+								<td>
+									<span class="badge light badge-danger">
+										<i class="fa fa-circle text-danger me-1"></i>
+										New Patient
+									</span>
+								</td>
+								<td>
+									<div class="dropdown ms-auto text-end">
+										<div class="btn-link" data-bs-toggle="dropdown">
+											<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
+										</div>
+										<div class="dropdown-menu dropdown-menu-end">
+											<a class="dropdown-item" href="#">Accept Patient</a>
+											<a class="dropdown-item" href="#">Reject Order</a>
+											<a class="dropdown-item" href="#">View Details</a>
+										</div>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="form-check custom-checkbox ms-2">
+										<input type="checkbox" class="form-check-input" id="customCheckBox17" required="">
+										<label class="form-check-label" for="customCheckBox17"></label>
+									</div>
+								</td>
+								<td>#P-00016</td>
+								<td>Sonya Frost</td>
+								<td>Sleep Problem</td>
+								<td>
+									<span class="badge light badge-danger">
+										<i class="fa fa-circle text-danger me-1"></i>
+										New Patient
+									</span>
+								</td>
+								<td>
+									<div class="dropdown ms-auto text-end">
+										<div class="btn-link" data-bs-toggle="dropdown">
+											<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
+										</div>
+										<div class="dropdown-menu dropdown-menu-end">
+											<a class="dropdown-item" href="#">Accept Patient</a>
+											<a class="dropdown-item" href="#">Reject Order</a>
+											<a class="dropdown-item" href="#">View Details</a>
+										</div>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="form-check custom-checkbox ms-2">
+										<input type="checkbox" class="form-check-input" id="customCheckBox18" required="">
+										<label class="form-check-label" for="customCheckBox18"></label>
+									</div>
+								</td>
+								<td>#P-00017</td>
+								<td>Sonya Frost</td>
+								<td>Cold & Flu</td>
+								<td>
+									<span class="badge light badge-warning">
+										<i class="fa fa-circle text-warning me-1"></i>
+										In Treatment
+									</span>
+								</td>
+								<td>
+									<div class="dropdown ms-auto text-end">
+										<div class="btn-link" data-bs-toggle="dropdown">
+											<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
+										</div>
+										<div class="dropdown-menu dropdown-menu-end">
+											<a class="dropdown-item" href="#">Accept Patient</a>
+											<a class="dropdown-item" href="#">Reject Order</a>
+											<a class="dropdown-item" href="#">View Details</a>
+										</div>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" id="btnSubmit">Kaydet</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Kapat</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" id="DersPaylasModal">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title"><span style="color:darkorange;">Ders</span> Paylaşma Pencersi</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal">
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="basic-form">
+					<div class="table-responsive">
+						<table id="siniflarTable" class="display" style="min-width: 730px;">
+							<thead>
+								<tr>
+									<th>
+										<div class="form-check custom-checkbox ms-2">
+											<input type="checkbox" class="form-check-input" id="checkAll" required="">
+											<label class="form-check-label" for="checkAll"></label>
+										</div>
+									</th>
+									<th>Patient ID</th>
+									<th>Patient Name</th>
+									<th>Disease</th>
+									<th>Status</th>
+									<th>Action</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>
+										<div class="form-check custom-checkbox ms-2">
+											<input type="checkbox" class="form-check-input" id="customCheckBox2" required="">
+											<label class="form-check-label" for="customCheckBox2"></label>
+										</div>
+									</td>
+									<td>#P-00001</td>
+									<td>Tiger Nixon</td>
+
+									<td>Cold & Flu</td>
+									<td>
+										<span class="badge light badge-danger">
+											<i class="fa fa-circle text-danger me-1"></i>
+											New Patient
+										</span>
+									</td>
+									<td>
+										<div class="dropdown ms-auto text-end">
+											<div class="btn-link" data-bs-toggle="dropdown">
+												<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
+											</div>
+											<div class="dropdown-menu dropdown-menu-end">
+												<a class="dropdown-item" href="#">Accept Patient</a>
+												<a class="dropdown-item" href="#">Reject Order</a>
+												<a class="dropdown-item" href="#">View Details</a>
+											</div>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="form-check custom-checkbox ms-2">
+											<input type="checkbox" class="form-check-input" id="customCheckBox3" required="">
+											<label class="form-check-label" for="customCheckBox3"></label>
+										</div>
+									</td>
+									<td>#P-00002</td>
+									<td>Garrett Winters</td>
+
+									<td>Sleep Problem</td>
+									<td>
+										<span class="badge light badge-warning">
+											<i class="fa fa-circle text-warning me-1"></i>
+											In Treatment
+										</span>
+									</td>
+									<td>
+										<div class="dropdown ms-auto text-end">
+											<div class="btn-link" data-bs-toggle="dropdown">
+												<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
+											</div>
+											<div class="dropdown-menu dropdown-menu-end">
+												<a class="dropdown-item" href="#">Accept Patient</a>
+												<a class="dropdown-item" href="#">Reject Order</a>
+												<a class="dropdown-item" href="#">View Details</a>
+											</div>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="form-check custom-checkbox ms-2">
+											<input type="checkbox" class="form-check-input" id="customCheckBox4" required="">
+											<label class="form-check-label" for="customCheckBox4"></label>
+										</div>
+									</td>
+									<td>#P-00003</td>
+									<td>Ashton Cox</td>
+									<td>Cold & Flu</td>
+									<td>
+										<span class="badge light badge-success">
+											<i class="fa fa-circle text-success me-1"></i>
+											Recovered
+										</span>
+									</td>
+									<td>
+										<div class="dropdown ms-auto text-end">
+											<div class="btn-link" data-bs-toggle="dropdown">
+												<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
+											</div>
+											<div class="dropdown-menu dropdown-menu-end">
+												<a class="dropdown-item" href="#">Accept Patient</a>
+												<a class="dropdown-item" href="#">Reject Order</a>
+												<a class="dropdown-item" href="#">View Details</a>
+											</div>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="form-check custom-checkbox ms-2">
+											<input type="checkbox" class="form-check-input" id="customCheckBox5" required="">
+											<label class="form-check-label" for="customCheckBox5"></label>
+										</div>
+									</td>
+									<td>#P-00004</td>
+									<td>Ashton Cox</td>
+
+									<td>Cold & Flu</td>
+									<td>
+										<span class="badge light badge-warning">
+											<i class="fa fa-circle text-warning me-1"></i>
+											In Treatment
+										</span>
+									</td>
+									<td>
+										<div class="dropdown ms-auto text-end">
+											<div class="btn-link" data-bs-toggle="dropdown">
+												<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
+											</div>
+											<div class="dropdown-menu dropdown-menu-end">
+												<a class="dropdown-item" href="#">Accept Patient</a>
+												<a class="dropdown-item" href="#">Reject Order</a>
+												<a class="dropdown-item" href="#">View Details</a>
+											</div>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="form-check custom-checkbox ms-2">
+											<input type="checkbox" class="form-check-input" id="customCheckBox6" required="">
+											<label class="form-check-label" for="customCheckBox6"></label>
+										</div>
+									</td>
+									<td>#P-00005</td>
+									<td>Ashton Cox</td>
+
+									<td>Cold & Flu</td>
+									<td>
+										<span class="badge light badge-warning">
+											<i class="fa fa-circle text-warning me-1"></i>
+											In Treatment
+										</span>
+									</td>
+									<td>
+										<div class="dropdown ms-auto text-end">
+											<div class="btn-link" data-bs-toggle="dropdown">
+												<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
+											</div>
+											<div class="dropdown-menu dropdown-menu-end">
+												<a class="dropdown-item" href="#">Accept Patient</a>
+												<a class="dropdown-item" href="#">Reject Order</a>
+												<a class="dropdown-item" href="#">View Details</a>
+											</div>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="form-check custom-checkbox ms-2">
+											<input type="checkbox" class="form-check-input" id="customCheckBox7" required="">
+											<label class="form-check-label" for="customCheckBox7"></label>
+										</div>
+									</td>
+									<td>#P-00006</td>
+									<td>Ashton Cox</td>
+									<td>Sleep Problem</td>
+									<td>
+										<span class="badge light badge-warning">
+											<i class="fa fa-circle text-warning me-1"></i>
+											In Treatment
+										</span>
+									</td>
+									<td>
+										<div class="dropdown ms-auto text-end">
+											<div class="btn-link" data-bs-toggle="dropdown">
+												<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
+											</div>
+											<div class="dropdown-menu dropdown-menu-end">
+												<a class="dropdown-item" href="#">Accept Patient</a>
+												<a class="dropdown-item" href="#">Reject Order</a>
+												<a class="dropdown-item" href="#">View Details</a>
+											</div>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="form-check custom-checkbox ms-2">
+											<input type="checkbox" class="form-check-input" id="customCheckBox8" required="">
+											<label class="form-check-label" for="customCheckBox8"></label>
+										</div>
+									</td>
+									<td>#P-00007</td>
+									<td>Airi Satou</td>
+									<td>Cold & Flu</td>
+									<td>
+										<span class="badge light badge-danger">
+											<i class="fa fa-circle text-danger me-1"></i>
+											New Patient
+										</span>
+									</td>
+									<td>
+										<div class="dropdown ms-auto text-end">
+											<div class="btn-link" data-bs-toggle="dropdown">
+												<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
+											</div>
+											<div class="dropdown-menu dropdown-menu-end">
+												<a class="dropdown-item" href="#">Accept Patient</a>
+												<a class="dropdown-item" href="#">Reject Order</a>
+												<a class="dropdown-item" href="#">View Details</a>
+											</div>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="form-check custom-checkbox ms-2">
+											<input type="checkbox" class="form-check-input" id="customCheckBox9" required="">
+											<label class="form-check-label" for="customCheckBox9"></label>
+										</div>
+									</td>
+									<td>#P-00008</td>
+									<td>Airi Satou</td>
+									<td>Sleep Problem</td>
+									<td>
+										<span class="badge light badge-warning">
+											<i class="fa fa-circle text-warning me-1"></i>
+											In Treatment
+										</span>
+									</td>
+									<td>
+										<div class="dropdown ms-auto text-end">
+											<div class="btn-link" data-bs-toggle="dropdown">
+												<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
+											</div>
+											<div class="dropdown-menu dropdown-menu-end">
+												<a class="dropdown-item" href="#">Accept Patient</a>
+												<a class="dropdown-item" href="#">Reject Order</a>
+												<a class="dropdown-item" href="#">View Details</a>
+											</div>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="form-check custom-checkbox ms-2">
+											<input type="checkbox" class="form-check-input" id="customCheckBox10" required="">
+											<label class="form-check-label" for="customCheckBox10"></label>
+										</div>
+									</td>
+									<td>#P-00009</td>
+									<td>Airi Satou</td>
+									<td>Cold & Flu</td>
+									<td>
+										<span class="badge light badge-danger">
+											<i class="fa fa-circle text-danger me-1"></i>
+											New Patient
+										</span>
+									</td>
+									<td>
+										<div class="dropdown ms-auto text-end">
+											<div class="btn-link" data-bs-toggle="dropdown">
+												<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
+											</div>
+											<div class="dropdown-menu dropdown-menu-end">
+												<a class="dropdown-item" href="#">Accept Patient</a>
+												<a class="dropdown-item" href="#">Reject Order</a>
+												<a class="dropdown-item" href="#">View Details</a>
+											</div>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="form-check custom-checkbox ms-2">
+											<input type="checkbox" class="form-check-input" id="customCheckBox11" required="">
+											<label class="form-check-label" for="customCheckBox11"></label>
+										</div>
+									</td>
+									<td>#P-00010</td>
+									<td>Airi Satou</td>
+									<td>Sleep Problem</td>
+									<td>
+										<span class="badge light badge-danger">
+											<i class="fa fa-circle text-danger me-1"></i>
+											New Patient
+										</span>
+									</td>
+									<td>
+										<div class="dropdown ms-auto text-end">
+											<div class="btn-link" data-bs-toggle="dropdown">
+												<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
+											</div>
+											<div class="dropdown-menu dropdown-menu-end">
+												<a class="dropdown-item" href="#">Accept Patient</a>
+												<a class="dropdown-item" href="#">Reject Order</a>
+												<a class="dropdown-item" href="#">View Details</a>
+											</div>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="form-check custom-checkbox ms-2">
+											<input type="checkbox" class="form-check-input" id="customCheckBox12" required="">
+											<label class="form-check-label" for="customCheckBox12"></label>
+										</div>
+									</td>
+									<td>#P-00011</td>
+									<td>Airi Satou</td>
+									<td>Cold & Flu</td>
+									<td>
+										<span class="badge light badge-warning">
+											<i class="fa fa-circle text-warning me-1"></i>
+											In Treatment
+										</span>
+									</td>
+									<td>
+										<div class="dropdown ms-auto text-end">
+											<div class="btn-link" data-bs-toggle="dropdown">
+												<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
+											</div>
+											<div class="dropdown-menu dropdown-menu-end">
+												<a class="dropdown-item" href="#">Accept Patient</a>
+												<a class="dropdown-item" href="#">Reject Order</a>
+												<a class="dropdown-item" href="#">View Details</a>
+											</div>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="form-check custom-checkbox ms-2">
+											<input type="checkbox" class="form-check-input" id="customCheckBox13" required="">
+											<label class="form-check-label" for="customCheckBox13"></label>
+										</div>
+									</td>
+									<td>#P-00012</td>
+									<td>Sonya Frost</td>
+									<td>Sleep Problem</td>
+									<td>
+										<span class="badge light badge-danger">
+											<i class="fa fa-circle text-danger me-1"></i>
+											New Patient
+										</span>
+									</td>
+									<td>
+										<div class="dropdown ms-auto text-end">
+											<div class="btn-link" data-bs-toggle="dropdown">
+												<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
+											</div>
+											<div class="dropdown-menu dropdown-menu-end">
+												<a class="dropdown-item" href="#">Accept Patient</a>
+												<a class="dropdown-item" href="#">Reject Order</a>
+												<a class="dropdown-item" href="#">View Details</a>
+											</div>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="form-check custom-checkbox ms-2">
+											<input type="checkbox" class="form-check-input" id="customCheckBox14" required="">
+											<label class="form-check-label" for="customCheckBox14"></label>
+										</div>
+									</td>
+									<td>#P-00013</td>
+									<td>Sonya Frost</td>
+									<td>Cold & Flu</td>
+									<td>
+										<span class="badge light badge-danger">
+											<i class="fa fa-circle text-danger me-1"></i>
+											New Patient
+										</span>
+									</td>
+									<td>
+										<div class="dropdown ms-auto text-end">
+											<div class="btn-link" data-bs-toggle="dropdown">
+												<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
+											</div>
+											<div class="dropdown-menu dropdown-menu-end">
+												<a class="dropdown-item" href="#">Accept Patient</a>
+												<a class="dropdown-item" href="#">Reject Order</a>
+												<a class="dropdown-item" href="#">View Details</a>
+											</div>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="form-check custom-checkbox ms-2">
+											<input type="checkbox" class="form-check-input" id="customCheckBox15" required="">
+											<label class="form-check-label" for="customCheckBox15"></label>
+										</div>
+									</td>
+									<td>#P-00014</td>
+									<td>Sonya Frost</td>
+									<td>Sleep Problem</td>
+									<td>
+										<span class="badge light badge-warning">
+											<i class="fa fa-circle text-warning me-1"></i>
+											In Treatment
+										</span>
+									</td>
+									<td>
+										<div class="dropdown ms-auto text-end">
+											<div class="btn-link" data-bs-toggle="dropdown">
+												<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
+											</div>
+											<div class="dropdown-menu dropdown-menu-end">
+												<a class="dropdown-item" href="#">Accept Patient</a>
+												<a class="dropdown-item" href="#">Reject Order</a>
+												<a class="dropdown-item" href="#">View Details</a>
+											</div>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="form-check custom-checkbox ms-2">
+											<input type="checkbox" class="form-check-input" id="customCheckBox16" required="">
+											<label class="form-check-label" for="customCheckBox16"></label>
+										</div>
+									</td>
+									<td>#P-00015</td>
+									<td>Sonya Frost</td>
+									<td>Cold & Flu</td>
+									<td>
+										<span class="badge light badge-danger">
+											<i class="fa fa-circle text-danger me-1"></i>
+											New Patient
+										</span>
+									</td>
+									<td>
+										<div class="dropdown ms-auto text-end">
+											<div class="btn-link" data-bs-toggle="dropdown">
+												<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
+											</div>
+											<div class="dropdown-menu dropdown-menu-end">
+												<a class="dropdown-item" href="#">Accept Patient</a>
+												<a class="dropdown-item" href="#">Reject Order</a>
+												<a class="dropdown-item" href="#">View Details</a>
+											</div>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="form-check custom-checkbox ms-2">
+											<input type="checkbox" class="form-check-input" id="customCheckBox17" required="">
+											<label class="form-check-label" for="customCheckBox17"></label>
+										</div>
+									</td>
+									<td>#P-00016</td>
+									<td>Sonya Frost</td>
+									<td>Sleep Problem</td>
+									<td>
+										<span class="badge light badge-danger">
+											<i class="fa fa-circle text-danger me-1"></i>
+											New Patient
+										</span>
+									</td>
+									<td>
+										<div class="dropdown ms-auto text-end">
+											<div class="btn-link" data-bs-toggle="dropdown">
+												<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
+											</div>
+											<div class="dropdown-menu dropdown-menu-end">
+												<a class="dropdown-item" href="#">Accept Patient</a>
+												<a class="dropdown-item" href="#">Reject Order</a>
+												<a class="dropdown-item" href="#">View Details</a>
+											</div>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="form-check custom-checkbox ms-2">
+											<input type="checkbox" class="form-check-input" id="customCheckBox18" required="">
+											<label class="form-check-label" for="customCheckBox18"></label>
+										</div>
+									</td>
+									<td>#P-00017</td>
+									<td>Sonya Frost</td>
+									<td>Cold & Flu</td>
+									<td>
+										<span class="badge light badge-warning">
+											<i class="fa fa-circle text-warning me-1"></i>
+											In Treatment
+										</span>
+									</td>
+									<td>
+										<div class="dropdown ms-auto text-end">
+											<div class="btn-link" data-bs-toggle="dropdown">
+												<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
+											</div>
+											<div class="dropdown-menu dropdown-menu-end">
+												<a class="dropdown-item" href="#">Accept Patient</a>
+												<a class="dropdown-item" href="#">Reject Order</a>
+												<a class="dropdown-item" href="#">View Details</a>
+											</div>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+
+
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success" id="btnSubmit">Kaydet</button>
+				<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Kapat</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+    <div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true" id="saatEkleModal">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Sınıf Ekleme Penceresi</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal">
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="basic-form">
+                        <form action="#" id="sinifEkleForm" method="post">
+                            @Html.AntiForgeryToken()
+
+
+
+
+                            <div class="mb-3 row">
+                                <label class="col-sm-5 col-form-label" style="font-size:12.25px; line-height: 2rem;">Tarih ve saat seçiniz</label>
+                                <div class="col-sm-7">
+                                    <input type="datetime-local" class="form-control" required>
+                                </div>
+                            </div>
+
+
+
+
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" id="btnSubmit">Kaydet</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Kapat</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section scripts{
+    <script src="~/Content/vendor/datatables/js/jquery.dataTables.min.js" asp-append-version="true"></script>
+    <script src="~/Content/vendor/jquery-nice-select/js/jquery.nice-select.min.js" asp-append-version="true"></script>
+    	
+    <script src="~/Content/vendor/select2/js/select2.full.min.js" asp-append-version="true"></script>
+
+
+@*        <script src="~/assets/js/bundle.js?ver=3.1.3"></script>
+    <script src="~/assets/js/scripts.js?ver=3.1.3"></script>
+    <script src="~/assets/js/libs/dragula.js?ver=3.1.3"></script>
+    <script src="~/assets/js/example-dragula.js?ver=3.1.3"></script>*@
+
+    <script>
+        //$(document).ready(function () {
+        //    $('.move-up').click(function () {
+        //        var row = $(this).closest('tr');
+        //        if (row.index() !== 0) {
+        //            row.prev().before(row);
+        //        }
+        //    });
+
+        //    $('.move-down').click(function () {
+        //        var row = $(this).closest('tr');
+        //        if (row.index() !== row.siblings().length) {
+        //            row.next().after(row);
+        //        }
+        //    });
+        //});
+
+        $(document).ready(function () {
+            $('.move-up').click(function () {
+                var row = $(this).closest('tr');
+                if (row.index() !== 0) {
+                    row.prev().before(row);
+                    saveChanges();
+                }
+            });
+
+            $('.move-down').click(function () {
+                var row = $(this).closest('tr');
+                if (row.index() !== row.siblings().length) {
+                    row.next().after(row);
+                    saveChanges();
+                }
+            });
+
+        });
+
+
+        $("#sinifArama").select2({
+            dropdownParent: $('#ogrenciEkleModal')
+        });
+       
+        $(document).ready(function () {
+            var mycrumb = $("#myBreadcrumb");
+            $("#previousBreadcrumb").before(mycrumb);
+			var table = $('#siniflarTable').DataTable({
+				searching: true,
+				paging: true,
+				select: false,
+				info: false,
+				lengthChange: false,
+				language: {
+					paginate: {
+						next: '<i class="fa fa-angle-double-right" aria-hidden="true"></i>',
+						previous: '<i class="fa fa-angle-double-left" aria-hidden="true"></i>'
+					}
+				}
+			});
+
+        })
+
+
+        $(document).ready(function () {
+            DuyurEkleme();
+        });
+
+        function Devamsizlik() {
+            $("#DevamsizlikField").removeAttr('hidden');
+            $("#DuyurEklemeField").attr('hidden', true);
+            $("#SinifEklemeField").attr('hidden', true);
+            $("#OkumaField").attr('hidden', true);
+            $("#ÖdevlerField").attr('hidden', true);
+            $("#DerslerField").attr('hidden', true);
+            $("#odevviewField").attr('hidden', true);
+            $("#sunumField").attr('hidden', true);
+            $("#SozluEklemeField").attr('hidden', true);
+
+
+
+
+        }
+        function DuyurEkleme() {
+            $("#DuyurEklemeField").removeAttr('hidden');
+            $("#DevamsizlikField").attr('hidden', true);
+            $("#SinifEklemeField").attr('hidden', true);
+            $("#OkumaField").attr('hidden', true);
+            $("#ÖdevlerField").attr('hidden', true);
+            $("#DerslerField").attr('hidden', true);
+            $("#odevviewField").attr('hidden', true);
+            $("#sunumField").attr('hidden', true);
+            $("#SozluEklemeField").attr('hidden', true);
+
+
+
+
+        }
+        function SinifEkleme() {
+            $("#SinifEklemeField").removeAttr('hidden');
+            // ابحث عن زر الموافقة
+            var approveButton = document.querySelector('.thh .btn-success');
+
+            // قم بإضافة حدث النقر على الزر
+            approveButton.addEventListener('click', function () {
+                // ابحث عن الصف الذي يحتوي على الزر المستهدف
+                var targetRow = approveButton.closest('tr');
+
+                //// انشئ صفًا جديدًا مع نفس المحتوى
+                //var newRow = targetRow.cloneNode(true);
+
+                // انشئ صفًا جديدًا
+                var newRow = document.createElement('tr');
+
+                // إنشاء العناصر الفرعية للصف
+                var td1 = document.createElement('td');
+                var input = document.createElement('input');
+                input.type = 'text';
+                input.className = 'form-control';
+                input.name = 'SinavinNotlari';
+                input.placeholder = 'Not giriniz';
+                input.required = true;
+                td1.appendChild(input);
+
+                var td2 = document.createElement('td');
+                td2.className = 'thh';
+                var deleteButton = document.createElement('a');
+                deleteButton.className = 'btn btn-danger shadow btn-lg';
+                var deleteIcon = document.createElement('i');
+                deleteIcon.className = 'bi bi-x-circle';
+                deleteButton.appendChild(deleteIcon);
+                td2.appendChild(deleteButton);
+
+
+                // أضف العناصر الفرعية إلى الصف الجديد
+                newRow.appendChild(td1);
+                newRow.appendChild(td2);
+
+                // أضف الصف الجديد بعد الصف المستهدف
+                targetRow.parentNode.insertBefore(newRow, targetRow.nextSibling);
+
+
+                // أضف الصف الجديد بعد الصف المستهدف
+                targetRow.parentNode.insertBefore(newRow, targetRow.nextSibling);
+
+                // احصل على زر الحذف
+                var deleteButton = document.querySelector('a.btn-danger');
+
+                // أضف استماعًا لحدث النقر
+                deleteButton.addEventListener('click', function () {
+                    // احصل على الصف الذي يحتوي على الزر المنقر
+                    var row = this.closest('tr');
+
+                    // قم بإزالة الصف من الجدول
+                    row.parentNode.removeChild(row);
+                });
+            });
+
+
+            $("#DevamsizlikField").attr('hidden', true);
+            $("#DuyurEklemeField").attr('hidden', true);
+            $("#ÖdevlerField").attr('hidden', true);
+            $("#ÖdevlerField").attr('hidden', true);
+            $("#DerslerField").attr('hidden', true);
+            $("#odevviewField").attr('hidden', true);
+            $("#sunumField").attr('hidden', true);
+            $("#SozluEklemeField").attr('hidden', true);
+
+
+
+        }
+        function ÖdevEkleme() {
+            $("#ÖdevlerField").removeAttr('hidden');
+            $("#DevamsizlikField").attr('hidden', true);
+            $("#DuyurEklemeField").attr('hidden', true);
+            $("#SinifEklemeField").attr('hidden', true);
+            $("#OkumaField").attr('hidden', true);
+            $("#DerslerField").attr('hidden', true);
+            $("#odevviewField").attr('hidden', true);
+            $("#sunumField").attr('hidden', true);
+            $("#SozluEklemeField").attr('hidden', true);
+
+
+
+        }
+        function Okuma() {
+            $("#OkumaField").removeAttr('hidden');
+            $("#DevamsizlikField").attr('hidden', true);
+            $("#DuyurEklemeField").attr('hidden', true);
+            $("#SinifEklemeField").attr('hidden', true);
+            $("#ÖdevlerField").attr('hidden', true);
+            $("#DerslerField").attr('hidden', true);
+            $("#odevviewField").attr('hidden', true);
+            $("#sunumField").attr('hidden', true);
+            $("#SozluEklemeField").attr('hidden', true);
+
+
+        }
+                function Ders() {
+            $("#DerslerField").removeAttr('hidden');
+            $("#DevamsizlikField").attr('hidden', true);
+            $("#DuyurEklemeField").attr('hidden', true);
+            $("#SinifEklemeField").attr('hidden', true);
+            $("#ÖdevlerField").attr('hidden', true);
+            $("#OkumaField").attr('hidden', true);
+            $("#odevviewField").attr('hidden', true);
+            $("#sunumField").attr('hidden', true);
+            $("#SozluEklemeField").attr('hidden', true);
+
+
+
+
+        }
+        function odevview() {
+            $("#odevviewField").removeAttr('hidden');
+            $("#DevamsizlikField").attr('hidden', true);
+            $("#DuyurEklemeField").attr('hidden', true);
+            $("#SinifEklemeField").attr('hidden', true);
+            $("#ÖdevlerField").attr('hidden', true);
+            $("#DerslerField").attr('hidden', true);
+            $("#OkumaField").attr('hidden', true);
+                        
+            $("#sunumField").attr('hidden', true);
+            $("#SozluEklemeField").attr('hidden', true);
+
+
+
+
+        }
+
+           function sunum() {
+            $("#sunumField").removeAttr('hidden');
+            $("#DevamsizlikField").attr('hidden', true);
+            $("#DuyurEklemeField").attr('hidden', true);
+            $("#SinifEklemeField").attr('hidden', true);
+            $("#ÖdevlerField").attr('hidden', true);
+            $("#DerslerField").attr('hidden', true);
+            $("#OkumaField").attr('hidden', true);
+            $("#odevviewField").attr('hidden', true);
+            $("#SozluEklemeField").attr('hidden', true);
+
+
+
+
+
+        }
+        function sozulu() {
+            $("#SozluEklemeField").removeAttr('hidden');
+            $("#DevamsizlikField").attr('hidden', true);
+            $("#DuyurEklemeField").attr('hidden', true);
+            $("#SinifEklemeField").attr('hidden', true);
+            $("#ÖdevlerField").attr('hidden', true);
+            $("#DerslerField").attr('hidden', true);
+            $("#OkumaField").attr('hidden', true);
+            $("#odevviewField").attr('hidden', true);
+            $("#sunumField").attr('hidden', true);
+
+
+
+
+
+        }
+        //function devamsizliklarim() {
+        //    $("#devamsizliklarimField").removeAttr('hidden');
+        //    $("#taksitOdemelerimField").attr('hidden', true);
+        //    $("#sinavSonuclarimField").attr('hidden', true);
+        //    $("#siniflarimField").attr('hidden', true);
+        //}
+    </script>
+    <script>
+        $("input[type=file]").change(function (e) {
+            $(this).parents(".uploadFile").find(".filename").text(e.target.files[0].name);
+        });
+        $("input[type=file]").change(function (e) {
+            $(this).parents(".uploadFile").find(".filename").text(e.target.files[0].name);
+        });
+
+        $('input[type=radio][name=VeliVarMi]').change(function () {
+            if (this.value == 'Var') {
+                $("#veliDurumu").removeAttr('hidden');
+                $('input[type=text][name=VeliAdi]').prop('required', true);
+                $('input[type=text][name=VeliSoyadi]').prop('required', true);
+                $('input[type=email][name=VeliEmail]').prop('required', true);
+                $('input[type=text][name=VeliTelefon]').prop('required', true);
+            }
+            else if (this.value == 'Yok') {
+                $("#veliDurumu").attr('hidden', true);
+                $('input[type=text][name=VeliAdi]').prop('required', false);
+                $('input[type=text][name=VeliSoyadi]').prop('required', false);
+                $('input[type=email][name=VeliEmail]').prop('required', false);
+                $('input[type=text][name=VeliTelefon]').prop('required', false);
+            }
+        });
+        function validate(event) {
+            var theEvent = event || window.event;
+            if (theEvent.type === 'paste') {
+                key = event.clipboardData.getData('text/plain');
+            } else {
+                var key = theEvent.keyCode || theEvent.which;
+                key = String.fromCharCode(key);
+            }
+            var regex = /[0-9]|\./;
+            if (!regex.test(key)) {
+                theEvent.returnValue = false;
+                if (theEvent.preventDefault) theEvent.preventDefault();
+            }
+        }
+    </script>
+
+}

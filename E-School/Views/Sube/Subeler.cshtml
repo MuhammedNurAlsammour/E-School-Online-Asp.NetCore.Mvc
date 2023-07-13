@@ -1,0 +1,477 @@
+﻿@{
+    ViewData["Title"] = "Şubeler";
+}
+
+@section head{
+    <link href="~/Content/vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet" asp-append-version="true">
+    <link href="~/Content/vendor/jquery-nice-select/css/nice-select.css" rel="stylesheet" asp-append-version="true">
+    <link href="~/Content/vendor/select2/css/select2.min.css" rel="stylesheet" asp-append-version="true" />
+    <style>
+        .col-form-label {
+            font-size: 20px;
+        }
+
+        .select2-selection__rendered {
+            line-height: 50px !important;
+        }
+
+        .select2-container .select2-selection--single {
+            height: 50px !important;
+        }
+
+        .select2-selection__arrow {
+            height: 50px !important;
+        }
+		.dataTables_scroll{
+			padding-top: 0px;
+		}
+		.thh{
+			text-align:center;
+		}
+
+
+    </style>
+}
+
+
+<div class="row page-titles" id="myBreadcrumb">
+    <ol class="breadcrumb">
+		<li class="breadcrumb-item active"><a asp-controller="Sube" asp-action="Subeler">Şubeler</a></li>
+    </ol>
+</div>
+<div class="row">
+	<div class="col-12">
+		<div class="card">
+			<div class="card-header">
+				<h4></h4>
+				<div class="card-toolbar">
+					<a href="#subeEkleModal" data-bs-target="#subeEkleModal" data-bs-toggle="modal" class="btn btn-secondary font-weight-bolder">
+						<span class="svg-icon svg-icon-md">
+							<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+								<path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+							</svg>
+						</span>Yeni Ekle
+					</a>
+					<a href="#" class="btn btn-dark font-weight-bolder">
+						<span class="svg-icon svg-icon-md">
+							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer-fill" viewBox="0 0 16 16">
+								<path d="M5 1a2 2 0 0 0-2 2v1h10V3a2 2 0 0 0-2-2H5zm6 8H5a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1z" />
+								<path d="M0 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-1v-2a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2H2a2 2 0 0 1-2-2V7zm2.5 1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z" />
+							</svg>
+						</span>Yazdır
+					</a>
+				</div>
+			</div>
+			<div class="card-body">
+				<style>
+					#devamsizliklarimTable_filter {
+						margin-bottom: 0px;
+						padding-bottom: 0px;
+					}
+				</style>
+				<div class="table-responsive">
+					<table id="subelerTable" class="display" style="min-width: 845px">
+						<thead>
+							<tr>
+
+
+								<th class="thh">Şube Adı</th>
+								<th class="thh">Şube Müdürü</th>
+								<th class="thh">Açılış Tarihi</th>
+								<th class="thh">Üyelik Türü</th>
+								<th class="thh">Aksiyon</th>
+
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+	
+								<td class="thh">Edusama</td>
+
+								<td class="thh">Selçuk Keskin</td>
+								<td class="thh">26/02/2020, 12:42 AM</td>
+								<td class="thh">Gold</td>
+								<td class="thh">
+									<a href="#GozModal" data-bs-target="#GozModal" data-bs-toggle="modal" class="btn btn-info shadow btn-xs sharp me-1"><i class="fa fa-eye"></i></a>
+
+									<a href="#EditModal" data-bs-target="#EditModal" data-bs-toggle="modal" class="btn btn-warning shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+									<a class="btn btn-primary shadow btn-xs sharp me-1"><i class="fa fa-trash"></i></a>
+
+
+								</td>
+							</tr>
+							
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" id="subeEkleModal">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Şube Ekleme Penceresi</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal">
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="basic-form">
+					<form action="#" id="subeEkleForm" method="post">
+						@Html.AntiForgeryToken()
+
+						<div class="mb-3 row">
+							<label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2rem;">Şube Adı</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" name="Adi" required>
+							</div>
+						</div>
+						<div class="mb-3 row">
+							<label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2.4rem;">ÜlkeLer</label>
+							<div class="col-sm-9">
+								<select id="UlkeArama" name="UlkeArama" required>
+									<option>Ülke Seçiniz</option>
+									<option>Türkye</option>
+									<option>Süriye</option>
+
+								</select>
+							</div>
+						</div>
+						<div class="mb-3 row">
+							<label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2.4rem;">Şehir Seç</label>
+							<div class="col-sm-9">
+								<select id="sehirArama" name="SehirID" required>
+									<option>Şehir Seçiniz</option>
+
+									<option>İstanbul</option>
+									<option>İzmir</option>
+									<option>Mersin</option>
+									<option>Hatay</option>
+								</select>
+							</div>
+						</div>
+						<div class="mb-3 row">
+							<label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2.4rem;">İlçe Seç</label>
+							<div class="col-sm-9">
+								<select id="ilceArama" name="ilceID" required>
+									<option>İlçe Seçiniz</option>
+
+									<option>Mezitli</option>
+									<option>Tece</option>
+									<option>Kargipinar</option>
+								</select>
+							</div>
+						</div>
+						<div class="mb-3 row">
+							<label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2.4rem;">Şube Müdürü</label>
+							<div class="col-sm-9">
+								<select id="SubeMudurArama" name="SubeMudurId" required>
+									<option>Müdürü Seçiniz</option>
+
+									<option>Selçuk Keskin</option>
+									<option>Mustafa Bey</option>
+									<option>Muhammed</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="mb-3 row">
+							<label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2.4rem;">Üyelik Tipi</label>
+							<div class="col-sm-9">
+								<select id="UyelikArama" name="UyelikId" required>
+									<option>Üyelik Seçiniz</option>
+
+									<option>Gold</option>
+
+								</select>
+							</div>
+						</div>
+
+						<div class="mb-3 row">
+							<label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2.4rem;">Telefon</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" name="Tel" required>
+
+							</div>
+						</div>
+
+						<div class="mb-3 row">
+							<label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2.4rem;">E-Posta</label>
+							<div class="col-sm-9">
+								<input type="email" class="form-control" name="subeemail" required>
+
+							</div>
+						</div>
+
+						<div class="mb-3 row">
+							<label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2.4rem;">Adres</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" name="subeemail" maxlength="300" required>
+
+							</div>
+						</div>
+
+
+
+					</form>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success" id="btnSubmit">Kaydet</button>
+				<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Kapat</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" id="EditModal">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Edit Penceresi</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal">
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="basic-form">
+					<form action="#" id="subeEkleForm" method="post">
+						@Html.AntiForgeryToken()
+
+						<div class="mb-3 row">
+							<label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2rem;">Şube Adı</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" name="Adi" required>
+							</div>
+						</div>
+						<div class="mb-3 row">
+							<label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2.4rem;">ÜlkeLer</label>
+							<div class="col-sm-9">
+								<select id="UlkeAramaedit" name="UlkeAramaedit" required>
+									<option>Ülke Seçiniz</option>
+									<option>Türkye</option>
+									<option>Süriye</option>
+
+								</select>
+							</div>
+						</div>
+						<div class="mb-3 row">
+							<label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2.4rem;">Şehir Seç</label>
+							<div class="col-sm-9">
+								<select id="sehirAramaedit" name="SehirIDedit" required>
+									<option>Şehir Seçiniz</option>
+
+									<option>İstanbul</option>
+									<option>İzmir</option>
+									<option>Mersin</option>
+									<option>Hatay</option>
+								</select>
+							</div>
+						</div>
+						<div class="mb-3 row">
+							<label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2.4rem;">İlçe Seç</label>
+							<div class="col-sm-9">
+								<select id="ilceAramaedit" name="ilceIDedit" required>
+									<option>İlçe Seçiniz</option>
+
+									<option>Mezitli</option>
+									<option>Tece</option>
+									<option>Kargipinar</option>
+								</select>
+							</div>
+						</div>
+						<div class="mb-3 row">
+							<label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2.4rem;">Şube Müdürü</label>
+							<div class="col-sm-9">
+								<select id="SubeMudurAramaedit" name="SubeMudurIdedit" required>
+									<option>Müdürü Seçiniz</option>
+
+									<option>Selçuk Keskin</option>
+									<option>Mustafa Bey</option>
+									<option>Muhammed</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="mb-3 row">
+							<label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2.4rem;">Üyelik Tipi</label>
+							<div class="col-sm-9">
+								<select id="UyelikAramaedit" name="UyelikIdedit" required>
+									<option>Üyelik Seçiniz</option>
+
+									<option>Gold</option>
+
+								</select>
+							</div>
+						</div>
+
+						<div class="mb-3 row">
+							<label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2.4rem;">Telefon</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" name="Tel" required>
+
+							</div>
+						</div>
+
+						<div class="mb-3 row">
+							<label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2.4rem;">E-Posta</label>
+							<div class="col-sm-9">
+								<input type="email" class="form-control" name="subeemail" required>
+
+							</div>
+						</div>
+
+						<div class="mb-3 row">
+							<label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2.4rem;">Adres</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" name="subeemail" maxlength="300" required>
+
+							</div>
+						</div>
+
+
+
+					</form>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success" id="btnSubmit">Kaydet</button>
+				<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Kapat</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" id="GozModal">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Edit Penceresi</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal">
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="basic-form">
+					<form action="#" id="subeEkleForm" method="post">
+						@Html.AntiForgeryToken()
+
+						<div class="row">
+							<div class="col-xl-12">
+								<div class="card" style="height:auto;">
+									<div class="card-header border-0 pb-0">
+										<h2 class="card-title">@*Şube adı gelecek*@ Mersin Şubesi Bilgileri</h2>
+									</div>
+									<div class="card-body pb-0">
+										<ul class="list-group list-group-flush">
+											<li class="list-group-item d-flex px-0 justify-content-between">
+												<strong>Açılış Tarihi</strong>
+												<span class="mb-0">02/08/1997</span>
+											</li>
+											<li class="list-group-item d-flex px-0 justify-content-between">
+												<strong>Yetkili</strong>
+												<span class="mb-0">Selçuk Keskin</span>
+											</li>
+											<li class="list-group-item d-flex px-0 justify-content-between">
+												<strong>Telefon</strong>
+												<span class="mb-0">32547659836</span>
+											</li>
+											<li class="list-group-item d-flex px-0 justify-content-between">
+												<strong>Email</strong>
+												<span class="mb-0">mersin@@edusama.com</span>
+											</li>
+											<li class="list-group-item d-flex px-0 justify-content-between">
+												<strong>Adres</strong>
+												<span class="mb-0">Mersin 3493 Sk. No:134/A Yenişehir Mersin</span>
+											</li>
+											<li class="list-group-item d-flex px-0 justify-content-between">
+												<strong>Personel Sayısı</strong>
+												<span class="mb-0">40</span>
+											</li>
+											<li class="list-group-item d-flex px-0 justify-content-between">
+												<strong>Öğrenci Sayısı</strong>
+												<span class="mb-0">300</span>
+											</li>
+											<li class="list-group-item d-flex px-0 justify-content-between">
+												<strong>Şube Durumu</strong>
+												<span class="mb-0" style="color:green;">Aktif</span>
+											</li>
+										</ul>
+									</div>
+								</div>
+
+							</div>
+
+						</div>
+
+
+
+
+					</form>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success" id="btnSubmit">Kaydet</button>
+				<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Kapat</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+@section scripts{
+	<script src="~/Content/vendor/datatables/js/jquery.dataTables.min.js" asp-append-version="true"></script>
+	<script src="~/Content/vendor/jquery-nice-select/js/jquery.nice-select.min.js" asp-append-version="true"></script>
+	<script src="~/Content/vendor/select2/js/select2.full.min.js" asp-append-version="true"></script>
+    <script>
+        $(document).ready(function () {
+			$("#UlkeArama").select2({
+				dropdownParent: $('#subeEkleModal')
+			});
+			$("#sehirArama").select2({
+				dropdownParent: $('#subeEkleModal')
+			});
+						
+			$("#ilceArama").select2({
+				dropdownParent: $('#subeEkleModal')
+			});
+			$("#SubeMudurArama").select2({
+				dropdownParent: $('#subeEkleModal')
+			});
+			$("#UyelikArama").select2({
+				dropdownParent: $('#subeEkleModal')
+			});
+
+
+			$("#UlkeAramaedit").select2({
+				dropdownParent: $('#EditModal')
+			});
+			$("#sehirAramaedit").select2({
+				dropdownParent: $('#EditModal')
+			});
+
+			$("#ilceAramaedit").select2({
+				dropdownParent: $('#EditModal')
+			});
+			$("#SubeMudurAramaedit").select2({
+				dropdownParent: $('#EditModal')
+			});
+			$("#UyelikAramaedit").select2({
+				dropdownParent: $('#EditModal')
+			});
+            var mycrumb = $("#myBreadcrumb");
+            $("#previousBreadcrumb").before(mycrumb);
+			var table = $('#subelerTable').DataTable({
+				searching: true,
+				paging: true,
+				select: false,
+				info: false,
+				lengthChange: false,
+				language: {
+					paginate: {
+						next: '<i class="fa fa-angle-double-right" aria-hidden="true"></i>',
+						previous: '<i class="fa fa-angle-double-left" aria-hidden="true"></i>'
+					}
+				}
+			});
+        })
+    </script>
+}

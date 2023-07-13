@@ -1,0 +1,269 @@
+﻿
+@section head{
+    <link href="~/Content/vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet" asp-append-version="true">
+    <link href="~/Content/vendor/jquery-nice-select/css/nice-select.css" rel="stylesheet" asp-append-version="true">
+    <link href="~/Content/vendor/select2/css/select2.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/Content/css/filepond.css" rel="stylesheet" asp-append-version="true" />
+    <style>
+        .col-form-label {
+            font-size: 20px;
+        }
+
+        .select2-selection__rendered {
+            line-height: 50px !important;
+        }
+
+        .select2-container .select2-selection--single {
+            height: 50px !important;
+        }
+
+        .select2-selection__arrow {
+            height: 50px !important;
+        }
+
+        .filepond--item-panel {
+            background-color: #4fa93f;
+        }
+
+        .thh {
+            text-align: center;
+        }
+    </style>
+	<link href="~/Content/vendor/jquery-smartwizard/dist/css/smart_wizard.min.css" rel="stylesheet">
+	<!-- Custom Stylesheet -->
+	<link href="~/Content/css/style.css" rel="stylesheet">
+
+}
+
+<div class="row page-titles" id="myBreadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-controller="Sinif" asp-action="Siniflar">Sınıf</a></li>
+        <li class="breadcrumb-item active"><a asp-controller="Sinif" asp-action="SinifSablonlari">Sınıf Şablonları</a></li>
+    </ol>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3></h3>
+                <div class="card-toolbar">
+                    <a asp-controller="Sinif" asp-action="SinifEklemeSablonlari" class="btn btn-secondary font-weight-bolder">
+                        <span class="svg-icon svg-icon-md">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+                            </svg>
+                        </span>Şablon Ekle
+                    </a>
+
+                </div>
+            </div>
+
+            <div class="card-body">
+
+                <div class="table-responsive">
+                    <table id="Egitimtable" class="display" style="min-width: 845px">
+                        <thead>
+                            <tr>
+                                <th class="thh">Eğitim Adı</th>
+                                <th class="thh">Eğitim Süresi</th>
+
+                                <th class="thh">Aksiyon</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="thh">N5</td>
+                                <td class="thh">24.Hafta</td>
+
+                                <td class="thh">
+                                    <a id="odevview" onclick="odevview()" class="btn btn-info shadow btn-xs sharp me-1"><i class="fa fa-eye"></i></a>
+
+                                    <a asp-controller="Sinif" asp-action="DuzSinifSablonlari" class="btn btn-warning shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+                                    <a class="btn btn-primary shadow btn-xs sharp me-1"><i class="fa fa-trash"></i></a>
+
+
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" id="duyuruEkleModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Şablon Ekleme Penceresi</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal">
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="basic-form">
+                    <form action="#" id="duyuruEkleForm" method="post" style="padding-bottom:20px;">
+                        @Html.AntiForgeryToken()
+                        <div class="mb-3 row">
+                            <label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2.4rem;">Şube</label>
+                            <div class="col-sm-9">
+                                <select class="form-control select2" id="subeArama" name="SubeID" required>
+                                    <option>Tüm Şubeler</option>
+                                    <option>İzmir Şubesi</option>
+                                    <option>Mersin Şubesi</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2rem;">Duyuru başlığı</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control " name="DuyuruBaslik" required>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-3 col-form-label" style="font-size:12.25px;">Duyuru içeriği</label>
+                            <div class="col-sm-9">
+                                <textarea name="editor1"></textarea>
+                                <script>
+                                    CKEDITOR.replace('editor1', {
+                                        customConfig: '/Content/vendor/ckeditor/config.js'
+                                    });
+                                </script>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2rem;">Dosya yükleme alanı</label>
+                            <div class="col-sm-9">
+                                <input type="file" class="my-pond" name="filepond" data-max-file-size="3MB" data-max-files="10" multiple />
+                            </div>
+                        </div>
+                        @*                        <div class="mb-3 row">
+                        <label class="col-sm-4 col-form-label" style="font-size:12.25px; line-height: 2.4rem;">Şablon olarak eklensin mi?</label>
+                        <div class="col-sm-8">
+                        <select class="form-control select2" id="SabArama" name="SabID"  required>
+                        <option>Evet</option>
+                        <option>Hayır</option>
+                        </select>
+                        </div>
+                        </div>
+                        <div class="mb-3 row">
+                        <label class="col-sm-4 col-form-label" style="font-size:12.25px; line-height: 2.4rem;">Otomatik Duyuru</label>
+                        <div class="col-sm-8">
+                        <select class="form-control select2" id="OtoArama" name="OtoID" required>
+                        <option>Seçiniz</option>
+                        <option>Evet</option>
+                        <option>Hayır</option>
+                        </select>
+                        </div>
+                        </div>*@
+                        <div class="mb-3 row" style="display:none;" id="biro">
+                            <label class="col-sm-4 col-form-label" style="font-size:12.25px; line-height: 2rem;">Duyuru Zamanı</label>
+                            <div class="col-sm-8">
+                                <input type="datetime-local" class="form-control" name="tarih" required>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" id="btnSubmit">Kaydet</button>
+
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Kapat</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script src="~/Content/vendor/datatables/js/jquery.dataTables.min.js" asp-append-version="true"></script>
+    <script src="~/Content/vendor/jquery-nice-select/js/jquery.nice-select.min.js" asp-append-version="true"></script>
+    <script src="~/Content/vendor/select2/js/select2.full.min.js" asp-append-version="true"></script>
+    <script src="~/Content/js/filepond.js" asp-append-version="true"></script>
+
+
+
+
+    <script>
+        $(document).ready(function () {
+            //Initialize Select2 Elements
+            $('.select2').select2()
+
+            //Initialize Select2 Elements
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            })
+
+            var mycrumb = $("#myBreadcrumb");
+            $("#previousBreadcrumb").before(mycrumb);
+            var table = $('#Egitimtable').DataTable({
+
+                language: {
+                    paginate: {
+                        next: '<i class="fa fa-angle-double-right" aria-hidden="true"></i>',
+                        previous: '<i class="fa fa-angle-double-left" aria-hidden="true"></i>'
+                    }
+                }
+            });
+            //FilePond upload işlemleri
+            pond = FilePond.create(
+                document.querySelector('input[type="file"]'), {
+                allowMultiple: true,
+                instantUpload: false,
+                allowProcess: false
+            });
+            $("#duyuruEkleForm").submit(function (e) {
+                e.preventDefault();
+                var fd = new FormData(this);
+                pondFiles = pond.getFiles();
+                for (var i = 0; i < pondFiles.length; i++) {
+                    fd.append('filepond', pondFiles[i].file);
+                }
+                $.ajax({
+                    url: '/Kutuphane/TestUpload',
+                    type: 'POST',
+                    data: fd,
+                    dataType: 'JSON',
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    success: function (data) {
+                    },
+                    error: function (data) {
+                    }
+                }
+                );
+            });
+
+
+
+        })
+
+    </script>
+    <script>
+        var selectElement = document.getElementById("OtoArama");
+
+        selectElement.onchange = function () {
+            var selectedOption = this.options[this.selectedIndex].text;
+
+            if (selectedOption == "Evet") {
+                document.getElementById("biro").style.display = "flex";
+
+            }
+
+            else {
+                /* Öğretmen و Diğer  الأختيار */
+                document.getElementById("biro").style.display = "none";
+
+            }
+        };
+
+
+
+    </script>
+
+
+}

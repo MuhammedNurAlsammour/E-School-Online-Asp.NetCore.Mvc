@@ -1,0 +1,407 @@
+﻿@{
+    ViewData["Title"] = "Demirbaşlar";
+}
+
+@section head{
+    <link href="~/Content/vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet" asp-append-version="true">
+    <link href="~/Content/vendor/jquery-nice-select/css/nice-select.css" rel="stylesheet" asp-append-version="true">
+	<link href="~/Content/vendor/select2/css/select2.min.css" rel="stylesheet" asp-append-version="true" />
+
+	<style>
+		.uploadFile {
+			width: 100%;
+			background-color: white;
+			color: grey;
+			font-size: 16px;
+			line-height: 23px;
+			overflow: hidden;
+			padding: 10px 10px 4px 10px;
+			position: relative;
+			resize: none;
+			[type="file"]
+
+		{
+			cursor: pointer !important;
+			display: block;
+			font-size: 999px;
+			filter: alpha(opacity=0);
+			min-height: 100%;
+			min-width: 100%;
+			opacity: 0;
+			position: absolute;
+			right: 0px;
+			text-align: right;
+			top: 0px;
+			z-index: 1;
+		}
+
+		}
+		.thh{
+			text-align:center;
+		}
+	</style>
+}
+
+@*
+	Demirbaşları atama yaparken table ın son kolunundaki işlemler kısmına "Düzenleme simgesi, silme simgesi, El vermek gibi bir simge(kişiye demirbaş atama için)" a hrefler konulacak. Ve açılan modal popupta öğrenci ve veliler hariç tüm personeller yanlarında rolleri ile birlikte gelecek. Örn: Ali Armağan KİLİSLİ (Öğretmen - Mersin Şubesi)
+*@
+
+<div class="row page-titles" id="myBreadcrumb">
+    <ol class="breadcrumb">
+		<li class="breadcrumb-item active"><a asp-controller="Demirbas" asp-action="Demirbaslar">Demirbaşlar</a></li>
+    </ol>
+</div>
+
+<div class="row">
+	<div class="col-12">
+		<div class="card">
+			<div class="card-header">
+				<div class="col-xl-4">
+					<div class="d-flex">
+@*						<h4 style="margin:auto;"></h4>
+*@						<div class="col-xl-8">
+							<select class="default-select wide">
+								<option value="All" selected="selected">Şube Seçiniz</option>
+								<option value="1">Mersin</option>
+								<option value="2">İzmir</option>
+								<option value="3">İstanbul</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="card-toolbar">
+					<a href="#DosyalarEkleModal" data-bs-target="#DosyalarEkleModal" data-bs-toggle="modal" class="btn btn-secondary font-weight-bolder">
+						<span class="svg-icon svg-icon-md">
+							<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+								<path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+							</svg>
+						</span>Demirbaş Ekle
+					</a>
+
+					<a href="#" class="btn btn-dark font-weight-bolder">
+						<span class="svg-icon svg-icon-md">
+							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer-fill" viewBox="0 0 16 16">
+								<path d="M5 1a2 2 0 0 0-2 2v1h10V3a2 2 0 0 0-2-2H5zm6 8H5a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1z" />
+								<path d="M0 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-1v-2a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2H2a2 2 0 0 1-2-2V7zm2.5 1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z" />
+							</svg>
+						</span>Yazdır
+					</a>
+				</div>
+			</div>
+			<div class="card-body">
+				<div class="table-responsive">
+					<table id="demirbaslarTable" class="display" style="min-width: 845px">
+						<thead>
+							<tr>
+
+								<th class="thh">Demirbaş Türü</th>
+								<th class="thh">Alım Tarihi</th>
+								<th class="thh">Fatura</th>
+								<th class="thh">Garanti Süresi</th>
+								<th class="thh">Personel Adı</th>
+								<th class="thh">Aksiyon</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+
+								<td class="thh">Mustafa</td>
+								<td class="thh">26/02/2020</td>
+								<td class="thh">
+									<label class="uploadFile">
+										<i class="bi bi-file-earmark-arrow-up"></i>
+										<span class="filename" style="font-size:12.25px;">Dosya Ekle</span>
+										<input type="file" class="inputfile form-control" name="file">
+									</label>
+								</td>
+								<td class="thh">2.yil</td>
+								<td class="thh">Selçuk</td>
+								<td class="thh">
+									<a href="#secDemirbasModal" data-bs-target="#secDemirbasModal" data-bs-toggle="modal" class="btn btn-info shadow btn-xs sharp me-1">
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill-add" viewBox="0 0 16 16">
+											<path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0Zm-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+											<path d="M2 13c0 1 1 1 1 1h5.256A4.493 4.493 0 0 1 8 12.5a4.49 4.49 0 0 1 1.544-3.393C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4Z" />
+										</svg>
+									</a>
+									<a id="odevview" onclick="odevview()" class="btn btn-danger shadow btn-xs sharp me-1">
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill-x" viewBox="0 0 16 16">
+											<path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-9 8c0 1 1 1 1 1h5.256A4.493 4.493 0 0 1 8 12.5a4.49 4.49 0 0 1 1.544-3.393C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4Z" />
+											<path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm-.646-4.854.646.647.646-.647a.5.5 0 0 1 .708.708l-.647.646.647.646a.5.5 0 0 1-.708.708l-.646-.647-.646.647a.5.5 0 0 1-.708-.708l.647-.646-.647-.646a.5.5 0 0 1 .708-.708Z" />
+										</svg>
+									</a>
+									<a href="#DuzDemirbasModal" data-bs-target="#DuzDemirbasModal" data-bs-toggle="modal" class="btn btn-warning shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+									<a class="btn btn-primary shadow btn-xs sharp me-1"><i class="fa fa-trash"></i></a>
+
+
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" id="DosyalarEkleModal">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">
+					Demirbaşlar Ekleme Penceresi
+				</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal">
+				</button>
+			</div>
+			@*			Özür dilerim, acaba neden izin alıyorsunuz?
+			*@			<div class="modal-body">
+				<div class="basic-form">
+					<form action="#" id="PersonelEkleForm" method="post">
+						@Html.AntiForgeryToken()
+
+
+						<div class="mb-3 row">
+							<label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2.4rem;">Demirbaş Adı</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" name="Sinavin" placeholder="Demirbaş Adı giriniz" required>
+							</div>
+						</div>
+
+						<div class="mb-3 row">
+							<label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 1rem;">Demirbaş Türü</label>
+							<div class="col-sm-9">
+								<select id="DemirbasArama" name="DemirbasId" required>
+									<option>Demirbaş Seç</option>
+									<option>none</option>
+								</select>
+							</div>
+						</div>
+
+
+						<div class="mb-3 row">
+							<label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 1rem;">Garanti Süresi</label>
+							<div class="col-sm-9">
+								<select id="GarantiArama" name="PersonelId" required>
+									<option>Garanti Seç</option>
+									<option>1.yil</option>
+									<option>2.yil</option>
+
+								</select>
+							</div>
+						</div>
+
+
+
+						<div class="mb-3 row">
+							<label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2.4rem;">Alım Tarihi</label>
+							<div class="col-sm-9">
+								<input type="date" class="form-control" name="Sinavin" placeholder="Not giriniz" required>
+							</div>
+						</div>
+
+						<div class="mb-3 row">
+							<label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2.4rem;">Fatura</label>
+							<div class="col-sm-9">
+								<input value="1.sınav" type="file" class="form-control" name="Sinavin" placeholder="Not giriniz" required>
+							</div>
+						</div>
+
+
+					</form>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success" id="btnSubmit">Kaydet</button>
+				<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Kapat</button>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" id="DuzDemirbasModal">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">
+					Demirbaş Düzeltme Penceresi
+				</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal">
+				</button>
+			</div>
+			@*			Özür dilerim, acaba neden izin alıyorsunuz?
+			*@			<div class="modal-body">
+				<div class="basic-form">
+					<form action="#" id="PersonelEkleForm" method="post">
+						@Html.AntiForgeryToken()
+
+
+						<div class="mb-3 row">
+							<label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2.4rem;">Demirbaş Adı</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" name="Sinavin" placeholder="Demirbaş Adı giriniz" required>
+							</div>
+						</div>
+
+						<div class="mb-3 row">
+							<label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 1rem;">Demirbaş Türü</label>
+							<div class="col-sm-9">
+								<select id="DuzDemirbasArama" name="DuzDemirbasId" required>
+									<option>Demirbaş Seç</option>
+									<option>none</option>
+								</select>
+							</div>
+						</div>
+
+
+						<div class="mb-3 row">
+							<label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 1rem;">Garanti Süresi</label>
+							<div class="col-sm-9">
+								<select id="DuzGarantiArama" name="DuzGarantiArama" required>
+									<option>Garanti Seç</option>
+									<option>1.yil</option>
+									<option>2.yil</option>
+
+								</select>
+							</div>
+						</div>
+
+
+
+						<div class="mb-3 row">
+							<label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2.4rem;">Alım Tarihi</label>
+							<div class="col-sm-9">
+								<input type="date" class="form-control" name="Sinavin" placeholder="Not giriniz" required>
+							</div>
+						</div>
+
+						<div class="mb-3 row">
+							<label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 2.4rem;">Fatura</label>
+							<div class="col-sm-9">
+								<input value="1.sınav" type="file" class="form-control" name="Sinavin" placeholder="Not giriniz" required>
+							</div>
+						</div>
+
+
+					</form>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success" id="btnSubmit">Kaydet</button>
+				<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Kapat</button>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" id="secDemirbasModal">
+	<div class="modal-dialog modal-m">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Demirbaş Zimmet Penceresi</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal">
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="basic-form">
+					<form action="#" id="DuzDemirbasEkleForm" method="post">
+						@Html.AntiForgeryToken()
+
+
+						<div class="mb-3 row">
+							<label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 1rem;">Sube Seçiniz</label>
+							<div class="col-sm-9">
+								<select id="Sube" class="form-control" name="Sube" required>
+									<option>Şube Seçiniz</option>
+									<option>Mersin</option>
+								</select>
+							</div>
+						</div>
+
+
+
+						<div class="mb-3 row">
+							<label class="col-sm-3 col-form-label" style="font-size:12.25px; line-height: 1rem;">Personeler</label>
+							<div class="col-sm-9">
+								<select id="Personel" class="form-control" name="Personel" required>
+									<option>Personel Seçiniz</option>
+									<option>Selçuk</option>
+								</select>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success" id="btnSubmit">Kaydet</button>
+				<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Kapat</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+@section scripts{
+    <script src="~/Content/vendor/datatables/js/jquery.dataTables.min.js" asp-append-version="true"></script>
+    <script src="~/Content/vendor/jquery-nice-select/js/jquery.nice-select.min.js" asp-append-version="true"></script>
+	<script src="~/Content/vendor/select2/js/select2.full.min.js" asp-append-version="true"></script>
+
+    <script>
+        $(document).ready(function () {
+			$("#GarantiArama").select2({
+				dropdownParent: $('#DosyalarEkleModal')
+			});
+			$("#DemirbasArama").select2({
+				dropdownParent: $('#DosyalarEkleModal')
+			});
+
+			$("#Sube").select2({
+				dropdownParent: $('#secDemirbasModal')
+			});
+
+
+
+			$("#DuzGarantiArama").select2({
+				dropdownParent: $('#DuzDemirbasModal')
+			});
+			$("#DuzDemirbasArama").select2({
+				dropdownParent: $('#DuzDemirbasModal')
+			});
+
+			$("#DuzSube").select2({
+				dropdownParent: $('#DuzDemirbasModal')
+			});
+
+
+
+			
+			$("#Personel").select2({
+				dropdownParent: $('#secDemirbasModal')
+			});
+            var mycrumb = $("#myBreadcrumb");
+            $("#previousBreadcrumb").before(mycrumb);
+			var table = $('#demirbaslarTable').DataTable({
+				searching: true,
+				paging: true,
+				select: false,
+				info: false,
+				lengthChange: false,
+				language: {
+					paginate: {
+						next: '<i class="fa fa-angle-double-right" aria-hidden="true"></i>',
+						previous: '<i class="fa fa-angle-double-left" aria-hidden="true"></i>'
+					}
+				}
+			});
+        })
+    </script>
+	<script>
+		$("input[type=file]").change(function (e) {
+			$(this).parents(".uploadFile").find(".filename").text(e.target.files[0].name);
+		});
+
+	</script>
+
+}
